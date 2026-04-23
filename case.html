@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case-study әдісі</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#ffffff;
+    --text:#1a1a1a;
+    --card:#f8f9fa;
+    --title:#0B3C5D;
+    --subtitle:#1C5D99;
+    --link:#1C5D99;
+    --link-hover:#0B3C5D;
+    --border:#e0e0e0;
+    --accent:#a8edea;
+}
+
+.dark{
+    --bg:#161b22;
+    --text:#e6edf3;
+    --card:#21262d;
+    --title:#7dd3fc;
+    --subtitle:#38bdf8;
+    --link:#7dd3fc;
+    --link-hover:#38bdf8;
+    --border:#30363d;
+    --accent:#7dd3fc;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    transition:background-color 0.3s ease;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    padding:40px;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    min-height:100vh;
+    transition:background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-link{
+    display:inline-block;
+    color:var(--link);
+    text-decoration:none;
+    margin-bottom:30px;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.back-link:hover{
+    color:var(--link-hover);
+    padding-left:5px;
+}
+
+h2{
+    font-size:36px;
+    margin-bottom:30px;
+    color:var(--title);
+    font-weight:600;
+    transition:color 0.3s ease;
+}
+
+/* Негізгі контейнер */
+.method-content{
+    max-width:900px;
+}
+
+/* Сурет контейнері */
+.method-image{
+    width:100%;
+    max-width:500px;
+    height:400px;
+    border-radius:16px;
+    margin-bottom:30px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+}
+
+.dark .method-image{
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Сурет */
+.method-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+/* Мақсат бөлімі */
+.goal-box{
+    background:var(--card);
+    border-left:4px solid var(--accent);
+    padding:20px 25px;
+    border-radius:0 12px 12px 0;
+    margin-bottom:25px;
+    transition:background-color 0.3s ease;
+}
+
+.goal-box b{
+    color:var(--accent);
+    font-size:18px;
+    display:block;
+    margin-bottom:10px;
+}
+
+.dark .goal-box b{
+    color:#7dd3fc;
+}
+
+.goal-box p{
+    font-size:16px;
+    color:var(--text);
+    margin:0;
+}
+
+/* Сипаттама */
+.description{
+    font-size:17px;
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+.description p{
+    margin-bottom:15px;
+}
+
+/* Талдау қадамдары */
+.steps-box{
+    background:var(--card);
+    padding:25px;
+    border-radius:12px;
+    margin-top:30px;
+    transition:background-color 0.3s ease;
+}
+
+.steps-box h3{
+    color:var(--subtitle);
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.steps-list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.step-item{
+    display:flex;
+    align-items:flex-start;
+    padding:15px;
+    background:var(--bg);
+    border-radius:10px;
+    transition:background-color 0.3s ease;
+}
+
+.step-number{
+    width:30px;
+    height:30px;
+    background:var(--accent);
+    color:var(--text);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:600;
+    margin-right:15px;
+    flex-shrink:0;
+}
+
+.dark .step-number{
+    color:#0d1117;
+}
+
+.step-text{
+    font-size:16px;
+    color:var(--text);
+    line-height:1.5;
+}
+
+/* Мысал блокы */
+.example-box{
+    background:var(--card);
+    padding:25px;
+    border-radius:12px;
+    margin-top:30px;
+    border-left:4px solid var(--accent);
+    transition:background-color 0.3s ease;
+}
+
+.example-box h3{
+    color:var(--accent);
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.dark .example-box h3{
+    color:#7dd3fc;
+}
+
+.example-box p{
+    font-size:16px;
+    color:var(--text);
+    line-height:1.6;
+    font-style:italic;
+}
+
+/* Қолдану уақыты */
+.time-box{
+    display:inline-block;
+    background:var(--accent);
+    color:var(--text);
+    padding:10px 20px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+    margin-top:20px;
+}
+
+.dark .time-box{
+    color:#0d1117;
+}
+</style>
+</head>
+<body>
+
+<a href="jogary.html" class="back-link">← Артқа</a>
+
+<div class="method-content">
+
+    <h2>Case-study әдісі</h2>
+
+    <!-- Сурет -->
+    <div class="method-image">
+        <img src="case.png" alt="Case-study әдісі">
+    </div>
+
+    <div class="goal-box">
+        <b>Мақсаты:</b>
+        <p>Нақты жағдайды талдау арқылы шешім қабылдау дағдысын дамыту, практикалық ойлауды қалыптастыру</p>
+    </div>
+
+    <div class="description">
+        <p>
+            Case-study (кейс-стади) — оқушыларға нақты өмірден алынған немесе 
+            пәнге байланысты күрделі жағдай ұсынылады. Оқушылар бұл мәселені 
+            талдап, әртүрлі шешімдер іздеп, ең тиімдісін таңдау керек.
+        </p>
+        <p>
+            Бұл әдіс оқушылардың сыни ойлауын, топтық жұмыс дағдыларын және 
+            нақты өмірдегі мәселелерді шешу қабілетін дамытады.
+        </p>
+    </div>
+
+    <div class="steps-box">
+        <h3>📊 Талдау қадамдары:</h3>
+        <div class="steps-list">
+            <div class="step-item">
+                <span class="step-number">1</span>
+                <span class="step-text">Мәселені анықтау — негізгі конфликтті не қиындықты табу</span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">2</span>
+                <span class="step-text">Себептерін талдау — мәселе неге пайда болды, факторларды анықтау</span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">3</span>
+                <span class="step-text">Мүмкін шешімдерді ұсыну — барлық нұсқаларды жазу</span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">4</span>
+                <span class="step-text">Ең тиімді шешімді таңдау — артықшылықтар мен кемшіліктерді салыстыру</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="example-box">
+        <h3>💡 Мысал:</h3>
+        <p>
+            "Қалада жаңа саябақ салу керек. Бюджет шектеулі, ал тұрғындар 
+            әртүрлі пікірде: балалар алаңы, спорт зона не күтімді бақ? 
+            Сіз қалалық мәслихат мүшесі ретінде не ұсынасыз?"
+        </p>
+    </div>
+
+    <div class="time-box">⏱️ 30-40 минут</div>
+
+</div>
+
+<script>
+function applyTheme(theme){
+    if(theme === 'dark'){
+        document.documentElement.classList.add('dark');
+    }else{
+        document.documentElement.classList.remove('dark');
+    }
+}
+
+let params = new URLSearchParams(window.location.search);
+let themeFromURL = params.get('theme');
+if(themeFromURL){
+    applyTheme(themeFromURL);
+}else if(localStorage.getItem('theme') === 'dark'){
+    applyTheme('dark');
+}
+
+window.addEventListener('message', function(e){
+    if(e.data === 'dark'){
+        applyTheme('dark');
+    }else if(e.data === 'light'){
+        applyTheme('light');
+    }
+});
+
+window.addEventListener('storage', function(e){
+    if(e.key === 'theme'){
+        applyTheme(e.newValue);
+    }
+});
+</script>
+
+</body>
+</html>

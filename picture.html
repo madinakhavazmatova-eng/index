@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сурет арқылы ойлау - Әдістер қоры</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+    --primary:#0B3C5D;
+    --primary-hover:#1C5D99;
+    --secondary:#1C5D99;
+    --accent:#F4A261;
+    --text:#2c3e50;
+    --text-medium:#5d6d7e;
+    --text-light:#7f8c8d;
+    --bg:#ffffff;
+    --bg-light:#f4f7fb;
+    --bg-gray:#E6F0F7;
+    --border:#e5e8e8;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
+    --card:#f8f9fa;
+    --title:#0B3C5D;
+    --link:#1C5D99;
+    --link-hover:#0B3C5D;
+    --success:#10b981;
+    --star-empty:#d1d5db;
+    --star-filled:#fbbf24;
+    --bookmark:#F4A261;
+}
+
+.dark{
+    --primary:#4A9FD4;
+    --primary-hover:#6BB3E0;
+    --secondary:#4A9FD4;
+    --accent:#F4A261;
+    --text:#E8F4F8;
+    --text-medium:#B8D4E3;
+    --text-light:#8FB8D4;
+    --bg:#0A1628;
+    --bg-light:#0F1F35;
+    --bg-gray:#152238;
+    --border:#1E3A5F;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.5);
+    --card:#161b22;
+    --title:#7dd3fc;
+    --link:#7dd3fc;
+    --link-hover:#38bdf8;
+    --star-empty:#4b5563;
+    --star-filled:#fbbf24;
+    --bookmark:#F4A261;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    padding:40px;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    min-height:100vh;
+    transition:background-color 0.3s ease, color 0.3s ease;
+}
+
+.container{
+    max-width:900px;
+    margin:0 auto;
+}
+
+/* Header with bookmark */
+.header-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:24px;
+}
+
+.back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--link);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    transition:all 0.2s;
+}
+
+.back-link:hover{
+    color:var(--link-hover);
+    transform:translateX(-4px);
+}
+
+.bookmark-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 20px;
+    border-radius:25px;
+    border:2px solid var(--bookmark);
+    background:var(--bg);
+    color:var(--bookmark);
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.bookmark-btn:hover{
+    background:var(--bookmark);
+    color:white;
+    transform:translateY(-2px);
+}
+
+.bookmark-btn.saved{
+    background:var(--bookmark);
+    border-color:var(--bookmark);
+    color:white;
+}
+
+.bookmark-btn.saved:hover{
+    background:#e69138;
+    border-color:#e69138;
+}
+
+h2{
+    font-size:36px;
+    margin-bottom:20px;
+    color:var(--title);
+    font-weight:600;
+    transition:color 0.3s ease;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:24px;
+}
+
+.tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:500;
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--text);
+}
+
+.tag.primary{
+    background:var(--secondary);
+    color:white;
+    border-color:var(--secondary);
+}
+
+.method-image{
+    width:100%;
+    max-width:500px;
+    height:400px;
+    border-radius:16px;
+    margin-bottom:30px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+}
+
+.dark .method-image{
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+.method-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.goal-box{
+    background:var(--card);
+    border-left:4px solid var(--accent);
+    padding:20px 25px;
+    border-radius:0 12px 12px 0;
+    margin-bottom:25px;
+    transition:background-color 0.3s ease;
+}
+
+.goal-box b{
+    color:var(--accent);
+    font-size:18px;
+    display:block;
+    margin-bottom:10px;
+}
+
+.goal-box p{
+    font-size:16px;
+    color:var(--text);
+    margin:0;
+}
+
+.description{
+    font-size:17px;
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+.description p{
+    margin-bottom:15px;
+}
+
+.steps{
+    background:var(--card);
+    padding:25px;
+    border-radius:12px;
+    margin-top:30px;
+    transition:background-color 0.3s ease;
+    border:1px solid var(--border);
+}
+
+.steps h3{
+    color:var(--secondary);
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.steps ol{
+    padding-left:20px;
+}
+
+.steps li{
+    margin-bottom:12px;
+    font-size:16px;
+    line-height:1.6;
+}
+
+.time-box{
+    display:inline-block;
+    background:var(--accent);
+    color:white;
+    padding:10px 20px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:500;
+    margin-top:20px;
+}
+
+/* Rating Section - Compact, at bottom */
+.rating-section{
+    background:var(--card);
+    border-radius:16px;
+    padding:20px;
+    margin-top:32px;
+    box-shadow:var(--shadow-sm);
+    border:1px solid var(--border);
+    text-align:center;
+    max-width:500px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.rating-header{
+    font-size:16px;
+    font-weight:600;
+    color:var(--title);
+    margin-bottom:12px;
+}
+
+.average-rating{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.big-star{
+    font-size:36px;
+    color:var(--star-filled);
+}
+
+.rating-number{
+    font-size:32px;
+    font-weight:700;
+    color:var(--title);
+}
+
+.rating-total{
+    font-size:13px;
+    color:var(--text-light);
+}
+
+.interactive-stars{
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    margin-bottom:12px;
+}
+
+.interactive-star{
+    font-size:28px;
+    color:var(--star-empty);
+    cursor:pointer;
+    transition:all 0.2s ease;
+}
+
+.interactive-star:hover,
+.interactive-star.active{
+    color:var(--star-filled);
+    transform:scale(1.15);
+}
+
+.rating-text{
+    font-size:13px;
+    color:var(--text-medium);
+    margin-top:6px;
+}
+
+.already-rated{
+    background:var(--bg-light);
+    padding:12px;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+.already-rated i{
+    color:var(--success);
+    margin-right:8px;
+}
+
+@media (max-width:768px){
+    body{
+        padding:20px;
+    }
+    h2{
+        font-size:28px;
+    }
+    .method-image{
+        height:250px;
+    }
+    .rating-section{
+        padding:16px;
+    }
+    .rating-number{
+        font-size:28px;
+    }
+    .interactive-star{
+        font-size:24px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header-top">
+        <a href="bastauysh.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Бастауыш сынып әдістері
+        </a>
+        
+        <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()">
+            <i class="far fa-bookmark"></i>
+            <span id="bookmarkText">Сақтау</span>
+        </button>
+    </div>
+
+    <h2>Сурет арқылы ойлау</h2>
+
+    <div class="tags">
+        <span class="tag primary">
+            <i class="fas fa-graduation-cap"></i> Бастауыш сынып
+        </span>
+        <span class="tag">
+            <i class="fas fa-brain"></i> Эмоциялық интеллект
+        </span>
+        <span class="tag" style="background:var(--accent);color:white;">
+            <i class="fas fa-clock"></i> 10-20 минут
+        </span>
+    </div>
+
+    <!-- Сурет -->
+    <div class="method-image">
+        <img src="suret.png" alt="Сурет арқылы ойлау">
+    </div>
+
+    <div class="goal-box">
+        <b>Мақсаты:</b>
+        <p>Оқушылардың бейнелі ойлауын дамыту, эмоциялық интеллектін жетілдіру, сөздік қорын байыту</p>
+    </div>
+
+    <div class="description">
+        <p>
+            Бұл әдісте оқушыларға әртүрлі суреттер көрсетіледі. Оқушы берілген 
+            суретті талдап, оған өз ойын, эмоциясын еркін жеткізеді. Сурет 
+            арқылы оқушының ішкі әлемі, қиялы, сезімі ашылады.
+        </p>
+        <p>
+            Әдіс психологиялық жайлы ортаны қалыптастырып, оқушылардың 
+            өзін-өзі тануын қолдайды.
+        </p>
+    </div>
+
+    <div class="steps">
+        <h3>Қадамдар:</h3>
+        <ol>
+            <li>Тақтаға не экранға сурет көрсетіңіз (табиғат, адам, оқиға)</li>
+            <li>Оқушылардан суретті 30 секунд байқауды сұраңыз</li>
+            <li>"Бұл суретте не көрінеді? Сізді қандай сезімге бөлейді?" деп сұраңыз</li>
+            <li>Әр оқушының жауабын тыңдап, құрметпен қабылдаңыз</li>
+            <li>Талқылауды қорытындылап, негізгі ойды анықтаңыз</li>
+        </ol>
+    </div>
+
+    <div class="time-box">
+        <i class="fas fa-clock"></i> 10-20 минут
+    </div>
+
+    <!-- Rating Section - Compact, at bottom -->
+    <div class="rating-section" id="ratingSection">
+        <div class="rating-header">Бұл әдісті бағалаңыз</div>
+        
+        <div class="average-rating">
+            <i class="fas fa-star big-star"></i>
+            <div>
+                <div class="rating-number" id="averageRating">—</div>
+                <div class="rating-total" id="totalRatings">0 баға</div>
+            </div>
+        </div>
+        
+        <div class="interactive-stars" id="interactiveStars">
+            <i class="fas fa-star interactive-star" data-rating="1" onclick="setRating(1)"></i>
+            <i class="fas fa-star interactive-star" data-rating="2" onclick="setRating(2)"></i>
+            <i class="fas fa-star interactive-star" data-rating="3" onclick="setRating(3)"></i>
+            <i class="fas fa-star interactive-star" data-rating="4" onclick="setRating(4)"></i>
+            <i class="fas fa-star interactive-star" data-rating="5" onclick="setRating(5)"></i>
+        </div>
+        
+        <div class="rating-text" id="ratingText">Баға беру үшін жұлдыздарды басыңыз</div>
+    </div>
+
+</div>
+
+<script>
+// Әдіс ID
+const METHOD_ID = 'picture';
+const USER_ID = 'current_user';
+
+// LocalStorage функциялары
+function getRatings() {
+    return JSON.parse(localStorage.getItem('methodRatings') || '{}');
+}
+
+function getUserRatings() {
+    return JSON.parse(localStorage.getItem('userRatings') || '{}');
+}
+
+function getSavedMethods() {
+    return JSON.parse(localStorage.getItem('savedMethods') || '[]');
+}
+
+function saveRatings(ratings) {
+    localStorage.setItem('methodRatings', JSON.stringify(ratings));
+}
+
+function saveUserRatings(ratings) {
+    localStorage.setItem('userRatings', JSON.stringify(ratings));
+}
+
+function saveSavedMethods(methods) {
+    localStorage.setItem('savedMethods', JSON.stringify(methods));
+}
+
+// Орташа бағаны есептеу
+function calculateAverage() {
+    const ratings = getRatings();
+    const methodRatings = ratings[METHOD_ID] || [];
+    
+    if (methodRatings.length === 0) return 0;
+    
+    const sum = methodRatings.reduce((acc, r) => acc + r.rating, 0);
+    return (sum / methodRatings.length).toFixed(1);
+}
+
+// Бағаны көрсету
+function updateRatingDisplay() {
+    const average = calculateAverage();
+    const ratings = getRatings();
+    const count = (ratings[METHOD_ID] || []).length;
+    
+    document.getElementById('averageRating').textContent = average > 0 ? average : '—';
+    document.getElementById('totalRatings').textContent = count + ' баға';
+}
+
+// Жұлдыздарды жаңарту
+function updateStars(rating) {
+    const stars = document.querySelectorAll('.interactive-star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('active');
+        } else {
+            star.classList.remove('active');
+        }
+    });
+}
+
+// Баға беру - бір адамға бір рет
+function setRating(rating) {
+    const userRatings = getUserRatings();
+    
+    // Тексеру: бұл қолданушы уже баға берген бе?
+    if (userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID]) {
+        showAlreadyRated();
+        return;
+    }
+    
+    const ratings = getRatings();
+    
+    if (!ratings[METHOD_ID]) {
+        ratings[METHOD_ID] = [];
+    }
+    
+    ratings[METHOD_ID].push({
+        rating: rating,
+        userId: USER_ID,
+        date: new Date().toISOString()
+    });
+    
+    if (!userRatings[USER_ID]) {
+        userRatings[USER_ID] = {};
+    }
+    userRatings[USER_ID][METHOD_ID] = rating;
+    
+    saveRatings(ratings);
+    saveUserRatings(userRatings);
+    
+    updateStars(rating);
+    updateRatingDisplay();
+    
+    const texts = ['Нашар', 'Қанағаттанарлық', 'Жақсы', 'Өте жақсы', 'Керемет!'];
+    document.getElementById('ratingText').textContent = 'Рахмет! Сіздің бағаңыз: ' + texts[rating - 1];
+    
+    setTimeout(() => {
+        showAlreadyRated();
+    }, 2000);
+}
+
+// Already rated көрсету
+function showAlreadyRated() {
+    const userRatings = getUserRatings();
+    const userRating = userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID];
+    
+    if (userRating) {
+        const section = document.getElementById('ratingSection');
+        section.innerHTML = `
+            <div class="rating-header">Сіздің бағаңыз</div>
+            <div class="average-rating">
+                <i class="fas fa-star big-star"></i>
+                <div class="rating-number">${userRating}</div>
+            </div>
+            <div class="already-rated">
+                <i class="fas fa-check-circle"></i>
+                <span>Сіз бұл әдісті бағаладыңыз. Рахмет!</span>
+            </div>
+        `;
+    }
+}
+
+// Тексеру: қолданушы уже баға берген бе?
+function checkIfRated() {
+    const userRatings = getUserRatings();
+    if (userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID]) {
+        showAlreadyRated();
+    }
+}
+
+// Bookmark қосу/алу
+function toggleBookmark() {
+    let savedMethods = getSavedMethods();
+    const btn = document.getElementById('bookmarkBtn');
+    const text = document.getElementById('bookmarkText');
+    const icon = btn.querySelector('i');
+    
+    if (savedMethods.includes(METHOD_ID)) {
+        savedMethods = savedMethods.filter(id => id !== METHOD_ID);
+        btn.classList.remove('saved');
+        icon.className = 'far fa-bookmark';
+        text.textContent = 'Сақтау';
+    } else {
+        savedMethods.push(METHOD_ID);
+        btn.classList.add('saved');
+        icon.className = 'fas fa-bookmark';
+        text.textContent = 'Сақталды';
+    }
+    
+    saveSavedMethods(savedMethods);
+}
+
+// Bookmark күйін тексеру
+function checkBookmark() {
+    const savedMethods = getSavedMethods();
+    const btn = document.getElementById('bookmarkBtn');
+    const text = document.getElementById('bookmarkText');
+    const icon = btn.querySelector('i');
+    
+    if (savedMethods.includes(METHOD_ID)) {
+        btn.classList.add('saved');
+        icon.className = 'fas fa-bookmark';
+        text.textContent = 'Сақталды';
+    }
+}
+
+// Түнгі режим
+function applyTheme(theme){
+    if(theme === 'dark'){
+        document.documentElement.classList.add('dark');
+    }else{
+        document.documentElement.classList.remove('dark');
+    }
+}
+
+// Бет жүктелгенде
+window.onload = function() {
+    let params = new URLSearchParams(window.location.search);
+    let themeFromURL = params.get('theme');
+    if(themeFromURL){
+        applyTheme(themeFromURL);
+    }else if(localStorage.getItem('theme') === 'dark'){
+        applyTheme('dark');
+    }
+    
+    updateRatingDisplay();
+    checkBookmark();
+    checkIfRated();
+};
+
+window.addEventListener('message', function(e){
+    if(e.data === 'dark'){
+        applyTheme('dark');
+    }else if(e.data === 'light'){
+        applyTheme('light');
+    }
+});
+
+window.addEventListener('storage', function(e){
+    if(e.key === 'theme'){
+        applyTheme(e.newValue);
+    }
+});
+</script>
+
+</body>
+</html>

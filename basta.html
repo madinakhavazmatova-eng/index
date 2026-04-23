@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сабақты бастау</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ===== Басты беттегі түс айнымалылары ===== */
+:root{
+    /* Негізгі түстер */
+    --primary:#0B3C5D;
+    --primary-hover:#1C5D99;
+    --secondary:#1C5D99;
+    --accent:#F4A261;
+    
+    /* Мәтін түстері */
+    --text:#2c3e50;
+    --text-medium:#5d6d7e;
+    --text-light:#7f8c8d;
+    
+    /* Фон түстері */
+    --bg:#ffffff;
+    --bg-light:#f4f7fb;
+    --bg-gray:#E6F0F7;
+    
+    /* Шекара және көлеңке */
+    --border:#e5e8e8;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
+    
+    /* Карточка түстері */
+    --card:#f8f9fa;
+    --title:#0B3C5D;
+    --link:#1C5D99;
+    --link-hover:#0B3C5D;
+}
+
+/* ===== DARK MODE - Басты бетпен бірдей ===== */
+.dark{
+    /* Негізгі түстер */
+    --primary:#4A9FD4;
+    --primary-hover:#6BB3E0;
+    --secondary:#4A9FD4;
+    --accent:#F4A261;
+    
+    /* Мәтін түстері */
+    --text:#E8F4F8;
+    --text-medium:#B8D4E3;
+    --text-light:#8FB8D4;
+    
+    /* Фон түстері */
+    --bg:#0A1628;
+    --bg-light:#0F1F35;
+    --bg-gray:#152238;
+    
+    /* Шекара және көлеңке */
+    --border:#1E3A5F;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.5);
+    
+    /* Карточка түстері */
+    --card:#161b22;
+    --title:#7dd3fc;
+    --link:#7dd3fc;
+    --link-hover:#38bdf8;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    padding:40px;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    transition:background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-link{
+    display:inline-block;
+    color:var(--link);
+    text-decoration:none;
+    margin-bottom:30px;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.back-link:hover{
+    color:var(--link-hover);
+    padding-left:5px;
+}
+
+/* Cormorant Garamond шрифтімен тақырып */
+h2{
+    font-family:'Cormorant Garamond', serif;
+    font-size:42px;
+    margin-bottom:40px;
+    color:var(--title);
+    font-weight:600;
+    transition:color 0.3s ease;
+    letter-spacing:-0.5px;
+}
+
+.methods-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:30px;
+    max-width:1200px;
+}
+
+.method-card{
+    background:var(--bg-gray);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow-md);
+    transition:all 0.3s ease;
+    cursor:pointer;
+    text-decoration:none;
+    display:block;
+    color:inherit;
+    border:1px solid var(--border);
+}
+
+.method-card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow-lg);
+}
+
+.card-image{
+    width:100%;
+    height:200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+/* Кіріспе - жылы түстер */
+.method-card:nth-child(1) .card-image{
+    background:linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+
+/* Мотивация - көк-жасыл түстер */
+.method-card:nth-child(2) .card-image{
+    background:linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.card-image::before{
+    content:"";
+    font-size:60px;
+    opacity:0.9;
+}
+
+.method-card:nth-child(1) .card-image::before{
+    content:"";
+}
+
+.method-card:nth-child(2) .card-image::before{
+    content:"";
+}
+
+.card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.card-title{
+    padding:20px;
+    font-size:18px;
+    font-weight:500;
+    text-align:center;
+    color:var(--text);
+    transition:color 0.3s ease;
+}
+</style>
+</head>
+<body>
+
+<h2>Сабақты бастау әдістері</h2>
+
+<div class="methods-grid">
+    
+    <a href="kirise.html" class="method-card">
+        <div class="card-image">
+            <img src="kirise.png" alt="Кіріспе">
+        </div>
+        <div class="card-title">Кіріспе</div>
+    </a>
+
+    <a href="motivasia.html" class="method-card">
+        <div class="card-image">
+            <img src="motivasia.png" alt="Мотивация">
+        </div>
+        <div class="card-title">Мотивация</div>
+    </a>
+
+</div>
+
+<script>
+// Түнгі режимді тексеру және қолдану
+function checkDarkMode(){
+    try{
+        // 1. localStorage тексеру (негізгі)
+        if(localStorage.getItem('theme') === 'dark'){
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    } catch(e){
+        console.log('localStorage қолжетімсіз');
+    }
+}
+
+// Бет жүктелгенде
+checkDarkMode();
+
+// Ата-ана беттен хабар алу (postMessage)
+window.addEventListener('message', function(e){
+    if(e.data === 'dark'){
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    } else if(e.data === 'light'){
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    }
+});
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'theme') {
+        if (e.data.value === 'dark') {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    }
+});
+</script>
+
+</body>
+</html>

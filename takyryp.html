@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Жаңа тақырып түсіндіру</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ===== Басты беттегі түс айнымалылары ===== */
+:root{
+    /* Негізгі түстер */
+    --primary:#0B3C5D;
+    --primary-hover:#1C5D99;
+    --secondary:#1C5D99;
+    --accent:#F4A261;
+    
+    /* Мәтін түстері */
+    --text:#2c3e50;
+    --text-medium:#5d6d7e;
+    --text-light:#7f8c8d;
+    
+    /* Фон түстері */
+    --bg:#ffffff;
+    --bg-light:#f4f7fb;
+    --bg-gray:#E6F0F7;
+    
+    /* Шекара және көлеңке */<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Жаңа тақырып түсіндіру</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ===== Басты беттегі түс айнымалылары ===== */
+:root{
+    /* Негізгі түстер */
+    --primary:#0B3C5D;
+    --primary-hover:#1C5D99;
+    --secondary:#1C5D99;
+    --accent:#F4A261;
+    
+    /* Мәтін түстері */
+    --text:#2c3e50;
+    --text-medium:#5d6d7e;
+    --text-light:#7f8c8d;
+    
+    /* Фон түстері */
+    --bg:#ffffff;
+    --bg-light:#f4f7fb;
+    --bg-gray:#E6F0F7;
+    
+    /* Шекара және көлеңке */
+    --border:#e5e8e8;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
+    
+    /* Карточка түстері */
+    --card:#f8f9fa;
+    --title:#0B3C5D;
+    --link:#1C5D99;
+    --link-hover:#0B3C5D;
+    
+    /* Жұлдыздар және сақтау */
+    --star-empty:#d1d5db;
+    --star-filled:#fbbf24;
+    --bookmark:#e74c3c;
+    --bookmark-active:#F4A261;
+}
+
+/* ===== DARK MODE - Басты бетпен бірдей ===== */
+.dark{
+    /* Негізгі түстер */
+    --primary:#4A9FD4;
+    --primary-hover:#6BB3E0;
+    --secondary:#4A9FD4;
+    --accent:#F4A261;
+    
+    /* Мәтін түстері */
+    --text:#E8F4F8;
+    --text-medium:#B8D4E3;
+    --text-light:#8FB8D4;
+    
+    /* Фон түстері */
+    --bg:#0A1628;
+    --bg-light:#0F1F35;
+    --bg-gray:#152238;
+    
+    /* Шекара және көлеңке */
+    --border:#1E3A5F;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.5);
+    
+    /* Карточка түстері */
+    --card:#161b22;
+    --title:#7dd3fc;
+    --link:#7dd3fc;
+    --link-hover:#38bdf8;
+    
+    /* Жұлдыздар және сақтау */
+    --star-empty:#4b5563;
+    --star-filled:#fbbf24;
+    --bookmark:#ff6b6b;
+    --bookmark-active:#F4A261;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    padding:40px;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    transition:background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-link{
+    display:inline-block;
+    color:var(--link);
+    text-decoration:none;
+    margin-bottom:30px;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.back-link:hover{
+    color:var(--link-hover);
+    padding-left:5px;
+}
+
+/* Cormorant Garamond шрифтімен тақырып */
+h2{
+    font-family:'Cormorant Garamond', serif;
+    font-size:42px;
+    margin-bottom:40px;
+    color:var(--title);
+    font-weight:600;
+    transition:color 0.3s ease;
+    letter-spacing:-0.5px;
+}
+
+.methods-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:30px;
+    max-width:1200px;
+}
+
+.method-card{
+    background:var(--bg-gray);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow-md);
+    transition:all 0.3s ease;
+    cursor:pointer;
+    text-decoration:none;
+    display:block;
+    color:inherit;
+    border:1px solid var(--border);
+    position:relative;
+}
+
+.method-card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow-lg);
+}
+
+.card-image{
+    width:100%;
+    height:200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+/* Әңгімелеу - күлгін-сары градиент */
+.method-card:nth-child(1) .card-image{
+    background:linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+/* Көрнекілік - жасыл-көк градиент */
+.method-card:nth-child(2) .card-image{
+    background:linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+}
+
+.card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* Card content - КІШІРЕЙТІЛГЕН */
+.card-content{
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:80px;
+    position:relative;
+}
+
+/* Атау және сақтау белгісі контейнері */
+.title-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    margin-bottom:12px;
+    flex-grow:1;
+    position:relative;
+}
+
+/* Атау ортада */
+.card-title{
+    font-size:18px;
+    font-weight:600;
+    color:var(--text);
+    transition:color 0.3s ease;
+    text-align:center;
+    flex:1;
+}
+
+/* Сақтау белгісі - домалақсыз, оң жақта */
+.bookmark-btn{
+    position:absolute;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+    width:auto;
+    height:auto;
+    border-radius:0;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    color:var(--text-light);
+    transition:all 0.3s ease;
+    z-index:10;
+    box-shadow:none;
+    padding:2px;
+}
+
+.dark .bookmark-btn{
+    background:transparent;
+    color:var(--text-light);
+}
+
+.bookmark-btn:hover{
+    transform:translateY(-50%) scale(1.1);
+    background:transparent;
+}
+
+/* Сақталған күй - қызғылт сары */
+.bookmark-btn.saved{
+    color:var(--bookmark-active);
+}
+
+.bookmark-btn.saved:hover{
+    color:var(--bookmark-active);
+    opacity:0.8;
+}
+
+/* Басқанда қызғылт сары */
+.bookmark-btn:active{
+    color:var(--bookmark-active);
+}
+
+/* Жұлдызды рейтинг - төменде, сол жақта */
+.rating{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:auto;
+    padding-top:4px;
+    width:100%;
+    justify-content:flex-start;
+}
+
+.stars{
+    display:flex;
+    gap:2px;
+}
+
+.star{
+    font-size:14px;
+    color:var(--star-empty);
+    transition:color 0.2s;
+}
+
+.star.filled{
+    color:var(--star-filled);
+}
+
+.rating-value{
+    font-size:14px;
+    font-weight:600;
+    color:var(--text-medium);
+}
+
+.rating-count{
+    font-size:12px;
+    color:var(--text-light);
+}
+</style>
+</head>
+<body>
+
+<h2>Жаңа тақырып түсіндіру әдістері</h2>
+
+<div class="methods-grid" id="methodsGrid">
+    <!-- Карточкалар JavaScript арқылы жасалады -->
+</div>
+
+<script>
+// Әдістер дерекқоры
+const methods = [
+    {
+        id: 'takyryp-story',
+        title: 'Әңгімелеу',
+        file: 'takyryp-story.html',
+        image: 'j1.png',
+        gradient: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)'
+    },
+    {
+        id: 'takyryp-visual',
+        title: 'Көрнекілік',
+        file: 'takyryp-visual.html',
+        image: 'visual.png',
+        gradient: 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)'
+    }
+];
+
+// LocalStorage-тан деректер алу
+function getRatings() {
+    return JSON.parse(localStorage.getItem('methodRatings') || '{}');
+}
+
+function getSavedMethods() {
+    return JSON.parse(localStorage.getItem('savedMethods') || '[]');
+}
+
+// Орташа бағаны есептеу
+function calculateAverage(methodId) {
+    const ratings = getRatings();
+    const methodRatings = ratings[methodId] || [];
+    
+    if (methodRatings.length === 0) return 0;
+    
+    const sum = methodRatings.reduce((acc, r) => acc + r.rating, 0);
+    return (sum / methodRatings.length).toFixed(1);
+}
+
+// Жұлдыздарды көрсету
+function renderStars(average) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= Math.round(average)) {
+            stars += '<i class="fas fa-star star filled"></i>';
+        } else {
+            stars += '<i class="fas fa-star star"></i>';
+        }
+    }
+    return stars;
+}
+
+// Карточкаларды көрсету
+function renderMethods() {
+    const grid = document.getElementById('methodsGrid');
+    const savedMethods = getSavedMethods();
+    const ratings = getRatings();
+    
+    grid.innerHTML = methods.map(method => {
+        const average = calculateAverage(method.id);
+        const ratingCount = (ratings[method.id] || []).length;
+        const isSaved = savedMethods.includes(method.id);
+        
+        return `
+            <div class="method-card" onclick="openMethod('${method.file}')">
+                <div class="card-image" style="background: ${method.gradient}">
+                    <img src="${method.image}" alt="${method.title}">
+                </div>
+                
+                <div class="card-content">
+                    <div class="title-row">
+                        <div class="card-title">${method.title}</div>
+                        <button class="bookmark-btn ${isSaved ? 'saved' : ''}" 
+                                onclick="toggleBookmark(event, '${method.id}')" 
+                                title="${isSaved ? 'Сақталған' : 'Сақтау'}">
+                            <i class="${isSaved ? 'fas' : 'far'} fa-bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="rating">
+                        <div class="stars">
+                            ${renderStars(average)}
+                        </div>
+                        <span class="rating-value">${average > 0 ? average : '—'}</span>
+                        <span class="rating-count">(${ratingCount} баға)</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Әдіс файлына өту
+function openMethod(file) {
+    window.location.href = file;
+}
+
+// Bookmark қосу/алу
+function toggleBookmark(event, methodId) {
+    event.stopPropagation();
+    
+    let savedMethods = getSavedMethods();
+    
+    if (savedMethods.includes(methodId)) {
+        savedMethods = savedMethods.filter(id => id !== methodId);
+    } else {
+        savedMethods.push(methodId);
+    }
+    
+    localStorage.setItem('savedMethods', JSON.stringify(savedMethods));
+    renderMethods();
+}
+
+// Түнгі режимді тексеру және қолдану
+function checkDarkMode(){
+    try{
+        if(localStorage.getItem('theme') === 'dark'){
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    } catch(e){
+        console.log('localStorage қолжетімсіз');
+    }
+}
+
+// Бет жүктелгенде
+checkDarkMode();
+renderMethods();
+
+// Ата-ана беттен хабар алу (postMessage)
+window.addEventListener('message', function(e){
+    if(e.data === 'dark'){
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    } else if(e.data === 'light'){
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    }
+});
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'theme') {
+        if (e.data.value === 'dark') {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    }
+});
+</script>
+
+</body>
+</html>

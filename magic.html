@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Менің есімім - Есте сақтау техникасы</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+    --primary:#0B3C5D;
+    --primary-hover:#1C5D99;
+    --secondary:#1C5D99;
+    --accent:#F4A261;
+    --text:#2c3e50;
+    --text-medium:#5d6d7e;
+    --text-light:#7f8c8d;
+    --bg:#ffffff;
+    --bg-light:#f4f7fb;
+    --bg-gray:#E6F0F7;
+    --border:#e5e8e8;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
+    --card:#f8f9fa;
+    --title:#0B3C5D;
+    --link:#1C5D99;
+    --link-hover:#0B3C5D;
+    --success:#10b981;
+    --star-empty:#d1d5db;
+    --star-filled:#fbbf24;
+    --bookmark:#F4A261;
+}
+
+.dark{
+    --primary:#4A9FD4;
+    --primary-hover:#6BB3E0;
+    --secondary:#4A9FD4;
+    --accent:#F4A261;
+    --text:#E8F4F8;
+    --text-medium:#B8D4E3;
+    --text-light:#8FB8D4;
+    --bg:#0A1628;
+    --bg-light:#0F1F35;
+    --bg-gray:#152238;
+    --border:#1E3A5F;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.5);
+    --card:#161b22;
+    --title:#7dd3fc;
+    --link:#7dd3fc;
+    --link-hover:#38bdf8;
+    --star-empty:#4b5563;
+    --star-filled:#fbbf24;
+    --bookmark:#F4A261;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    transition:background-color 0.3s ease;
+}
+
+body{
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    min-height:100vh;
+    transition:background-color 0.3s ease, color 0.3s ease;
+}
+
+.container{
+    max-width:1000px;
+    margin:0 auto;
+    padding:20px;
+}
+
+/* Header with bookmark */
+.header-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:24px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--link);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    padding:8px 0;
+    transition:all 0.2s;
+}
+
+.back-link:hover{
+    color:var(--link-hover);
+    transform:translateX(-4px);
+}
+
+.bookmark-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 20px;
+    border-radius:25px;
+    border:2px solid var(--bookmark);
+    background:var(--bg);
+    color:var(--bookmark);
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.bookmark-btn:hover{
+    background:var(--bookmark);
+    color:white;
+    transform:translateY(-2px);
+}
+
+.bookmark-btn.saved{
+    background:var(--bookmark);
+    border-color:var(--bookmark);
+    color:white;
+}
+
+.bookmark-btn.saved:hover{
+    background:#e69138;
+    border-color:#e69138;
+}
+
+.header{
+    margin-bottom:32px;
+    animation: fadeIn 0.6s ease-out 0.1s both;
+}
+
+h1{
+    font-size:32px;
+    font-weight:700;
+    color:var(--title);
+    margin-bottom:16px;
+    line-height:1.2;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:24px;
+}
+
+.tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:500;
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--text);
+}
+
+.tag.primary{
+    background:var(--secondary);
+    color:white;
+    border-color:var(--secondary);
+}
+
+.tag.time{
+    background:var(--accent);
+    color:white;
+    border-color:var(--accent);
+}
+
+/* YouTube Video Block */
+.video-block{
+    width:100%;
+    margin-bottom:32px;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow-lg);
+    position:relative;
+    padding-bottom:56.25%;
+    height:0;
+    animation: fadeIn 0.6s ease-out 0.15s both;
+}
+
+.video-block iframe{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:none;
+}
+
+.card{
+    background:var(--card);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:24px;
+    box-shadow:var(--shadow-sm);
+    border:1px solid var(--border);
+    animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+.card:nth-child(2) { animation-delay: 0.25s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.35s; }
+.card:nth-child(5) { animation-delay: 0.4s; }
+.card:nth-child(6) { animation-delay: 0.45s; }
+.card:nth-child(7) { animation-delay: 0.5s; }
+
+.card-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.card-icon{
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    flex-shrink:0;
+}
+
+.card-icon.goal{ background:#fef3c7; color:#d97706; }
+.card-icon.info{ background:#dbeafe; color:#2563eb; }
+.card-icon.steps{ background:#d1fae5; color:#059669; }
+.card-icon.materials{ background:#fce7f3; color:#db2777; }
+.card-icon.tips{ background:#e0e7ff; color:#4f46e5; }
+.card-icon.variations{ background:#f3e8ff; color:#9333ea; }
+.card-icon.youtube{ background:#fee2e2; color:#dc2626; }
+.card-icon.example{ background:#ccfbf1; color:#0d9488; }
+.card-icon.benefits{ background:#fef9c3; color:#a16207; }
+
+.card-title{
+    font-size:18px;
+    font-weight:600;
+    color:var(--title);
+}
+
+.card-body{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--text);
+}
+
+/* Description Quote */
+.quote-box{
+    background:linear-gradient(135deg, var(--bg-light) 0%, var(--bg-gray) 100%);
+    border-left:4px solid var(--accent);
+    padding:20px 24px;
+    border-radius:0 12px 12px 0;
+    font-size:16px;
+    font-style:italic;
+    color:var(--text);
+    margin-bottom:24px;
+    animation: fadeIn 0.6s ease-out 0.25s both;
+}
+
+.dark .quote-box{
+    background:linear-gradient(135deg, #0F1F35 0%, #152238 100%);
+}
+
+/* Steps */
+.steps-list{
+    counter-reset:step;
+    list-style:none;
+    padding:0;
+}
+
+.steps-list li{
+    position:relative;
+    padding-left:56px;
+    margin-bottom:20px;
+    min-height:40px;
+}
+
+.steps-list li::before{
+    counter-increment:step;
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:36px;
+    height:36px;
+    background:var(--secondary);
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:14px;
+    flex-shrink:0;
+}
+
+.step-title{
+    font-weight:600;
+    color:var(--title);
+    margin-bottom:4px;
+    font-size:15px;
+}
+
+.step-desc{
+    font-size:14px;
+    color:var(--text);
+    opacity:0.85;
+    line-height:1.5;
+}
+
+/* Example Block */
+.example-block{
+    background:var(--bg);
+    border:2px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+    text-align:center;
+    margin-top:16px;
+    transition: all 0.3s ease;
+}
+
+.example-block:hover{
+    border-color:var(--accent);
+    box-shadow:var(--shadow-md);
+    transform:translateY(-2px);
+}
+
+.example-label{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--text-light);
+    margin-bottom:12px;
+    font-weight:600;
+}
+
+.example-word{
+    font-size:48px;
+    font-weight:700;
+    color:var(--title);
+    letter-spacing:8px;
+    margin:16px 0;
+}
+
+.example-letter{
+    display:inline-block;
+    padding:8px 12px;
+    margin:4px;
+    border-radius:8px;
+    font-size:28px;
+    font-weight:700;
+    color:white;
+    text-shadow:0 1px 2px rgba(0,0,0,0.2);
+}
+
+.example-letter:nth-child(1){ background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.example-letter:nth-child(2){ background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.example-letter:nth-child(3){ background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+
+.example-meaning{
+    font-size:14px;
+    color:var(--text-medium);
+    margin-top:12px;
+    line-height:1.6;
+}
+
+/* Benefits Badges */
+.benefits-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    justify-content:center;
+    margin-top:16px;
+}
+
+.benefit-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 24px;
+    border-radius:50px;
+    font-size:14px;
+    font-weight:600;
+    background:linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color:white;
+    box-shadow:var(--shadow-sm);
+    transition:all 0.3s ease;
+}
+
+.benefit-badge:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow-md);
+}
+
+.benefit-badge i{
+    font-size:16px;
+}
+
+/* Usage Grid */
+.usage-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:16px;
+}
+
+.usage-item{
+    padding:16px;
+    background:var(--bg);
+    border-radius:12px;
+    border:1px solid var(--border);
+}
+
+.usage-label{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--secondary);
+    font-weight:600;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.usage-value{
+    font-size:15px;
+    font-weight:500;
+    color:var(--title);
+}
+
+.section-divider{
+    height:1px;
+    background:var(--border);
+    margin:32px 0;
+    border:none;
+}
+
+/* Rating Section */
+.rating-section{
+    background:var(--card);
+    border-radius:16px;
+    padding:20px;
+    margin-top:32px;
+    box-shadow:var(--shadow-sm);
+    border:1px solid var(--border);
+    text-align:center;
+    max-width:500px;
+    margin-left:auto;
+    margin-right:auto;
+    animation: fadeIn 0.6s ease-out 0.6s both;
+}
+
+.rating-header{
+    font-size:16px;
+    font-weight:600;
+    color:var(--title);
+    margin-bottom:12px;
+}
+
+.average-rating{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.big-star{
+    font-size:36px;
+    color:var(--star-filled);
+}
+
+.rating-number{
+    font-size:32px;
+    font-weight:700;
+    color:var(--title);
+}
+
+.rating-total{
+    font-size:13px;
+    color:var(--text-light);
+}
+
+.interactive-stars{
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    margin-bottom:12px;
+}
+
+.interactive-star{
+    font-size:28px;
+    color:var(--star-empty);
+    cursor:pointer;
+    transition:all 0.2s ease;
+}
+
+.interactive-star:hover,
+.interactive-star.active{
+    color:var(--star-filled);
+    transform:scale(1.15);
+}
+
+.rating-text{
+    font-size:13px;
+    color:var(--text-medium);
+    margin-top:6px;
+}
+
+.already-rated{
+    background:var(--bg-light);
+    padding:12px;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+.already-rated i{
+    color:var(--success);
+    margin-right:8px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width:768px){
+    .container{
+        padding:16px;
+    }
+    h1{
+        font-size:24px;
+    }
+    .card{
+        padding:20px;
+    }
+    .steps-list li{
+        padding-left:48px;
+    }
+    .example-word{
+        font-size:32px;
+        letter-spacing:4px;
+    }
+    .example-letter{
+        font-size:20px;
+        padding:6px 8px;
+    }
+    .benefit-badge{
+        padding:10px 18px;
+        font-size:13px;
+    }
+    .rating-section{
+        padding:16px;
+    }
+    .rating-number{
+        font-size:28px;
+    }
+    .interactive-star{
+        font-size:24px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header-top">
+        <a href="bastauysh.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Бастауыш сынып әдістері
+        </a>
+        
+        <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()">
+            <i class="far fa-bookmark"></i>
+            <span id="bookmarkText">Сақтау</span>
+        </button>
+    </div>
+
+    <header class="header">
+        <h1>Менің есімім</h1>
+        <div class="tags">
+            <span class="tag primary">
+                <i class="fas fa-graduation-cap"></i> Бастауыш сынып
+            </span>
+            <span class="tag">
+                <i class="fas fa-brain"></i> Мнемоника
+            </span>
+            <span class="tag time">
+                <i class="fas fa-clock"></i> 5-10 минут
+            </span>
+        </div>
+    </header>
+
+    <!-- YouTube Video -->
+    <div class="video-block">
+        <iframe src="https://www.youtube.com/embed/jcx8JsvDiK0" 
+                title="Менің есімім әдісі" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- Description -->
+    <div class="quote-box">
+        <i class="fas fa-quote-left" style="color:var(--accent); margin-right:8px;"></i>
+        Бұл — терминдерді есте сақтауға арналған мнемоникалық әдіс. Әрбір әріп сізге білетін сөздің мағынасын еске түсіреді.
+    </div>
+
+    <!-- Қолдану аясы -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon info">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h2 class="card-title">Қашан қолдануға болады</h2>
+        </div>
+        <div class="card-body">
+            <div class="usage-grid">
+                <div class="usage-item">
+                    <div class="usage-label">
+                        <i class="fas fa-users"></i> Сынып
+                    </div>
+                    <div class="usage-value">1-4 сыныптар</div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-label">
+                        <i class="fas fa-book"></i> Пәндер
+                    </div>
+                    <div class="usage-value">Қазақ тілі, Дүниетану, Ағылшын тілі</div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-label">
+                        <i class="fas fa-layer-group"></i> Сабақ кезеңі
+                    </div>
+                    <div class="usage-value">Жаңа сөздерді үйрету, Бекіту</div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-label">
+                        <i class="fas fa-user-friends"></i> Жұмыс түрі
+                    </div>
+                    <div class="usage-value">Жеке жұмыс, Жұптық жұмыс</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How it works (3 қадам) -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon steps">
+                <i class="fas fa-list-ol"></i>
+            </div>
+            <h2 class="card-title">Қалай жұмыс істейді?</h2>
+        </div>
+        <div class="card-body">
+            <ol class="steps-list">
+                <li>
+                    <div class="step-title"><i class="fas fa-pen"></i> Жаз</div>
+                    <div class="step-desc">Есіміңді (немесе кез келген сөзді) тігінен орналастыр. Әр әріп бөлек жолға жазылады.</div>
+                </li>
+                <li>
+                    <div class="step-title"><i class="fas fa-search"></i> Ізде</div>
+                    <div class="step-desc">Терминдерді әріптерге сәйкестендір. Әр әріптен басталатын сөздер тауып, оларды жаңа сөзбен байланыстыр.</div>
+                </li>
+                <li>
+                    <div class="step-title"><i class="fas fa-check-circle"></i> Бекіт</div>
+                    <div class="step-desc">Мағынасын түсіндір. Әр сөздің неге таңдалғанын және ол қалай көмектесетінін айт.</div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Interactive Example -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon example">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h2 class="card-title">Мысал</h2>
+        </div>
+        <div class="card-body">
+            <div class="example-block">
+                <div class="example-label">Есім: ӘЛИ</div>
+                <div class="example-word">
+                    <span class="example-letter">Ә</span>
+                    <span class="example-letter">Л</span>
+                    <span class="example-letter">И</span>
+                </div>
+                <div class="example-meaning">
+                    <strong>Ә</strong> — Әйел (сүйікті анаң)<br>
+                    <strong>Л</strong> — Лимон (сүйікті жемісің)<br>
+                    <strong>И</strong> — Ит (үй жануарың)<br><br>
+                    <em>«Менің есімім — ӘЛИ. Менің анам — Әйел, жемісім — Лимон, үй жануарым — Ит»</em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon benefits">
+                <i class="fas fa-star"></i>
+            </div>
+            <h2 class="card-title">Пайдасы</h2>
+        </div>
+        <div class="card-body">
+            <div class="benefits-grid">
+                <div class="benefit-badge">
+                    <i class="fas fa-eye"></i> Зейінді ашады
+                </div>
+                <div class="benefit-badge">
+                    <i class="fas fa-bolt"></i> Тез жаттатады
+                </div>
+                <div class="benefit-badge">
+                    <i class="fas fa-smile"></i> Қызықты
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- Сабақ мақсаты -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon goal">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <h2 class="card-title">Сабақ мақсаты</h2>
+        </div>
+        <div class="card-body">
+            <ul class="goal-list" style="list-style:none; padding:0;">
+                <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; font-size:15px;">
+                    <span style="width:20px; height:20px; background:var(--success); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; margin-top:2px;"><i class="fas fa-check"></i></span>
+                    <span>Оқушылардың сөздік қорын байыту</span>
+                </li>
+                <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; font-size:15px;">
+                    <span style="width:20px; height:20px; background:var(--success); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; margin-top:2px;"><i class="fas fa-check"></i></span>
+                    <span>Есте сақтау қабілетін дамыту</span>
+                </li>
+                <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; font-size:15px;">
+                    <span style="width:20px; height:20px; background:var(--success); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; margin-top:2px;"><i class="fas fa-check"></i></span>
+                    <span>Шығармашылық ойлауды дамыту</span>
+                </li>
+                <li style="display:flex; align-items:flex-start; gap:12px; font-size:15px;">
+                    <span style="width:20px; height:20px; background:var(--success); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; margin-top:2px;"><i class="fas fa-check"></i></span>
+                    <span>Жаңа терминдерді тез меңгерту</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Қадамдық нұсқаулық -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon steps">
+                <i class="fas fa-tasks"></i>
+            </div>
+            <h2 class="card-title">Қадамдық нұсқаулық</h2>
+        </div>
+        <div class="card-body">
+            <ol class="steps-list">
+                <li>
+                    <div class="step-title">Тақырыпты таңдау</div>
+                    <div class="step-desc">Оқушыларға есте сақтау керек сөзді немесе терминді таңдауды ұсыныңыз. Мысалы: өз есімі, жаңа сөздік сөз, немесе пәндік термин.</div>
+                </li>
+                <li>
+                    <div class="step-title">Әріптерді бөліп жазу</div>
+                    <div class="step-desc">Сөзді тігінен жазуды үйретіңіз. Әр әріп жаңа жолға жазылады. Мысалы: Ә, Л, И — үш бөлек жол.</div>
+                </li>
+                <li>
+                    <div class="step-title">Сәйкестендіру</div>
+                    <div class="step-desc">Әр әріптен басталатын таныс сөздерді тауып, оларды жаңа сөзбен байланыстыру керек. Оқушылар өздері ойлауға тырыссын.</div>
+                </li>
+                <li>
+                    <div class="step-title">Түсіндіру</div>
+                    <div class="step-desc">Әр сөзді неге таңдағанын және ол қалай көмектесетінін айту. Бұл қадам мағынасын терең түсінуге көмектеседі.</div>
+                </li>
+                <li>
+                    <div class="step-title">Қорытынды</div>
+                    <div class="step-desc">Барлық оқушылардың тең мүмкіндік алғанын тексеріңіз. Ең шығармашылық мысалдарды класта талқылаңыз және мадақтаңыз.</div>
+                </li>
+            </ol>
+            
+            <div style="background:linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left:4px solid var(--accent); padding:16px 20px; border-radius:0 12px 12px 0; margin-top:16px;">
+                <div style="font-weight:600; color:#92400e; margin-bottom:8px; font-size:14px; display:flex; align-items:center; gap:8px;">
+                    <i class="fas fa-lightbulb"></i> Мұғалімге кеңес
+                </div>
+                <div style="font-size:14px; color:#78350f; line-height:1.6;">
+                    Егер оқушы қиналса, "Сенің атыңның бірінші әрпінен басталатын нені жақсы көресің?" деген сияқты нақты сұрақтар қойыңыз. Бастапқыда өзіңіз мысал көрсетіп берген жөн.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Әдісті түрлендіру -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon variations">
+                <i class="fas fa-sync-alt"></i>
+            </div>
+            <h2 class="card-title">Әдісті түрлендіру</h2>
+        </div>
+        <div class="card-body">
+            <div style="margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border);">
+                <strong style="color:var(--secondary); font-size:15px; display:block; margin-bottom:4px;">"Жұптық жұмыс"</strong>
+                <p style="font-size:14px; color:var(--text); line-height:1.5; margin:0;">Екі оқушы бір-бірінің есімін қолданып, бір-біріне мнемоника құрастырады. Бұл командалық жұмысқа үйретеді.</p>
+            </div>
+            <div style="margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border);">
+                <strong style="color:var(--secondary); font-size:15px; display:block; margin-bottom:4px;">"Суретпен бекіту"</strong>
+                <p style="font-size:14px; color:var(--text); line-height:1.5; margin:0;">Әр әріптің мағынасын суретпен байланыстыру. Суретті қағазға салып, қасында жазу.</p>
+            </div>
+            <div>
+                <strong style="color:var(--secondary); font-size:15px; display:block; margin-bottom:4px;">"Топтық жарыс"</strong>
+                <p style="font-size:14px; color:var(--text); line-height:1.5; margin:0;">Топтар беріліген сөзге ең тез және ең қызықты мнемоника құрастырады. Жеңімпаз топ марапатталады.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Section -->
+    <div class="rating-section" id="ratingSection">
+        <div class="rating-header">Бұл әдісті бағалаңыз</div>
+        
+        <div class="average-rating">
+            <i class="fas fa-star big-star"></i>
+            <div>
+                <div class="rating-number" id="averageRating">—</div>
+                <div class="rating-total" id="totalRatings">0 баға</div>
+            </div>
+        </div>
+        
+        <div class="interactive-stars" id="interactiveStars">
+            <i class="fas fa-star interactive-star" data-rating="1" onclick="setRating(1)"></i>
+            <i class="fas fa-star interactive-star" data-rating="2" onclick="setRating(2)"></i>
+            <i class="fas fa-star interactive-star" data-rating="3" onclick="setRating(3)"></i>
+            <i class="fas fa-star interactive-star" data-rating="4" onclick="setRating(4)"></i>
+            <i class="fas fa-star interactive-star" data-rating="5" onclick="setRating(5)"></i>
+        </div>
+        
+        <div class="rating-text" id="ratingText">Баға беру үшін жұлдыздарды басыңыз</div>
+    </div>
+
+</div>
+
+<script>
+// Әдіс ID
+const METHOD_ID = 'my-name';
+const USER_ID = 'current_user';
+
+// LocalStorage функциялары
+function getRatings() {
+    return JSON.parse(localStorage.getItem('methodRatings') || '{}');
+}
+
+function getUserRatings() {
+    return JSON.parse(localStorage.getItem('userRatings') || '{}');
+}
+
+function getSavedMethods() {
+    return JSON.parse(localStorage.getItem('savedMethods') || '[]');
+}
+
+function saveRatings(ratings) {
+    localStorage.setItem('methodRatings', JSON.stringify(ratings));
+}
+
+function saveUserRatings(ratings) {
+    localStorage.setItem('userRatings', JSON.stringify(ratings));
+}
+
+function saveSavedMethods(methods) {
+    localStorage.setItem('savedMethods', JSON.stringify(methods));
+}
+
+// Орташа бағаны есептеу
+function calculateAverage() {
+    const ratings = getRatings();
+    const methodRatings = ratings[METHOD_ID] || [];
+    
+    if (methodRatings.length === 0) return 0;
+    
+    const sum = methodRatings.reduce((acc, r) => acc + r.rating, 0);
+    return (sum / methodRatings.length).toFixed(1);
+}
+
+// Бағаны көрсету
+function updateRatingDisplay() {
+    const average = calculateAverage();
+    const ratings = getRatings();
+    const count = (ratings[METHOD_ID] || []).length;
+    
+    document.getElementById('averageRating').textContent = average > 0 ? average : '—';
+    document.getElementById('totalRatings').textContent = count + ' баға';
+}
+
+// Жұлдыздарды жаңарту
+function updateStars(rating) {
+    const stars = document.querySelectorAll('.interactive-star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('active');
+        } else {
+            star.classList.remove('active');
+        }
+    });
+}
+
+// Баға беру - бір адамға бір рет
+function setRating(rating) {
+    const userRatings = getUserRatings();
+    
+    if (userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID]) {
+        showAlreadyRated();
+        return;
+    }
+    
+    const ratings = getRatings();
+    
+    if (!ratings[METHOD_ID]) {
+        ratings[METHOD_ID] = [];
+    }
+    
+    ratings[METHOD_ID].push({
+        rating: rating,
+        userId: USER_ID,
+        date: new Date().toISOString()
+    });
+    
+    if (!userRatings[USER_ID]) {
+        userRatings[USER_ID] = {};
+    }
+    userRatings[USER_ID][METHOD_ID] = rating;
+    
+    saveRatings(ratings);
+    saveUserRatings(userRatings);
+    
+    updateStars(rating);
+    updateRatingDisplay();
+    
+    const texts = ['Нашар', 'Қанағаттанарлық', 'Жақсы', 'Өте жақсы', 'Керемет!'];
+    document.getElementById('ratingText').textContent = 'Рахмет! Сіздің бағаңыз: ' + texts[rating - 1];
+    
+    setTimeout(() => {
+        showAlreadyRated();
+    }, 2000);
+}
+
+function showAlreadyRated() {
+    const userRatings = getUserRatings();
+    const userRating = userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID];
+    
+    if (userRating) {
+        const section = document.getElementById('ratingSection');
+        section.innerHTML = `
+            <div class="rating-header">Сіздің бағаңыз</div>
+            <div class="average-rating">
+                <i class="fas fa-star big-star"></i>
+                <div class="rating-number">${userRating}</div>
+            </div>
+            <div class="already-rated">
+                <i class="fas fa-check-circle"></i>
+                <span>Сіз бұл әдісті бағаладыңыз. Рахмет!</span>
+            </div>
+        `;
+    }
+}
+
+function checkIfRated() {
+    const userRatings = getUserRatings();
+    if (userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID]) {
+        showAlreadyRated();
+    }
+}
+
+function toggleBookmark() {
+    let savedMethods = getSavedMethods();
+    const btn = document.getElementById('bookmarkBtn');
+    const text = document.getElementById('bookmarkText');
+    const icon = btn.querySelector('i');
+    
+    if (savedMethods.includes(METHOD_ID)) {
+        savedMethods = savedMethods.filter(id => id !== METHOD_ID);
+        btn.classList.remove('saved');
+        icon.className = 'far fa-bookmark';
+        text.textContent = 'Сақтау';
+    } else {
+        savedMethods.push(METHOD_ID);
+        btn.classList.add('saved');
+        icon.className = 'fas fa-bookmark';
+        text.textContent = 'Сақталды';
+    }
+    
+    saveSavedMethods(savedMethods);
+}
+
+function checkBookmark() {
+    const savedMethods = getSavedMethods();
+    const btn = document.getElementById('bookmarkBtn');
+    const text = document.getElementById('bookmarkText');
+    const icon = btn.querySelector('i');
+    
+    if (savedMethods.includes(METHOD_ID)) {
+        btn.classList.add('saved');
+        icon.className = 'fas fa-bookmark';
+        text.textContent = 'Сақталды';
+    }
+}
+
+function applyTheme(theme){
+    if(theme === 'dark'){
+        document.documentElement.classList.add('dark');
+    }else{
+        document.documentElement.classList.remove('dark');
+    }
+}
+
+window.onload = function() {
+    let params = new URLSearchParams(window.location.search);
+    let themeFromURL = params.get('theme');
+    if(themeFromURL){
+        applyTheme(themeFromURL);
+    }else if(localStorage.getItem('theme') === 'dark'){
+        applyTheme('dark');
+    }
+    
+    updateRatingDisplay();
+    checkBookmark();
+    checkIfRated();
+};
+
+window.addEventListener('message', function(e){
+    if(e.data === 'dark'){
+        applyTheme('dark');
+    }else if(e.data === 'light'){
+        applyTheme('light');
+    }
+});
+
+window.addEventListener('storage', function(e){
+    if(e.key === 'theme'){
+        applyTheme(e.newValue);
+    }
+});
+</script>
+
+</body>
+</html>

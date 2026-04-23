@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шатасқан әріптер - Анаграмма әдісі</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+    --primary:#0B3C5D;
+    --primary-hover:#1C5D99;
+    --secondary:#1C5D99;
+    --accent:#F4A261;
+    --accent-soft:#fef3c7;
+    --text:#2c3e50;
+    --text-medium:#5d6d7e;
+    --text-light:#7f8c8d;
+    --bg:#ffffff;
+    --bg-light:#f4f7fb;
+    --bg-gray:#E6F0F7;
+    --border:#e5e8e8;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
+    --card:#f8f9fa;
+    --title:#0B3C5D;
+    --link:#1C5D99;
+    --link-hover:#0B3C5D;
+    --success:#10b981;
+    --star-empty:#d1d5db;
+    --star-filled:#fbbf24;
+    --bookmark:#F4A261;
+    --purple:#8b5cf6;
+    --pink:#ec4899;
+    --teal:#14b8a6;
+}
+
+.dark{
+    --primary:#4A9FD4;
+    --primary-hover:#6BB3E0;
+    --secondary:#4A9FD4;
+    --accent:#F4A261;
+    --accent-soft:#451a03;
+    --text:#E8F4F8;
+    --text-medium:#B8D4E3;
+    --text-light:#8FB8D4;
+    --bg:#0A1628;
+    --bg-light:#0F1F35;
+    --bg-gray:#152238;
+    --border:#1E3A5F;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.5);
+    --card:#161b22;
+    --title:#7dd3fc;
+    --link:#7dd3fc;
+    --link-hover:#38bdf8;
+    --star-empty:#4b5563;
+    --star-filled:#fbbf24;
+    --bookmark:#F4A261;
+    --purple:#a78bfa;
+    --pink:#f472b6;
+    --teal:#2dd4bf;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    transition:background-color 0.3s ease;
+}
+
+body{
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    min-height:100vh;
+    transition:background-color 0.3s ease, color 0.3s ease;
+}
+
+.container{
+    max-width:900px;
+    margin:0 auto;
+    padding:20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes shuffle {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px) rotate(-2deg); }
+    50% { transform: translateX(3px) rotate(2deg); }
+    75% { transform: translateX(-2px) rotate(-1deg); }
+    100% { transform: translateX(0); }
+}
+
+/* Header */
+.header-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:24px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--link);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    padding:8px 0;
+    transition:all 0.2s;
+}
+
+.back-link:hover{
+    color:var(--link-hover);
+    transform:translateX(-4px);
+}
+
+.bookmark-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 20px;
+    border-radius:25px;
+    border:2px solid var(--bookmark);
+    background:var(--bg);
+    color:var(--bookmark);
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.bookmark-btn:hover{
+    background:var(--bookmark);
+    color:white;
+    transform:translateY(-2px);
+}
+
+.bookmark-btn.saved{
+    background:var(--bookmark);
+    border-color:var(--bookmark);
+    color:white;
+}
+
+.bookmark-btn.saved:hover{
+    background:#e69138;
+    border-color:#e69138;
+}
+
+.header{
+    margin-bottom:32px;
+    animation: fadeIn 0.6s ease-out 0.1s both;
+}
+
+h1{
+    font-size:36px;
+    font-weight:700;
+    color:var(--title);
+    margin-bottom:8px;
+    line-height:1.2;
+}
+
+.subtitle{
+    font-size:16px;
+    color:var(--text-light);
+    font-weight:500;
+    margin-bottom:16px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:500;
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--text);
+}
+
+.tag.primary{
+    background:var(--secondary);
+    color:white;
+    border-color:var(--secondary);
+}
+
+.tag.accent{
+    background:var(--accent);
+    color:white;
+    border-color:var(--accent);
+}
+
+/* Quote */
+.quote-box{
+    background:linear-gradient(135deg, var(--bg-light) 0%, var(--bg-gray) 100%);
+    border-left:4px solid var(--accent);
+    padding:20px 24px;
+    border-radius:0 12px 12px 0;
+    font-size:16px;
+    color:var(--text);
+    margin-bottom:24px;
+    animation: fadeIn 0.6s ease-out 0.15s both;
+}
+
+.dark .quote-box{
+    background:linear-gradient(135deg, #0F1F35 0%, #152238 100%);
+}
+
+/* YouTube Video Block */
+.video-block{
+    width:100%;
+    margin-bottom:24px;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow-lg);
+    position:relative;
+    padding-bottom:56.25%;
+    height:0;
+    background:var(--bg-gray);
+    animation: fadeIn 0.6s ease-out 0.2s both;
+    border:2px solid var(--border);
+}
+
+.video-block iframe{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:none;
+}
+
+/* Cards */
+.card{
+    background:var(--card);
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:var(--shadow-sm);
+    border:1px solid var(--border);
+    animation: fadeIn 0.6s ease-out 0.25s both;
+}
+
+.card:nth-of-type(2){ animation-delay:0.3s; }
+.card:nth-of-type(3){ animation-delay:0.35s; }
+.card:nth-of-type(4){ animation-delay:0.4s; }
+.card:nth-of-type(5){ animation-delay:0.45s; }
+.card:nth-of-type(6){ animation-delay:0.5s; }
+.card:nth-of-type(7){ animation-delay:0.55s; }
+
+.card-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.card-icon{
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    flex-shrink:0;
+}
+
+.card-icon.steps{ background:#d1fae5; color:#059669; }
+.card-icon.example{ background:#ccfbf1; color:#0d9488; }
+.card-icon.benefits{ background:#fef9c3; color:#a16207; }
+.card-icon.usage{ background:#dbeafe; color:#2563eb; }
+.card-icon.tips{ background:#e0e7ff; color:#4f46e5; }
+.card-icon.goal{ background:#fef3c7; color:#d97706; }
+
+.card-title{
+    font-size:18px;
+    font-weight:600;
+    color:var(--title);
+}
+
+.card-body{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--text);
+}
+
+/* Steps */
+.steps-list{
+    counter-reset:step;
+    list-style:none;
+    padding:0;
+}
+
+.steps-list li{
+    position:relative;
+    padding-left:56px;
+    margin-bottom:20px;
+    min-height:40px;
+}
+
+.steps-list li::before{
+    counter-increment:step;
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:36px;
+    height:36px;
+    background:var(--secondary);
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:14px;
+    flex-shrink:0;
+}
+
+.step-title{
+    font-weight:600;
+    color:var(--title);
+    margin-bottom:4px;
+    font-size:15px;
+}
+
+.step-desc{
+    font-size:14px;
+    color:var(--text);
+    opacity:0.85;
+    line-height:1.5;
+}
+
+/* Anagram Examples */
+.anagram-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:16px;
+    margin-top:16px;
+}
+
+.anagram-card{
+    background:var(--bg);
+    border:2px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    text-align:center;
+    transition:all 0.3s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.anagram-card:hover{
+    border-color:var(--accent);
+    transform:translateY(-3px);
+    box-shadow:var(--shadow-md);
+}
+
+.anagram-card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:4px;
+    background:linear-gradient(90deg, var(--purple), var(--accent), var(--teal));
+}
+
+.anagram-scrambled{
+    font-size:20px;
+    font-weight:700;
+    color:var(--text-light);
+    letter-spacing:6px;
+    margin-bottom:12px;
+    font-family:'Courier New', monospace;
+}
+
+.anagram-arrow{
+    font-size:20px;
+    color:var(--accent);
+    margin:8px 0;
+}
+
+.anagram-solved{
+    font-size:28px;
+    font-weight:800;
+    color:var(--title);
+    letter-spacing:4px;
+}
+
+.anagram-label{
+    font-size:12px;
+    color:var(--text-light);
+    margin-top:8px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+/* Benefits */
+.benefits-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:14px;
+    margin-top:16px;
+}
+
+.benefit-card{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:18px;
+    background:var(--bg);
+    border-radius:12px;
+    border:1px solid var(--border);
+    transition:all 0.3s ease;
+}
+
+.benefit-card:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow-sm);
+    border-color:var(--accent);
+}
+
+.benefit-icon{
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    flex-shrink:0;
+}
+
+.benefit-icon.focus{ background:#fef3c7; color:#d97706; }
+.benefit-icon.spelling{ background:#d1fae5; color:#059669; }
+.benefit-icon.logic{ background:#dbeafe; color:#2563eb; }
+
+.benefit-content h4{
+    font-size:15px;
+    font-weight:600;
+    color:var(--title);
+    margin-bottom:4px;
+}
+
+.benefit-content p{
+    font-size:13px;
+    color:var(--text-medium);
+    line-height:1.5;
+    margin:0;
+}
+
+/* Usage */
+.usage-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:14px;
+}
+
+.usage-item{
+    padding:16px;
+    background:var(--bg);
+    border-radius:12px;
+    border:1px solid var(--border);
+}
+
+.usage-label{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--secondary);
+    font-weight:600;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.usage-value{
+    font-size:15px;
+    font-weight:500;
+    color:var(--title);
+}
+
+/* Goal list */
+.goal-list{
+    list-style:none;
+    padding:0;
+}
+
+.goal-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:12px;
+    font-size:15px;
+}
+
+.goal-icon{
+    width:20px;
+    height:20px;
+    background:var(--success);
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    flex-shrink:0;
+    margin-top:2px;
+}
+
+/* Tip box */
+.tip-box{
+    background:linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-left:4px solid var(--accent);
+    padding:16px 20px;
+    border-radius:0 12px 12px 0;
+    margin-top:16px;
+}
+
+.dark .tip-box{
+    background:linear-gradient(135deg, #451a03 0%, #78350f 100%);
+}
+
+.tip-title{
+    font-weight:600;
+    color:#92400e;
+    margin-bottom:8px;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.dark .tip-title{
+    color:#fbbf24;
+}
+
+.tip-text{
+    font-size:14px;
+    color:#78350f;
+    line-height:1.6;
+}
+
+.dark .tip-text{
+    color:#fcd34d;
+}
+
+/* Section divider */
+.section-divider{
+    height:1px;
+    background:var(--border);
+    margin:28px 0;
+    border:none;
+}
+
+/* Rating */
+.rating-section{
+    background:var(--card);
+    border-radius:16px;
+    padding:20px;
+    margin-top:32px;
+    box-shadow:var(--shadow-sm);
+    border:1px solid var(--border);
+    text-align:center;
+    max-width:500px;
+    margin-left:auto;
+    margin-right:auto;
+    animation: fadeIn 0.6s ease-out 0.6s both;
+}
+
+.rating-header{
+    font-size:16px;
+    font-weight:600;
+    color:var(--title);
+    margin-bottom:12px;
+}
+
+.average-rating{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.big-star{
+    font-size:36px;
+    color:var(--star-filled);
+}
+
+.rating-number{
+    font-size:32px;
+    font-weight:700;
+    color:var(--title);
+}
+
+.rating-total{
+    font-size:13px;
+    color:var(--text-light);
+}
+
+.interactive-stars{
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    margin-bottom:12px;
+}
+
+.interactive-star{
+    font-size:28px;
+    color:var(--star-empty);
+    cursor:pointer;
+    transition:all 0.2s ease;
+}
+
+.interactive-star:hover,
+.interactive-star.active{
+    color:var(--star-filled);
+    transform:scale(1.15);
+}
+
+.rating-text{
+    font-size:13px;
+    color:var(--text-medium);
+    margin-top:6px;
+}
+
+.already-rated{
+    background:var(--bg-light);
+    padding:12px;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+.already-rated i{
+    color:var(--success);
+    margin-right:8px;
+}
+
+/* Responsive */
+@media (max-width:768px){
+    .container{
+        padding:16px;
+    }
+    h1{
+        font-size:26px;
+    }
+    .subtitle{
+        font-size:14px;
+    }
+    .card{
+        padding:20px;
+    }
+    .steps-list li{
+        padding-left:48px;
+    }
+    .anagram-grid{
+        grid-template-columns:1fr;
+    }
+    .benefits-grid{
+        grid-template-columns:1fr;
+    }
+    .usage-grid{
+        grid-template-columns:1fr;
+    }
+    .rating-section{
+        padding:16px;
+    }
+    .rating-number{
+        font-size:28px;
+    }
+    .interactive-star{
+        font-size:24px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header-top">
+        <a href="bastauysh.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Бастауыш сынып әдістері
+        </a>
+        
+        <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()">
+            <i class="far fa-bookmark"></i>
+            <span id="bookmarkText">Сақтау</span>
+        </button>
+    </div>
+
+    <header class="header">
+        <h1>Шатасқан әріптер</h1>
+        <div class="subtitle">Анаграмма — зейінді ұштау және терминдерді есте сақтау әдісі</div>
+        <div class="tags">
+            <span class="tag primary">
+                <i class="fas fa-graduation-cap"></i> Бастауыш сынып
+            </span>
+            <span class="tag">
+                <i class="fas fa-brain"></i> Ойын-жаттығу
+            </span>
+            <span class="tag accent">
+                <i class="fas fa-clock"></i> 5-10 минут
+            </span>
+        </div>
+    </header>
+
+    <!-- YouTube Video -->
+    <div class="video-block">
+        <iframe src="https://www.youtube.com/embed/nuRcRIFyfZE" 
+                title="Шатасқан әріптер әдісі" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- Description -->
+    <div class="quote-box">
+        <i class="fas fa-quote-left" style="color:var(--accent); margin-right:8px;"></i>
+        Оқушының зейінін ұштайтын және терминдерді есте сақтауға арналған қызықты ойын-жаттығу.
+    </div>
+
+    <!-- Usage -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon usage">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h2 class="card-title">Қашан қолдану тиімді?</h2>
+        </div>
+        <div class="card-body">
+            <div class="usage-grid">
+                <div class="usage-item">
+                    <div class="usage-label">
+                        <i class="fas fa-play-circle"></i> Сабақ басында
+                    </div>
+                    <div class="usage-value">Оқушыларды сабаққа қызықтыру (миға шабуыл)</div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-label">
+                        <i class="fas fa-flag-checkered"></i> Сабақ соңында
+                    </div>
+                    <div class="usage-value">Өтілген терминдерді қайталап, бекіту</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon steps">
+                <i class="fas fa-list-ol"></i>
+            </div>
+            <h2 class="card-title">Бұл қалай жұмыс істейді?</h2>
+        </div>
+        <div class="card-body">
+            <ol class="steps-list">
+                <li>
+                    <div class="step-title"><i class="fas fa-hand-pointer"></i> Тапсырма беріңіз</div>
+                    <div class="step-desc">Оқушыларға әріптері араласып кеткен сөздерді көрсетіңіз.</div>
+                </li>
+                <li>
+                    <div class="step-title"><i class="fas fa-search"></i> Ойлантыңыз</div>
+                    <div class="step-desc">Оқушылар сол әріптерді орындарына қойып, жасырын терминді табуы керек.</div>
+                </li>
+                <li>
+                    <div class="step-title"><i class="fas fa-check-circle"></i> Бекітіңіз</div>
+                    <div class="step-desc">Табылған сөздің мағынасын қысқаша түсіндіріп өтіңіз.</div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Examples -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon example">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h2 class="card-title">Мысалдар</h2>
+        </div>
+        <div class="card-body">
+            <div class="anagram-grid">
+                <div class="anagram-card">
+                    <div class="anagram-label">Жеңіл</div>
+                    <div class="anagram-scrambled">П - А - К - І - Т</div>
+                    <div class="anagram-arrow"><i class="fas fa-arrow-down"></i></div>
+                    <div class="anagram-solved">КІТАП</div>
+                </div>
+                <div class="anagram-card">
+                    <div class="anagram-label">Жеңіл</div>
+                    <div class="anagram-scrambled">А - Т - О - М</div>
+                    <div class="anagram-arrow"><i class="fas fa-arrow-down"></i></div>
+                    <div class="anagram-solved">АТОМ</div>
+                </div>
+                <div class="anagram-card">
+                    <div class="anagram-label">Жеңіл</div>
+                    <div class="anagram-scrambled">Р - П - А - А - Т</div>
+                    <div class="anagram-arrow"><i class="fas fa-arrow-down"></i></div>
+                    <div class="anagram-solved">ПАРТА</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon benefits">
+                <i class="fas fa-star"></i>
+            </div>
+            <h2 class="card-title">Мұғалім үшін пайдасы</h2>
+        </div>
+        <div class="card-body">
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon focus">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Зейінді арттырады</h4>
+                        <p>Оқушылардың фокусын сабаққа аударудың ең жылдам жолы.</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon spelling">
+                        <i class="fas fa-spell-check"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Сауаттылық</h4>
+                        <p>Терминдердің дұрыс жазылуын жаттауға көмектеседі.</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon logic">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Логика</h4>
+                        <p>Әріптерден сөз құрастыру арқылы мидың жұмысын белсендіреді.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- Goal -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon goal">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <h2 class="card-title">Сабақ мақсаты</h2>
+        </div>
+        <div class="card-body">
+            <ul class="goal-list">
+                <li>
+                    <span class="goal-icon"><i class="fas fa-check"></i></span>
+                    <span>Оқушылардың зейінін сабаққа аудару</span>
+                </li>
+                <li>
+                    <span class="goal-icon"><i class="fas fa-check"></i></span>
+                    <span>Терминдерді дұрыс жазу дағдыларын қалыптастыру</span>
+                </li>
+                <li>
+                    <span class="goal-icon"><i class="fas fa-check"></i></span>
+                    <span>Логикалық ойлауды дамыту</span>
+                </li>
+                <li>
+                    <span class="goal-icon"><i class="fas fa-check"></i></span>
+                    <span>Сыныпта белсенділікті арттыру</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Steps detailed -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon steps">
+                <i class="fas fa-tasks"></i>
+            </div>
+            <h2 class="card-title">Қадамдық нұсқаулық</h2>
+        </div>
+        <div class="card-body">
+            <ol class="steps-list">
+                <li>
+                    <div class="step-title">Тақырыпты таңдау</div>
+                    <div class="step-desc">Оқушыларға есте сақтау керек терминдерді таңдаңыз. Сөздер оқушыларға таныс болуы керек.</div>
+                </li>
+                <li>
+                    <div class="step-title">Әріптерді араластыру</div>
+                    <div class="step-desc">Терминнің әріптерін кездейсоқ ретпен жазып, оқушыларға көрсетіңіз.</div>
+                </li>
+                <li>
+                    <div class="step-title">Табу жарысы</div>
+                    <div class="step-desc">Оқушылар кім бірінші болып сөзді табатынын анықтайды. Таймер қоюға болады (1-2 минут).</div>
+                </li>
+                <li>
+                    <div class="step-title">Түсіндіру</div>
+                    <div class="step-desc">Табылған сөздің мағынасын қысқаша түсіндіріп, сабақпен байланыстырыңыз.</div>
+                </li>
+                <li>
+                    <div class="step-title">Қорытынды</div>
+                    <div class="step-desc">Барлық оқушылардың тең мүмкіндік алғанын тексеріңіз. Ең тез табушыларды мадақтаңыз.</div>
+                </li>
+            </ol>
+            
+            <div class="tip-box">
+                <div class="tip-title">
+                    <i class="fas fa-lightbulb"></i> Мұғалімге кеңес
+                </div>
+                <div class="tip-text">
+                    Егер оқушы қиналса, бірінші әріпті көрсетіп беріңіз. Сабақ соңында күрделірек сөздер беруге болады.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Variations -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon tips">
+                <i class="fas fa-sync-alt"></i>
+            </div>
+            <h2 class="card-title">Әдісті түрлендіру</h2>
+        </div>
+        <div class="card-body">
+            <div style="margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border);">
+                <strong style="color:var(--secondary); font-size:15px; display:block; margin-bottom:4px;">"Жұптық жарыс"</strong>
+                <p style="font-size:14px; color:var(--text); line-height:1.5; margin:0;">Екі оқушы бір команда болып, кім көп сөз тапса, сол жеңеді.</p>
+            </div>
+            <div style="margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border);">
+                <strong style="color:var(--secondary); font-size:15px; display:block; margin-bottom:4px;">"Топтық жұмыс"</strong>
+                <p style="font-size:14px; color:var(--text); line-height:1.5; margin:0;">Топтар өздері анаграмма құрастырады, басқа топ табуға тырысады.</p>
+            </div>
+            <div>
+                <strong style="color:var(--secondary); font-size:15px; display:block; margin-bottom:4px;">"Уақыт шектеуі"</strong>
+                <p style="font-size:14px; color:var(--text); line-height:1.5; margin:0;">30 секунд ішінде максимум сөз табу — адреналинді арттырады.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating -->
+    <div class="rating-section" id="ratingSection">
+        <div class="rating-header">Бұл әдісті бағалаңыз</div>
+        
+        <div class="average-rating">
+            <i class="fas fa-star big-star"></i>
+            <div>
+                <div class="rating-number" id="averageRating">—</div>
+                <div class="rating-total" id="totalRatings">0 баға</div>
+            </div>
+        </div>
+        
+        <div class="interactive-stars" id="interactiveStars">
+            <i class="fas fa-star interactive-star" data-rating="1" onclick="setRating(1)"></i>
+            <i class="fas fa-star interactive-star" data-rating="2" onclick="setRating(2)"></i>
+            <i class="fas fa-star interactive-star" data-rating="3" onclick="setRating(3)"></i>
+            <i class="fas fa-star interactive-star" data-rating="4" onclick="setRating(4)"></i>
+            <i class="fas fa-star interactive-star" data-rating="5" onclick="setRating(5)"></i>
+        </div>
+        
+        <div class="rating-text" id="ratingText">Баға беру үшін жұлдыздарды басыңыз</div>
+    </div>
+
+</div>
+
+<script>
+const METHOD_ID = 'shataskan-aripter';
+const USER_ID = 'current_user';
+
+function getRatings() {
+    return JSON.parse(localStorage.getItem('methodRatings') || '{}');
+}
+
+function getUserRatings() {
+    return JSON.parse(localStorage.getItem('userRatings') || '{}');
+}
+
+function getSavedMethods() {
+    return JSON.parse(localStorage.getItem('savedMethods') || '[]');
+}
+
+function saveRatings(ratings) {
+    localStorage.setItem('methodRatings', JSON.stringify(ratings));
+}
+
+function saveUserRatings(ratings) {
+    localStorage.setItem('userRatings', JSON.stringify(ratings));
+}
+
+function saveSavedMethods(methods) {
+    localStorage.setItem('savedMethods', JSON.stringify(methods));
+}
+
+function calculateAverage() {
+    const ratings = getRatings();
+    const methodRatings = ratings[METHOD_ID] || [];
+    if (methodRatings.length === 0) return 0;
+    const sum = methodRatings.reduce((acc, r) => acc + r.rating, 0);
+    return (sum / methodRatings.length).toFixed(1);
+}
+
+function updateRatingDisplay() {
+    const average = calculateAverage();
+    const ratings = getRatings();
+    const count = (ratings[METHOD_ID] || []).length;
+    document.getElementById('averageRating').textContent = average > 0 ? average : '—';
+    document.getElementById('totalRatings').textContent = count + ' баға';
+}
+
+function updateStars(rating) {
+    const stars = document.querySelectorAll('.interactive-star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('active');
+        } else {
+            star.classList.remove('active');
+        }
+    });
+}
+
+function setRating(rating) {
+    const userRatings = getUserRatings();
+    if (userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID]) {
+        showAlreadyRated();
+        return;
+    }
+    const ratings = getRatings();
+    if (!ratings[METHOD_ID]) {
+        ratings[METHOD_ID] = [];
+    }
+    ratings[METHOD_ID].push({
+        rating: rating,
+        userId: USER_ID,
+        date: new Date().toISOString()
+    });
+    if (!userRatings[USER_ID]) {
+        userRatings[USER_ID] = {};
+    }
+    userRatings[USER_ID][METHOD_ID] = rating;
+    saveRatings(ratings);
+    saveUserRatings(userRatings);
+    updateStars(rating);
+    updateRatingDisplay();
+    const texts = ['Нашар', 'Қанағаттанарлық', 'Жақсы', 'Өте жақсы', 'Керемет!'];
+    document.getElementById('ratingText').textContent = 'Рахмет! Сіздің бағаңыз: ' + texts[rating - 1];
+    setTimeout(() => {
+        showAlreadyRated();
+    }, 2000);
+}
+
+function showAlreadyRated() {
+    const userRatings = getUserRatings();
+    const userRating = userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID];
+    if (userRating) {
+        const section = document.getElementById('ratingSection');
+        section.innerHTML = `
+            <div class="rating-header">Сіздің бағаңыз</div>
+            <div class="average-rating">
+                <i class="fas fa-star big-star"></i>
+                <div class="rating-number">${userRating}</div>
+            </div>
+            <div class="already-rated">
+                <i class="fas fa-check-circle"></i>
+                <span>Сіз бұл әдісті бағаладыңыз. Рахмет!</span>
+            </div>
+        `;
+    }
+}
+
+function checkIfRated() {
+    const userRatings = getUserRatings();
+    if (userRatings[USER_ID] && userRatings[USER_ID][METHOD_ID]) {
+        showAlreadyRated();
+    }
+}
+
+function toggleBookmark() {
+    let savedMethods = getSavedMethods();
+    const btn = document.getElementById('bookmarkBtn');
+    const text = document.getElementById('bookmarkText');
+    const icon = btn.querySelector('i');
+    if (savedMethods.includes(METHOD_ID)) {
+        savedMethods = savedMethods.filter(id => id !== METHOD_ID);
+        btn.classList.remove('saved');
+        icon.className = 'far fa-bookmark';
+        text.textContent = 'Сақтау';
+    } else {
+        savedMethods.push(METHOD_ID);
+        btn.classList.add('saved');
+        icon.className = 'fas fa-bookmark';
+        text.textContent = 'Сақталды';
+    }
+    saveSavedMethods(savedMethods);
+}
+
+function checkBookmark() {
+    const savedMethods = getSavedMethods();
+    const btn = document.getElementById('bookmarkBtn');
+    const text = document.getElementById('bookmarkText');
+    const icon = btn.querySelector('i');
+    if (savedMethods.includes(METHOD_ID)) {
+        btn.classList.add('saved');
+        icon.className = 'fas fa-bookmark';
+        text.textContent = 'Сақталды';
+    }
+}
+
+function applyTheme(theme){
+    if(theme === 'dark'){
+        document.documentElement.classList.add('dark');
+    }else{
+        document.documentElement.classList.remove('dark');
+    }
+}
+
+window.onload = function() {
+    let params = new URLSearchParams(window.location.search);
+    let themeFromURL = params.get('theme');
+    if(themeFromURL){
+        applyTheme(themeFromURL);
+    }else if(localStorage.getItem('theme') === 'dark'){
+        applyTheme('dark');
+    }
+    updateRatingDisplay();
+    checkBookmark();
+    checkIfRated();
+};
+
+window.addEventListener('message', function(e){
+    if(e.data === 'dark'){
+        applyTheme('dark');
+    }else if(e.data === 'light'){
+        applyTheme('light');
+    }
+});
+
+window.addEventListener('storage', function(e){
+    if(e.key === 'theme'){
+        applyTheme(e.newValue);
+    }
+});
+</script>
+
+</body>
+</html>

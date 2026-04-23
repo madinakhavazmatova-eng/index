@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="kk" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Білім батареясы</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Lora', serif; }
+    html, body { 
+      background: linear-gradient(135deg, #daf1f9 0%, #c5e8f5 50%, #b0ddf1 100%); 
+      min-height: 100vh;
+    }
+    .btn-vote { 
+      transition: transform 0.15s, box-shadow 0.15s; 
+      cursor: pointer; 
+    }
+    .btn-vote:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2); 
+    }
+    .btn-vote:active { 
+      transform: translateY(0); 
+    }
+    .battery-fill { 
+      transition: height 0.8s cubic-bezier(0.4,0,0.2,1), background 0.8s ease; 
+    }
+    .battery-percent { 
+      transition: all 0.5s ease; 
+    }
+    @keyframes pulse-glow {
+      0%, 100% { filter: drop-shadow(0 0 12px rgba(34,197,94,0.4)); }
+      50% { filter: drop-shadow(0 0 24px rgba(34,197,94,0.7)); }
+    }
+    .battery-glow { 
+      animation: pulse-glow 2s infinite; 
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast-anim {
+      animation: fadeIn 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-full">
+  <div id="app" class="min-h-full w-full overflow-auto pb-10">
+    <!-- Header -->
+    <div class="text-center pt-8 pb-4 px-4">
+      <h1 id="main-title" class="text-5xl md:text-7xl font-black tracking-wide" style="color: #0a3a52;">🔋Білім батареясы</h1>
+      <p class="mt-3 text-lg font-semibold" style="color: #1e5a7a;">Түсіну деңгейін бағалаңыз</p>
+    </div>
+
+    <!-- Student Count Input -->
+    <div class="flex justify-center mb-6 px-4">
+      <div class="bg-white bg-opacity-80 rounded-xl shadow-lg p-6 max-w-md w-full backdrop-blur-sm">
+        <label for="student-input" class="block font-semibold mb-2 text-lg" style="color: #0a3a52;">Сынып оқушыларының саны:</label>
+        <input 
+          type="number" 
+          id="student-input" 
+          min="1" 
+          max="999" 
+          placeholder="Оқушы санын енгізіңіз" 
+          class="w-full px-4 py-3 border-2 rounded-lg font-semibold text-lg focus:outline-none focus:border-sky-500 transition-colors"
+          style="border-color: #88caea; color: #0a3a52;"
+        >
+        <p id="student-hint" class="mt-2 text-sm font-medium" style="color: #94a3b8;">Дауыс беру үшін оқушы санын енгізіңіз</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 px-6 pb-10 max-w-5xl mx-auto">
+      <!-- Left: Buttons -->
+      <div class="flex flex-col gap-5 w-full md:w-auto">
+        <!-- Green Button -->
+        <button onclick="vote('green')" class="btn-vote rounded-2xl px-8 py-6 text-white font-black text-xl md:text-2xl text-center shadow-lg" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); min-width: 280px;">
+          Бәрі түсінікті болды
+        </button>
+        <div id="count-green" class="text-center font-bold text-xl" style="color: #16a34a;">0 оқушы</div>
+
+        <!-- Yellow Button -->
+        <button onclick="vote('yellow')" class="btn-vote rounded-2xl px-8 py-6 text-white font-black text-xl md:text-2xl text-center shadow-lg" style="background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); min-width: 280px;">
+          Сұрағым бар
+        </button>
+        <div id="count-yellow" class="text-center font-bold text-xl" style="color: #ca8a04;">0 оқушы</div>
+
+        <!-- Orange-Red Button -->
+        <button onclick="vote('red')" class="btn-vote rounded-2xl px-8 py-6 text-white font-black text-xl md:text-2xl text-center shadow-lg" style="background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); min-width: 280px;">
+          Түсінбедім
+        </button>
+        <div id="count-red" class="text-center font-bold text-xl" style="color: #c2410c;">0 оқушы</div>
+
+        <!-- Reset -->
+        <button onclick="resetVotes()" class="mt-2 rounded-xl px-6 py-3 font-bold text-base border-2 hover:bg-red-50 transition flex items-center justify-center gap-2 mx-auto" style="color: #1e5a7a; border-color: #94a3b8;">
+          <i data-lucide="rotate-ccw" style="width:18px;height:18px;"></i>
+          Тазалау
+        </button>
+      </div>
+
+      <!-- Right: Battery -->
+      <div class="flex flex-col items-center">
+        <!-- Battery SVG -->
+        <div class="battery-glow relative" style="width: 160px; height: 340px;">
+          <!-- Battery cap -->
+          <div class="mx-auto rounded-t-lg" style="width: 60px; height: 16px; background: linear-gradient(135deg, #7dd3fc 0%, #06b6d4 100%);"></div>
+          <!-- Battery body -->
+          <div class="relative rounded-2xl border-4 overflow-hidden" style="width: 160px; height: 320px; border-color: #0ea5e9; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+            <!-- Fill -->
+            <div id="battery-fill" class="battery-fill absolute bottom-0 left-0 right-0 rounded-b-xl" style="height: 0%; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);"></div>
+            <!-- Percentage text -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span id="battery-percent" class="battery-percent font-black text-5xl" style="color: #0f3d66; text-shadow: 0 1px 4px rgba(255,255,255,0.8);">0%</span>
+            </div>
+            <!-- Level markers -->
+            <div class="absolute left-2 top-0 bottom-0 flex flex-col justify-between py-4 pointer-events-none">
+              <span class="text-xs font-bold" style="color:#64748b;">100</span>
+              <span class="text-xs font-bold" style="color:#64748b;">75</span>
+              <span class="text-xs font-bold" style="color:#64748b;">50</span>
+              <span class="text-xs font-bold" style="color:#64748b;">25</span>
+              <span class="text-xs font-bold" style="color:#64748b;">0</span>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 font-bold text-xl" style="color: #0a3a52;">Түсіну деңгейі</p>
+        <p id="total-label" class="font-semibold text-lg mt-1" style="color: #1e5a7a;">Барлығы: 0 оқушы</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Dialog -->
+  <div id="confirm-dialog" class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm mx-4 text-center transform transition-all">
+      <div class="flex justify-center mb-4">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: #fef3c7;">
+          <i data-lucide="alert-triangle" style="width:32px;height:32px;color:#d97706;"></i>
+        </div>
+      </div>
+      <p class="font-bold text-xl mb-6" style="color: #1e3a5f;">Барлық дауыстарды өшіру керек пе?</p>
+      <div class="flex gap-4 justify-center">
+        <button onclick="confirmReset()" class="px-6 py-2 rounded-xl font-bold text-white transition hover:opacity-90" style="background:#ea580c;">Иә, өшіру</button>
+        <button onclick="cancelReset()" class="px-6 py-2 rounded-xl font-bold border-2 transition hover:bg-gray-50" style="border-color:#cbd5e1;color:#64748b;">Жоқ</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let allVotes = [];
+    let isProcessing = false;
+    let targetStudentCount = 0;
+
+    // Initialize Lucide icons
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+      
+      // Setup student count input
+      const studentInput = document.getElementById('student-input');
+      studentInput.addEventListener('input', handleStudentCountChange);
+      
+      // Load from localStorage if available
+      loadFromStorage();
+    });
+
+    function updateUI() {
+      const green = allVotes.filter(v => v.type === 'green').length;
+      const yellow = allVotes.filter(v => v.type === 'yellow').length;
+      const red = allVotes.filter(v => v.type === 'red').length;
+      const total = green + yellow + red;
+
+      document.getElementById('count-green').textContent = green + ' оқушы';
+      document.getElementById('count-yellow').textContent = yellow + ' оқушы';
+      document.getElementById('count-red').textContent = red + ' оқушы';
+      
+      if (targetStudentCount > 0) {
+        document.getElementById('total-label').textContent = 'Барлығы: ' + total + '/' + targetStudentCount + ' оқушы';
+      } else {
+        document.getElementById('total-label').textContent = 'Барлығы: ' + total + ' оқушы';
+      }
+
+      // Battery: green=100%, yellow=50%, red=0%
+      let percent = 0;
+      if (targetStudentCount > 0) {
+        percent = Math.round((green * 100 + yellow * 50 + red * 0) / targetStudentCount);
+        percent = Math.min(100, percent);
+      }
+
+      const fill = document.getElementById('battery-fill');
+      fill.style.height = percent + '%';
+
+      // Color gradient based on level
+      if (percent >= 70) {
+        fill.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
+      } else if (percent >= 40) {
+        fill.style.background = 'linear-gradient(135deg, #eab308 0%, #ca8a04 100%)';
+      } else {
+        fill.style.background = 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)';
+      }
+
+      document.getElementById('battery-percent').textContent = percent + '%';
+      
+      // Save to localStorage
+      saveToStorage();
+    }
+
+    function vote(type) {
+      if (isProcessing) return;
+      
+      if (targetStudentCount === 0) {
+        showToast('Алдымен оқушы санын енгізіңіз');
+        document.getElementById('student-input').focus();
+        return;
+      }
+      
+      const total = allVotes.length;
+      if (total >= targetStudentCount) {
+        showToast('Барлық оқушы дауыс берді!');
+        return;
+      }
+      
+      isProcessing = true;
+      
+      // Simulate async with small delay for UX
+      setTimeout(() => {
+        allVotes.push({
+          id: Date.now() + Math.random().toString(36).substr(2, 9),
+          type: type,
+          timestamp: new Date().toISOString()
+        });
+        
+        updateUI();
+        isProcessing = false;
+      }, 150);
+    }
+
+    function resetVotes() {
+      if (allVotes.length === 0) {
+        showToast('Дауыс жоқ');
+        return;
+      }
+      document.getElementById('confirm-dialog').classList.remove('hidden');
+    }
+    
+    function cancelReset() {
+      document.getElementById('confirm-dialog').classList.add('hidden');
+    }
+    
+    function confirmReset() {
+      document.getElementById('confirm-dialog').classList.add('hidden');
+      if (allVotes.length === 0) return;
+      
+      allVotes = [];
+      updateUI();
+      showToast('Барлық дауыстар өшірілді');
+    }
+
+    function showToast(msg) {
+      // Remove existing toast
+      const existing = document.querySelector('.toast-message');
+      if (existing) existing.remove();
+      
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.className = 'toast-message toast-anim fixed top-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-xl font-bold text-white shadow-lg z-50';
+      t.style.background = 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)';
+      document.body.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translateX(-50%) translateY(-10px)';
+        t.style.transition = 'all 0.3s ease';
+        setTimeout(() => t.remove(), 300);
+      }, 3000);
+    }
+
+    function handleStudentCountChange() {
+      const studentInput = document.getElementById('student-input');
+      const count = parseInt(studentInput.value) || 0;
+      const hint = document.getElementById('student-hint');
+      
+      if (count < 1) {
+        targetStudentCount = 0;
+        hint.textContent = 'Дауыс беру үшін оқушы санын енгізіңіз';
+        hint.style.color = '#94a3b8';
+        updateUI();
+        return;
+      } else if (count > 999) {
+        targetStudentCount = 999;
+        studentInput.value = '999';
+        showToast('Максималды 999 оқушы');
+      } else {
+        targetStudentCount = count;
+      }
+      
+      hint.textContent = 'Дауыс беруге дайын';
+      hint.style.color = '#22c55e';
+      updateUI();
+    }
+
+    // localStorage functions for persistence
+    function saveToStorage() {
+      try {
+        const data = {
+          votes: allVotes,
+          studentCount: targetStudentCount
+        };
+        localStorage.setItem('bilim_battery_data', JSON.stringify(data));
+      } catch (e) {
+        console.log('localStorage недоступен');
+      }
+    }
+
+    function loadFromStorage() {
+      try {
+        const saved = localStorage.getItem('bilim_battery_data');
+        if (saved) {
+          const data = JSON.parse(saved);
+          allVotes = data.votes || [];
+          targetStudentCount = data.studentCount || 0;
+          
+          if (targetStudentCount > 0) {
+            document.getElementById('student-input').value = targetStudentCount;
+            document.getElementById('student-hint').textContent = 'Дауыс беруге дайын';
+            document.getElementById('student-hint').style.color = '#22c55e';
+          }
+          
+          updateUI();
+        }
+      } catch (e) {
+        console.log('localStorage недоступен');
+      }
+    }
+  </script>
+</body>
+</html>

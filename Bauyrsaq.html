@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="kk" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    html, body { 
+      height: 100%; 
+      margin: 0;
+      overflow-x: hidden;
+    }
+    body { 
+      font-family: 'Nunito', sans-serif;
+      display: flex;
+    }
+
+    /* НЕГІЗГІ ҚҰРАЛДАР - СОЛ ЖАҚ (70%) */
+    .main-content {
+      width: 70%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* ӘЖЕ КОНТЕЙНЕРІ - ОҢ ЖАҚ (30%) */
+    .aje-section {
+      width: 30%;
+      height: 100%;
+      position: relative;
+      background: linear-gradient(135deg, #fdf6ec 0%, #f7e8d0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .baursak-card {
+      perspective: 800px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .baursak-card:hover { transform: scale(1.05); }
+    .baursak-card:active { transform: scale(0.97); }
+
+    .baursak-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .baursak-card.flipped .baursak-inner {
+      transform: rotateY(180deg);
+    }
+    .baursak-front, .baursak-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .baursak-back {
+      transform: rotateY(180deg);
+    }
+
+    .baursak-svg {
+      filter: drop-shadow(2px 4px 6px rgba(139, 90, 43, 0.4));
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+      60% { transform: scale(1.15) rotate(3deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .pop-in {
+      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes flyFromAje {
+      0% {
+        position: fixed;
+        right: 15%;
+        top: 50%;
+        opacity: 1;
+        transform: scale(0.8) rotate(-15deg);
+        z-index: 1000;
+      }
+      100% {
+        position: static;
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        z-index: 1;
+      }
+    }
+    .fly-in {
+      animation: flyFromAje 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    .dastarkhan-bg {
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(194, 139, 60, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(194, 139, 60, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #fdf6ec 0%, #f7e8d0 50%, #fdf6ec 100%);
+    }
+
+    .ornament-border {
+      border: 3px solid #c28b3c;
+      position: relative;
+    }
+    .ornament-border::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(194, 139, 60, 0.3);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .group-colors {
+      --g0: #e74c3c; --g1: #2980b9; --g2: #27ae60; --g3: #f39c12;
+      --g4: #8e44ad; --g5: #1abc9c; --g6: #d35400; --g7: #c0392b;
+      --g8: #2c3e50; --g9: #16a085;
+    }
+
+    /* ҮЛКЕН ӘЖЕ */
+    .aje-container {
+      width: 90%;
+      height: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      filter: drop-shadow(-5px 5px 25px rgba(0,0,0,0.3));
+      transition: transform 0.3s;
+    }
+
+    .aje-container:hover {
+      transform: scale(1.02);
+    }
+
+    .aje-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      background: transparent !important;
+    }
+
+    /* Әженің қозғалысы */
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-10px) rotate(1deg); }
+      50% { transform: translateY(-15px) rotate(0deg); }
+      75% { transform: translateY(-10px) rotate(-1deg); }
+    }
+
+    .aje-container.animate {
+      animation: gentleBounce 3s ease-in-out infinite;
+    }
+
+    /* Топ атауларын редактировать ету */
+    .team-names-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+
+    .team-name-input {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: white;
+      border: 2px solid;
+      transition: all 0.3s;
+    }
+
+    .team-name-input input {
+      border: none;
+      background: transparent;
+      width: 80px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .team-name-input .color-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .team-name-input .remove-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.1);
+      color: #666;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .team-name-input .remove-btn:hover {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .add-team-btn-small {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 2px dashed #c28b3c;
+      background: transparent;
+      color: #c28b3c;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .add-team-btn-small:hover {
+      background: #c28b3c;
+      color: white;
+      border-style: solid;
+    }
+
+    /* Сәттілік модаль */
+    .success-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      flex-direction: column;
+      backdrop-filter: blur(5px);
+    }
+
+    .success-modal.active {
+      display: flex;
+    }
+
+    .success-text {
+      font-size: 80px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #F6D365 0%, #FDA085 50%, #F6D365 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: successPulse 0.8s ease-out;
+      font-family: 'Caveat', cursive;
+    }
+
+    @keyframes successPulse {
+      0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+      50% { transform: scale(1.2) rotate(5deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .reset-btn {
+      margin-top: 30px;
+      background: white;
+      color: #6b4226;
+      border: 3px solid #c28b3c;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .reset-btn:hover {
+      background: #c28b3c;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* От шашу */
+    .fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .firework {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: explode 1s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+    }
+
+    /* Мобильді адаптация */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .main-content {
+        width: 100%;
+        height: 70%;
+      }
+      .aje-section {
+        width: 100%;
+        height: 30%;
+      }
+      .aje-container {
+        height: 90%;
+      }
+    }
+
+    /* Әжені басу нұсқауы */
+    .aje-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      padding: 10px 20px;
+      border-radius: 25px;
+      color: #6b4226;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+    }
+  </style>
+<base target="_blank">
+</head>
+<body class="dastarkhan-bg group-colors">
+
+  <!-- СОЛ ЖАҚ - НЕГІЗГІ ҚҰРАЛДАР (70%) -->
+  <div class="main-content">
+    <div class="h-full w-full flex flex-col items-center px-4 py-6">
+      <!-- Title -->
+      <h1 id="page-title" class="text-3xl md:text-4xl font-black text-center mb-6" style="color: #6b4226; font-family: 'Caveat', cursive; font-size: 2.8rem;">Балаларды топқа бөлу</h1>
+
+      <!-- Controls -->
+      <div class="ornament-border rounded-2xl p-5 mb-4 w-full max-w-lg" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(8px);">
+        <div class="flex flex-col gap-4">
+          <div class="flex gap-4">
+            <div class="flex-1">
+              <label for="child-count" class="block text-sm font-bold mb-1" style="color: #6b4226;">Оқушы саны</label>
+              <input type="number" id="child-count" min="2" max="60" value="12" class="w-full px-3 py-2 rounded-xl border-2 text-center font-bold text-lg focus:outline-none focus:ring-2" style="border-color: #c28b3c; color: #6b4226; background: #fdf6ec;">
+            </div>
+            <div class="flex-1">
+              <label for="group-count" class="block text-sm font-bold mb-1" style="color: #6b4226;">Топ саны</label>
+              <input type="number" id="group-count" min="2" max="20" value="3" class="w-full px-3 py-2 rounded-xl border-2 text-center font-bold text-lg focus:outline-none focus:ring-2" style="border-color: #c28b3c; color: #6b4226; background: #fdf6ec;">
+            </div>
+          </div>
+
+          <!-- Топ атаулары редактировать ету -->
+          <div>
+            <label class="block text-sm font-bold mb-2" style="color: #6b4226;">Топ атаулары:</label>
+            <div class="team-names-container" id="teamNamesContainer">
+              <!-- Топ атаулары осында динамикалық қосылады -->
+            </div>
+          </div>
+
+          <button id="generate-btn" onclick="generateBaursaks()" class="w-full py-3 rounded-xl font-extrabold text-lg text-white transition-all hover:brightness-110 active:scale-95" style="background: linear-gradient(135deg, #c28b3c, #8b5e3c); box-shadow: 0 4px 12px rgba(139,90,43,0.4);">
+            <span class="flex items-center justify-center gap-2">🍞 Топқа бөлу!</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Group Legend -->
+      <div id="group-legend" class="flex flex-wrap justify-center gap-2 mb-4 max-w-lg"></div>
+
+      <!-- Baursak Grid -->
+      <div id="baursak-grid" class="grid gap-3 w-full max-w-2xl" style="grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));"></div>
+
+      <p id="hint-text" class="text-sm mt-4 font-semibold text-center" style="color: #a07840; display: none;">👆 Бауырсақты басыңыз — қай топта екені көрінеді!</p>
+    </div>
+  </div>
+
+  <!-- ОҢ ЖАҚ - ӘЖЕ (30%) -->
+  <div class="aje-section">
+    <div class="aje-container animate" id="aje-container" onclick="generateBaursaks()">
+      <!-- 
+        МЕҢЗЕРЛЕУ: azhe_bauyrsaq.png файлын осы HTML файлымен бір қалтада сақтаңыз!
+        Суретте фон болмауы керек (PNG transparent background)
+      -->
+      <img src="azhe_bauyrsaq.png" alt="Әже мен бауырсақ" class="aje-image" id="aje-image">
+    </div>
+    <div class="aje-hint">👆 Әжені басыңыз!</div>
+  </div>
+
+  <!-- Сәттілік модаль -->
+  <div class="success-modal" id="successModal">
+    <div class="success-text">СӘТТІЛІК!</div>
+    <button class="reset-btn" onclick="resetAll()">🔄 Қайта бастау</button>
+  </div>
+
+  <!-- От шашу -->
+  <div class="fireworks" id="fireworks"></div>
+
+  <script>
+    const groupColors = ['#e74c3c','#2980b9','#27ae60','#f39c12','#8e44ad','#1abc9c','#d35400','#c0392b','#2c3e50','#16a085',
+      '#e67e22','#3498db','#2ecc71','#f1c40f','#9b59b6','#1abc9c','#e74c3c','#34495e','#d35400','#27ae60'];
+
+    let teamNames = ['Топ 1', 'Топ 2', 'Топ 3'];
+    let baursakElements = [];
+    let revealedCount = 0;
+
+    function baursaqSVG(number) {
+      return `<svg viewBox="0 0 80 80" width="60" height="60" class="baursak-svg">
+        <ellipse cx="40" cy="42" rx="34" ry="30" fill="#d4953a" />
+        <ellipse cx="40" cy="38" rx="34" ry="30" fill="#e8b35a" />
+        <ellipse cx="40" cy="36" rx="30" ry="26" fill="#f0c56e" />
+        <ellipse cx="38" cy="32" rx="16" ry="10" fill="#f5d98a" opacity="0.6"/>
+        <text x="40" y="44" text-anchor="middle" font-size="20" font-weight="900" fill="#6b4226" font-family="Nunito">${number}</text>
+      </svg>`;
+    }
+
+    // Топ атауларын жаңарту
+    function updateTeamNamesInputs() {
+      const container = document.getElementById('teamNamesContainer');
+      container.innerHTML = '';
+
+      teamNames.forEach((name, index) => {
+        const div = document.createElement('div');
+        div.className = 'team-name-input';
+        div.style.borderColor = groupColors[index];
+
+        div.innerHTML = `
+          <div class="color-dot" style="background: ${groupColors[index]}"></div>
+          <input type="text" value="${name}" onchange="updateTeamName(${index}, this.value)" placeholder="Топ ${index + 1}">
+          ${teamNames.length > 2 ? `<button class="remove-btn" onclick="removeTeam(${index})">×</button>` : ''}
+        `;
+
+        container.appendChild(div);
+      });
+
+      // Қосу батырмасы
+      if (teamNames.length < 20) {
+        const addBtn = document.createElement('button');
+        addBtn.className = 'add-team-btn-small';
+        addBtn.textContent = '+ Топ қосу';
+        addBtn.onclick = addTeam;
+        container.appendChild(addBtn);
+      }
+    }
+
+    function updateTeamName(index, value) {
+      teamNames[index] = value || `Топ ${index + 1}`;
+    }
+
+    function removeTeam(index) {
+      if (teamNames.length > 2) {
+        teamNames.splice(index, 1);
+        updateTeamNamesInputs();
+        document.getElementById('group-count').value = teamNames.length;
+      }
+    }
+
+    function addTeam() {
+      if (teamNames.length < 20) {
+        teamNames.push(`Топ ${teamNames.length + 1}`);
+        updateTeamNamesInputs();
+        document.getElementById('group-count').value = teamNames.length;
+      }
+    }
+
+    // Топ саны өзгергенде
+    document.getElementById('group-count').addEventListener('change', function() {
+      const newCount = Math.min(20, Math.max(2, parseInt(this.value) || 2));
+      this.value = newCount;
+
+      const currentCount = teamNames.length;
+      if (newCount > currentCount) {
+        for (let i = currentCount; i < newCount; i++) {
+          teamNames.push(`Топ ${i + 1}`);
+        }
+      } else if (newCount < currentCount) {
+        teamNames = teamNames.slice(0, newCount);
+      }
+      updateTeamNamesInputs();
+    });
+
+    function generateBaursaks() {
+      const childCount = Math.min(60, Math.max(2, parseInt(document.getElementById('child-count').value) || 12));
+      const groupCount = teamNames.length;
+
+      document.getElementById('child-count').value = childCount;
+      document.getElementById('group-count').value = groupCount;
+
+      // Assign groups randomly
+      const assignments = [];
+      for (let i = 0; i < childCount; i++) {
+        assignments.push(i % groupCount);
+      }
+      // Shuffle
+      for (let i = assignments.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [assignments[i], assignments[j]] = [assignments[j], assignments[i]];
+      }
+
+      // Legend
+      const legend = document.getElementById('group-legend');
+      legend.innerHTML = '';
+      for (let g = 0; g < groupCount; g++) {
+        const count = assignments.filter(a => a === g).length;
+        const chip = document.createElement('div');
+        chip.className = 'flex items-center gap-1 px-3 py-1 rounded-full text-white font-bold text-sm';
+        chip.style.background = groupColors[g];
+        chip.textContent = `${teamNames[g]} (${count})`;
+        legend.appendChild(chip);
+      }
+
+      // Grid
+      const grid = document.getElementById('baursak-grid');
+      grid.innerHTML = '';
+      baursakElements = [];
+      revealedCount = 0;
+
+      assignments.forEach((group, idx) => {
+        const card = document.createElement('div');
+        card.className = 'baursak-card fly-in';
+        card.style.animationDelay = `${idx * 60}ms`;
+        card.style.opacity = '0';
+        card.style.height = '100px';
+
+        const color = groupColors[group];
+        const teamName = teamNames[group];
+
+        card.innerHTML = `
+          <div class="baursak-inner">
+            <div class="baursak-front" style="background: rgba(255,255,255,0.5); border: 2px solid #dcc49a;">
+              ${baursaqSVG(idx + 1)}
+            </div>
+            <div class="baursak-back" style="background: ${color}; border: 2px solid ${color};">
+              <span class="text-white font-black text-xl" style="font-family: Caveat, cursive;">${teamName}</span>
+              <span class="text-white text-xs font-bold opacity-90">басында</span>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener('click', function() {
+          if (!card.classList.contains('flipped')) {
+            card.classList.add('flipped');
+            revealedCount++;
+            checkAllRevealed();
+          }
+        });
+
+        grid.appendChild(card);
+        baursakElements.push(card);
+      });
+
+      document.getElementById('hint-text').style.display = 'block';
+
+      // Әженің анимациясын өзгерту (тек қозғалыс)
+      document.getElementById('aje-container').classList.add('animate');
+    }
+
+    function checkAllRevealed() {
+      if (revealedCount === baursakElements.length && baursakElements.length > 0) {
+        setTimeout(() => {
+          showSuccess();
+        }, 500);
+      }
+    }
+
+    function showSuccess() {
+      const modal = document.getElementById('successModal');
+      modal.classList.add('active');
+
+      // 3 секундтық от шашу
+      let fireworkCount = 0;
+      const maxFireworks = 20;
+
+      const interval = setInterval(() => {
+        if (fireworkCount >= maxFireworks) {
+          clearInterval(interval);
+          return;
+        }
+        createFirework();
+        fireworkCount++;
+      }, 150);
+
+      setTimeout(() => {
+        clearInterval(interval);
+      }, 3000);
+    }
+
+    function createFirework() {
+      const fireworks = document.getElementById('fireworks');
+      const colors = ['#FF6B6B', '#FECA57', '#48DBFB', '#FF9FF3', '#54A0FF', '#5F27CD', '#00D2D3', '#FF9F43'];
+
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight * 0.7 + window.innerHeight * 0.1;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'firework';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.background = color;
+        particle.style.boxShadow = `0 0 10px ${color}`;
+
+        const angle = (Math.PI * 2 * i) / 20;
+        const velocity = 100 + Math.random() * 100;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+
+        fireworks.appendChild(particle);
+        setTimeout(() => particle.remove(), 1000);
+      }
+    }
+
+    function resetAll() {
+      document.getElementById('successModal').classList.remove('active');
+      document.getElementById('fireworks').innerHTML = '';
+      document.getElementById('baursak-grid').innerHTML = '';
+      document.getElementById('group-legend').innerHTML = '';
+      document.getElementById('hint-text').style.display = 'none';
+      revealedCount = 0;
+      baursakElements = [];
+      document.getElementById('aje-container').classList.add('animate');
+    }
+
+    // Бастапқы жүктеу
+    window.addEventListener('load', () => {
+      updateTeamNamesInputs();
+    });
+  </script>
+</body>
+</html>

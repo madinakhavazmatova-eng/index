@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Алты қалпақ әдісі</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#ffffff;
+    --text:#1a1a1a;
+    --card:#f8f9fa;
+    --title:#0B3C5D;
+    --subtitle:#1C5D99;
+    --link:#1C5D99;
+    --link-hover:#0B3C5D;
+    --border:#e0e0e0;
+    --accent:#ffecd2;
+}
+
+.dark{
+    --bg:#161b22;
+    --text:#e6edf3;
+    --card:#21262d;
+    --title:#7dd3fc;
+    --subtitle:#38bdf8;
+    --link:#7dd3fc;
+    --link-hover:#38bdf8;
+    --border:#30363d;
+    --accent:#fbbf24;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    transition:background-color 0.3s ease;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    padding:40px;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    min-height:100vh;
+    transition:background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-link{
+    display:inline-block;
+    color:var(--link);
+    text-decoration:none;
+    margin-bottom:30px;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.back-link:hover{
+    color:var(--link-hover);
+    padding-left:5px;
+}
+
+h2{
+    font-size:36px;
+    margin-bottom:30px;
+    color:var(--title);
+    font-weight:600;
+    transition:color 0.3s ease;
+}
+
+/* Негізгі контейнер */
+.method-content{
+    max-width:900px;
+}
+
+/* Сурет контейнері */
+.method-image{
+    width:100%;
+    max-width:500px;
+    height:400px;
+    border-radius:16px;
+    margin-bottom:30px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+}
+
+.dark .method-image{
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Сурет */
+.method-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+/* Мақсат бөлімі */
+.goal-box{
+    background:var(--card);
+    border-left:4px solid var(--accent);
+    padding:20px 25px;
+    border-radius:0 12px 12px 0;
+    margin-bottom:25px;
+    transition:background-color 0.3s ease;
+}
+
+.goal-box b{
+    color:var(--accent);
+    font-size:18px;
+    display:block;
+    margin-bottom:10px;
+}
+
+.dark .goal-box b{
+    color:#fbbf24;
+}
+
+.goal-box p{
+    font-size:16px;
+    color:var(--text);
+    margin:0;
+}
+
+/* Сипаттама */
+.description{
+    font-size:17px;
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+.description p{
+    margin-bottom:15px;
+}
+
+/* Қалпақтар торы */
+.hats-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:15px;
+    margin-top:30px;
+}
+
+.hat-item{
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hat-item:hover{
+    transform:translateY(-5px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.hat-icon{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.hat-name{
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.hat-desc{
+    font-size:14px;
+    opacity:0.9;
+}
+
+/* Әр қалпақтың түсі */
+.hat-white{
+    background:#f8f9fa;
+    color:#1a1a1a;
+    border:2px solid #dee2e6;
+}
+
+.dark .hat-white{
+    background:#e5e7eb;
+    color:#1a1a1a;
+}
+
+.hat-red{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.hat-black{
+    background:#1f2937;
+    color:#f9fafb;
+}
+
+.hat-yellow{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.hat-green{
+    background:#d1fae5;
+    color:#065f46;
+}
+
+.hat-blue{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+/* Қадамдар */
+.steps{
+    background:var(--card);
+    padding:25px;
+    border-radius:12px;
+    margin-top:30px;
+    transition:background-color 0.3s ease;
+}
+
+.steps h3{
+    color:var(--subtitle);
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.steps ol{
+    padding-left:20px;
+}
+
+.steps li{
+    margin-bottom:12px;
+    font-size:16px;
+    line-height:1.6;
+}
+
+/* Қолдану уақыты */
+.time-box{
+    display:inline-block;
+    background:var(--accent);
+    color:var(--text);
+    padding:10px 20px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+    margin-top:20px;
+}
+
+.dark .time-box{
+    background:#fbbf24;
+    color:#0d1117;
+}
+</style>
+</head>
+<body>
+
+<a href="jogary.html" class="back-link">← Артқа</a>
+
+<div class="method-content">
+
+    <h2>Алты қалпақ әдісі</h2>
+
+    <!-- Сурет -->
+    <div class="method-image">
+        <img src="6kalpak.png" alt="Алты қалпақ әдісі">
+    </div>
+
+    <div class="goal-box">
+        <b>Мақсаты:</b>
+        <p>Мәселені жан-жақты қарастыру, әртүрлі перспективадан ойлау және сыни ойлауды дамыту</p>
+    </div>
+
+    <div class="description">
+        <p>
+            Алты қалпақ әдісі — Эдвард де Боно жасаған танымал ойлау техникасы. 
+            Оқушылар 6 топқа бөлініп, әр топ өз қалпағының түсіне сәйкес 
+            ойлайды. Бұл мәселені толыққанды талдауға мүмкіндік береді.
+        </p>
+        <p>
+            Әр қалпақ белгілі бір ойлау стилін білдіреді: логикалық, эмоциялық, 
+            креативті және т.б.
+        </p>
+    </div>
+
+    <div class="hats-grid">
+        <div class="hat-item hat-white">
+            <div class="hat-icon">⚪</div>
+            <div class="hat-name">Ақ қалпақ</div>
+            <div class="hat-desc">Дерек пен фактілер</div>
+        </div>
+        <div class="hat-item hat-red">
+            <div class="hat-icon">🔴</div>
+            <div class="hat-name">Қызыл қалпақ</div>
+            <div class="hat-desc">Сезім мен эмоция</div>
+        </div>
+        <div class="hat-item hat-black">
+            <div class="hat-icon">⚫</div>
+            <div class="hat-name">Қара қалпақ</div>
+            <div class="hat-desc">Сын және қауіп</div>
+        </div>
+        <div class="hat-item hat-yellow">
+            <div class="hat-icon">🟡</div>
+            <div class="hat-name">Сары қалпақ</div>
+            <div class="hat-desc">Оң жақтары</div>
+        </div>
+        <div class="hat-item hat-green">
+            <div class="hat-icon">🟢</div>
+            <div class="hat-name">Жасыл қалпақ</div>
+            <div class="hat-desc">Жаңа идеялар</div>
+        </div>
+        <div class="hat-item hat-blue">
+            <div class="hat-icon">🔵</div>
+            <div class="hat-name">Көк қалпақ</div>
+            <div class="hat-desc">Қорытынды және басқару</div>
+        </div>
+    </div>
+
+    <div class="steps">
+        <h3>Қадамдар:</h3>
+        <ol>
+            <li>Тақырыпты таңдаңыз (мысалы: "Мектепте телефонға тыйым салу керек пе?")</li>
+            <li>Оқушыларды 6 топқа бөліңіз, әрқайсысына қалпақ тағайындаңыз</li>
+            <li>Әр топ өз қалпағына сәйкес 5 минутта ой толғайды</li>
+            <li>Топтар кезекпен өз пікірлерін ұсынады</li>
+            <li>Көк қалпақ топ қорытынды жасайды</li>
+        </ol>
+    </div>
+
+    <div class="time-box">⏱️ 35-45 минут</div>
+
+</div>
+
+<script>
+function applyTheme(theme){
+    if(theme === 'dark'){
+        document.documentElement.classList.add('dark');
+    }else{
+        document.documentElement.classList.remove('dark');
+    }
+}
+
+let params = new URLSearchParams(window.location.search);
+let themeFromURL = params.get('theme');
+if(themeFromURL){
+    applyTheme(themeFromURL);
+}else if(localStorage.getItem('theme') === 'dark'){
+    applyTheme('dark');
+}
+
+window.addEventListener('message', function(e){
+    if(e.data === 'dark'){
+        applyTheme('dark');
+    }else if(e.data === 'light'){
+        applyTheme('light');
+    }
+});
+
+window.addEventListener('storage', function(e){
+    if(e.key === 'theme'){
+        applyTheme(e.newValue);
+    }
+});
+</script>
+
+</body>
+</html>
