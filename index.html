@@ -1340,6 +1340,9 @@
             transform: translateY(0);
         }
     </style>
+    <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -1361,12 +1364,17 @@
             <li><a href="#help">Көмек</a></li>
         </ul>
 
-        <div class="nav-actions">
-            <!-- Жаңартылған сілтемелер -->
-            <a href="кіру.html" class="btn btn-outline">Кіру</a>
-            <a href="тіркелу.html" class="btn btn-solid">Тіркелу</a>
-            <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button>
-        </div>
+        <div class="nav-actions" id="authButtons">
+    <!-- Кірмеген пайдаланушы -->
+    <a href="кіру.html" class="btn btn-outline" id="loginBtn">Кіру</a>
+    <a href="тіркелу.html" class="btn btn-solid" id="registerBtn">Тіркелу</a>
+    
+    <!-- Кірген пайдаланушы (бастапқыда жасырын) -->
+    <span id="userName" style="color: white; margin-right: 1rem; display: none; font-weight: 500;"></span>
+    <button class="btn btn-outline" id="logoutBtn" style="display: none;" onclick="logout()">Шығу</button>
+    
+    <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button>
+</div>
 
         <div class="hamburger" onclick="toggleMenu()">
             <span></span>
@@ -1382,11 +1390,13 @@
         <a href="#target" onclick="toggleMenu()">Аудитория</a>
         <a href="#why-adis" onclick="toggleMenu()">Платформа туралы</a>
         <a href="#help" onclick="toggleMenu()">Көмек</a>
-        <div class="mobile-buttons">
-            <a href="кіру.html" class="btn btn-outline">Кіру</a>
-            <a href="тіркелу.html" class="btn btn-solid">Тіркелу</a>
-            <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button> 
-        </div>
+        <div class="mobile-buttons" id="mobileAuthButtons">
+    <a href="кіру.html" class="btn btn-outline" id="mobileLoginBtn">Кіру</a>
+    <a href="тіркелу.html" class="btn btn-solid" id="mobileRegisterBtn">Тіркелу</a>
+    <span id="mobileUserName" style="color: white; margin-bottom: 0.5rem; display: none;"></span>
+    <button class="btn btn-outline" id="mobileLogoutBtn" style="display: none;" onclick="logout()">Шығу</button>
+    <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button> 
+</div>
     </div>
 
     <!-- Section 1: Hero with Panoramic Animation -->
@@ -1631,30 +1641,32 @@
             <div class="contact-section fade-in">
                 <h3>Бізге хабарласыңыз</h3>
                 <p>Сұрағыңыз бар ма? Төмендегі форманы толтырыңыз, біз жауап береміз.</p>
-                <form action="send.php" method="POST">
-                    <div class="form-group">
-                        <label for="fullName">Аты-жөніңіз</label>
-                        <input type="text" id="fullName" required placeholder="Мысалы: Айгүл Серікқызы">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email немесе телефон</label>
-                        <input type="text" id="email" required placeholder="email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Сұрақтың түрі</label>
-                        <select id="category" required>
-                            <option value="">Таңдаңыз...</option>
-                            <option value="technical">Техникалық мәселе</option>
-                            <option value="content">Материалдар туралы</option>
-                            <option value="other">Басқа</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Хабарлама</label>
-                        <textarea id="message" required placeholder="Сұрағыңызды толық жазыңыз..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn" onclick="location.href='contact.php'">Жіберу</button>
-                </form>
+                 <form action="https://formspree.io/f/mlgaokoz" method="POST">
+    <input type="hidden" name="_replyto" value="madinakhavazmatova@gmail.com">
+    
+    <div class="form-group">
+        <label for="fullName">Аты-жөніңіз</label>
+        <input type="text" id="fullName" name="name" required placeholder="Мысалы: Айгүл Серікқызы">
+    </div>
+    <div class="form-group">
+        <label for="email">Email немесе телефон</label>
+        <input type="text" id="email" name="email" required placeholder="email@example.com">
+    </div>
+    <div class="form-group">
+        <label for="category">Сұрақтың түрі</label>
+        <select id="category" name="category" required>
+            <option value="">Таңдаңыз...</option>
+            <option value="technical">Техникалық мәселе</option>
+            <option value="content">Материалдар туралы</option>
+            <option value="other">Басқа</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="message">Хабарлама</label>
+        <textarea id="message" name="message" required placeholder="Сұрағыңызды толық жазыңыз..."></textarea>
+    </div>
+    <button type="submit" class="submit-btn">Жіберу</button>
+</form>
             </div>
         </div>
     </section>
@@ -1790,6 +1802,55 @@
                 }
             });
         });
+        // ============================================
+// FIREBASE AUTHENTICATION
+// ============================================
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC2NjVhAxz6o0orZsLvZO6DBpmefGWtdbs",
+    authDomain: "adis11.firebaseapp.com",
+    projectId: "adis11",
+    storageBucket: "adis11.firebasestorage.app",
+    messagingSenderId: "1076245506221",
+    appId: "1:1076245506221:web:163729dc73b8bc4b957e24",
+    measurementId: "G-ZDK8R92RMY"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// Авторизация күйін бақылау
+auth.onAuthStateChanged((user) => {
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const userName = document.getElementById('userName');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (user) {
+        // Кірген
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (userName) {
+            userName.textContent = 'Қош келдіңіз, ' + (user.displayName || user.email);
+            userName.style.display = 'inline';
+        }
+        if (logoutBtn) logoutBtn.style.display = 'inline-flex';
+    } else {
+        // Кірмеген
+        if (loginBtn) loginBtn.style.display = 'inline-flex';
+        if (registerBtn) registerBtn.style.display = 'inline-flex';
+        if (userName) userName.style.display = 'none';
+        if (logoutBtn) logoutBtn.style.display = 'none';
+    }
+});
+
+function logout() {
+    auth.signOut().then(() => {
+        window.location.href = 'index.html';
+    }).catch((error) => {
+        console.error('Шығу қатесі:', error);
+    });
+}
     </script>
 
 </body>

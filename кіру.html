@@ -1,564 +1,245 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-<meta charset="UTF-8">
-<title>ÄDIS – Кіру</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-:root{
-    --primary:#0B3C5D;
-    --primary-hover:#1C5D99;
-    --secondary:#1C5D99;
-    --accent:#F4A261;
-    --text:#2c3e50;
-    --text-medium:#5d6d7e;
-    --bg:#ffffff;
-    --bg-light:#f4f7fb;
-    --bg-gray:#E6F0F7;
-    --border:#e5e8e8;
-    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
-    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
-    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
-    --icon-color:#7f8c8d;
-}
-
-.dark{
-    --primary:#4A9FD4;
-    --primary-hover:#6BB3E0;
-    --secondary:#4A9FD4;
-    --accent:#F4A261;
-    --text:#E8F4F8;
-    --text-medium:#B8D4E3;
-    --bg:#0A1628;
-    --bg-light:#0F1F35;
-    --bg-gray:#152238;
-    --border:#1E3A5F;
-    --icon-color:#8FB8D4;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:'Inter', sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    min-height:100vh;
-    transition:background-color 0.3s ease, color 0.3s ease;
-}
-
-/* HEADER */
-.header{
-    width:100%;
-    background:var(--primary);
-    padding:20px 40px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo-section{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
-
-.logo-img{
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    object-fit:cover;
-}
-
-.logo-text h1{
-    font-family:'Cormorant Garamond', serif;
-    font-size:42px;
-    color:white;
-    margin:0;
-    letter-spacing:2px;
-}
-
-.logo-text p{
-    color:#CFE8F5;
-    font-size:14px;
-    letter-spacing:2px;
-    margin:5px 0 0 0;
-}
-
-.header-actions{
-    display:flex;
-    gap:15px;
-    align-items:center;
-}
-
-.toggle-theme{
-    background:rgba(255,255,255,0.1);
-    border:none;
-    font-size:20px;
-    cursor:pointer;
-    padding:10px;
-    border-radius:50%;
-    transition:all 0.3s;
-    color:white;
-    width:40px;
-    height:40px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.toggle-theme:hover{
-    background:rgba(255,255,255,0.2);
-    transform:rotate(15deg);
-}
-
-/* FORM CONTAINER */
-.form-container{
-    max-width:450px;
-    margin:60px auto;
-    padding:0 20px;
-}
-
-.form-box{
-    background:var(--bg-light);
-    padding:50px 40px;
-    border-radius:16px;
-    border:1px solid var(--border);
-    box-shadow:var(--shadow-md);
-    text-align:center;
-}
-
-.form-box h2{
-    font-family:'Cormorant Garamond', serif;
-    font-size:36px;
-    margin-bottom:10px;
-    color:var(--primary);
-}
-
-.form-subtitle{
-    color:var(--text-medium);
-    margin-bottom:30px;
-    font-size:15px;
-}
-
-.form-group{
-    margin-bottom:20px;
-    text-align:left;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:500;
-    font-size:14px;
-    color:var(--text-medium);
-}
-
-.form-group input{
-    width:100%;
-    padding:14px;
-    font-size:16px;
-    border-radius:10px;
-    border:1px solid var(--border);
-    background:var(--bg);
-    color:var(--text);
-    transition:all 0.3s ease;
-}
-
-.form-group input:focus{
-    outline:none;
-    border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(11,60,93,0.1);
-}
-
-.dark .form-group input:focus{
-    box-shadow:0 0 0 3px rgba(74,159,212,0.2);
-}
-
-/* Password wrapper with icon */
-.password-wrapper{
-    position:relative;
-}
-
-.password-wrapper input{
-    padding-right:45px;
-}
-
-.toggle-password{
-    position:absolute;
-    right:14px;
-    top:50%;
-    transform:translateY(-50%);
-    cursor:pointer;
-    font-size:16px;
-    color:var(--icon-color);
-    width:20px;
-    height:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:all 0.3s;
-}
-
-.toggle-password:hover{
-    color:var(--primary);
-}
-
-.dark .toggle-password:hover{
-    color:var(--primary);
-}
-
-/* Remember me & Forgot password */
-.form-options{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-    font-size:14px;
-}
-
-.remember-me{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    cursor:pointer;
-    color:var(--text-medium);
-}
-
-.remember-me input{
-    width:18px;
-    height:18px;
-    accent-color:var(--primary);
-}
-
-.forgot-password{
-    color:var(--primary);
-    text-decoration:none;
-    font-weight:500;
-    transition:all 0.3s;
-}
-
-.forgot-password:hover{
-    text-decoration:underline;
-}
-
-/* Submit button */
-.submit-btn{
-    width:100%;
-    padding:16px;
-    background:var(--primary);
-    color:white;
-    font-size:18px;
-    font-weight:600;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    transition:all 0.3s ease;
-}
-
-.submit-btn:hover{
-    background:var(--primary-hover);
-    transform:translateY(-2px);
-    box-shadow:var(--shadow-lg);
-}
-
-/* Social Login Section */
-.social-login-section{
-    margin:25px 0;
-}
-
-.divider{
-    display:flex;
-    align-items:center;
-    text-align:center;
-    margin:20px 0;
-    color:var(--text-medium);
-    font-size:14px;
-}
-
-.divider::before,
-.divider::after{
-    content:'';
-    flex:1;
-    border-bottom:1px solid var(--border);
-}
-
-.divider::before{
-    margin-right:10px;
-}
-
-.divider::after{
-    margin-left:10px;
-}
-
-.social-buttons{
-    display:flex;
-    gap:15px;
-    justify-content:center;
-}
-
-.social-btn{
-    flex:1;
-    padding:12px 20px;
-    border-radius:10px;
-    border:2px solid var(--border);
-    background:var(--bg);
-    cursor:pointer;
-    transition:all 0.3s ease;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    font-size:16px;
-    font-weight:500;
-    text-decoration:none;
-    color:var(--text);
-}
-
-.social-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:var(--shadow-md);
-}
-
-/* Google батырмасы - қызғылт сары (accent) түс */
-.google-btn{
-    border-color:var(--accent);
-    color:var(--accent);
-}
-
-.google-btn:hover{
-    background:var(--accent);
-    color:white;
-}
-
-/* Apple батырмасы - қою көк (primary) түс */
-.apple-btn{
-    border-color:var(--primary);
-    color:var(--primary);
-}
-
-.dark .apple-btn{
-    border-color:var(--primary);
-    color:var(--primary);
-}
-
-.apple-btn:hover{
-    background:var(--primary);
-    color:white;
-}
-
-.dark .apple-btn:hover{
-    background:var(--primary);
-    color:white;
-}
-
-.social-btn i{
-    font-size:20px;
-}
-
-/* Register link */
-.register-link{
-    margin-top:25px;
-    padding-top:25px;
-    border-top:1px solid var(--border);
-    color:var(--text-medium);
-    font-size:15px;
-}
-
-.register-link a{
-    color:var(--primary);
-    text-decoration:none;
-    font-weight:600;
-    margin-left:5px;
-    transition:all 0.3s;
-}
-
-.register-link a:hover{
-    text-decoration:underline;
-}
-
-/* Responsive */
-@media (max-width:600px){
-    .header{
-        padding:15px 20px;
-    }
-    
-    .logo-img{
-        width:50px;
-        height:50px;
-    }
-    
-    .logo-text h1{
-        font-size:28px;
-    }
-    
-    .form-box{
-        padding:35px 25px;
-    }
-    
-    .form-box h2{
-        font-size:28px;
-    }
-    
-    .form-options{
-        flex-direction:column;
-        gap:15px;
-        align-items:flex-start;
-    }
-    
-    .social-buttons{
-        flex-direction:column;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кіру — ӘДІС</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0B3C5D 0%, #1C5D99 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .auth-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 420px;
+        }
+        
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-logo h1 {
+            color: #0B3C5D;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .auth-logo p {
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e5e8e8;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #0B3C5D;
+            box-shadow: 0 0 0 3px rgba(11, 60, 93, 0.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #0B3C5D;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #1C5D99;
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #7f8c8d;
+        }
+        
+        .auth-footer a {
+            color: #0B3C5D;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .back-link:hover {
+            color: #0B3C5D;
+        }
+        
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <div class="logo-section">
-        <img src="adis.png" alt="ÄDIS Logo" class="logo-img">
-        <div class="logo-text">
-            <h1>ÄDIS</h1>
-            <p>tez • jeńil • naqty</p>
+<div class="auth-container">
+    <div class="auth-logo">
+        <h1>ӘДІС</h1>
+        <p>Аккаунтқа кіру</p>
+    </div>
+    
+    <div class="error-message" id="errorMsg"></div>
+    <div class="success-message" id="successMsg"></div>
+    
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required placeholder="email@example.com">
         </div>
+        <div class="form-group">
+            <label for="password">Құпия сөз</label>
+            <input type="password" id="password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">Кіру</button>
+    </form>
+    
+    <div class="auth-footer">
+        Аккаунт жоқ па? <a href="тіркелу.html">Тіркелу</a>
     </div>
-    <div class="header-actions">
-        <button class="toggle-theme" onclick="toggleTheme()" title="Түнгі/күнгі режим">🌙</button>
-    </div>
+    <a href="index.html" class="back-link">← Басты бетке оралу</a>
 </div>
 
-<!-- FORM -->
-<div class="form-container">
-    <div class="form-box">
-        <h2>Қош келдіңіз!</h2>
-        <p class="form-subtitle">Аккаунтыңызға кіріңіз</p>
-        
-        <!-- Социалды кіру батырмалары -->
-        <div class="social-login-section">
-            <div class="social-buttons">
-                <a href="indexx.html" class="social-btn google-btn">
-                    <i class="fab fa-google"></i>
-                    <span>Google</span>
-                </a>
-                <a href="indexx.html" class="social-btn apple-btn">
-                    <i class="fab fa-apple"></i>
-                    <span>Apple</span>
-                </a>
-            </div>
-            
-            <div class="divider">немесе</div>
-        </div>
-        
-       <form action="login.php" method="POST">
-            
-            <!-- Email -->
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="email@example.com" required>
-            </div>
-            
-            <!-- Пароль -->
-            <div class="form-group">
-                <label for="password">Пароль</label>
-                <div class="password-wrapper">
-                    <input type="password" id="password" name="password" placeholder="Парольді енгізіңіз" required>
-                    <span class="toggle-password" onclick="togglePassword('password', this)">
-                        <i class="fas fa-eye"></i>
-                    </span>
-                </div>
-            </div>
-            
-            <!-- Есте сақтау & Ұмыттым -->
-            <div class="form-options">
-                <label class="remember-me">
-                    <input type="checkbox" name="remember" id="remember">
-                    Есте сақтау
-                </label>
-                <a href="#" class="forgot-password" onclick="alert('Функция жақында қосылады')">Парольді ұмыттыңыз ба?</a>
-            </div>
-            
-            <button type="submit" class="submit-btn">Кіру</button>
-        </form>
-        
-        <!-- Тіркелу сілтемесі -->
-        <div class="register-link">
-            Аккаунтыңыз жоқ па? <a href="тіркелу.html">Тіркелу</a>
-        </div>
-    </div>
-</div>
-
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 
 <script>
-// Түнгі режимді тексеру
-function checkTheme(){
-    if(localStorage.getItem('theme') === 'dark'){
-        document.body.classList.add('dark');
-    } else {
-        document.body.classList.remove('dark');
-    }
-}
+    const firebaseConfig = {
+        apiKey: "AIzaSyC2NjVhAxz6o0orZsLvZO6DBpmefGWtdbs",
+        authDomain: "adis11.firebaseapp.com",
+        projectId: "adis11",
+        storageBucket: "adis11.firebasestorage.app",
+        messagingSenderId: "1076245506221",
+        appId: "1:1076245506221:web:163729dc73b8bc4b957e24",
+        measurementId: "G-ZDK8R92RMY"
+    };
 
-// Түнгі режимді ауыстыру
-function toggleTheme(){
-    if(document.body.classList.contains('dark')){
-        document.body.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-    } else {
-        document.body.class.add('dark');
-        localStorage.setItem('theme', 'dark');
-    }
-}
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-// Парольді көру/жасыру
-function togglePassword(inputId, iconContainer){
-    const input = document.getElementById(inputId);
-    const icon = iconContainer.querySelector('i');
-    
-    if(input.type === 'password'){
-        input.type = 'text';
-        icon.className = 'fas fa-eye-slash';
-    } else {
-        input.type = 'password';
-        icon.className = 'fas fa-eye';
-    }
-}
-
-// Кіру өңдеу
-function handleLogin(e){
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const remember = document.getElementById('remember').checked;
-    
-    // Деректерді тексеру
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    
-    if(userData.email === email && userData.password === password){
-        localStorage.setItem('isLoggedIn', 'true');
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        if(remember){
-            localStorage.setItem('rememberMe', 'true');
-        }
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const btn = document.getElementById('submitBtn');
+        const errorDiv = document.getElementById('errorMsg');
+        const successDiv = document.getElementById('successMsg');
         
-        alert('Қош келдіңіз, ' + (userData.fullname || 'Құрметті мұғалім') + '!');
+        btn.disabled = true;
+        btn.textContent = 'Кіру...';
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
         
-        // Негізгі бетке өту
-        window.location.href = 'main.html';
-    } else {
-        alert('Email немесе пароль қате!');
-    }
-}
-
-// Бет жүктелгенде
-checkTheme();
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                successDiv.textContent = 'Сәтті кірдіңіз! Басты бетке өтудеміз...';
+                successDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    window.location.href = 'indexx.html';
+                }, 1500);
+            })
+            .catch((error) => {
+                let message = 'Қате орын алды';
+                
+                switch(error.code) {
+                    case 'auth/user-not-found':
+                        message = 'Бұл email тіркелмеген';
+                        break;
+                    case 'auth/wrong-password':
+                        message = 'Құпия сөз дұрыс емес';
+                        break;
+                    case 'auth/invalid-email':
+                        message = 'Email форматы дұрыс емес';
+                        break;
+                    case 'auth/invalid-credential':
+                        message = 'Email немесе құпия сөз дұрыс емес';
+                        break;
+                    case 'auth/too-many-requests':
+                        message = 'Тым көп әрекет. Кейінірек қайталап көріңіз';
+                        break;
+                }
+                
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Кіру';
+            });
+    });
 </script>
 
 </body>
