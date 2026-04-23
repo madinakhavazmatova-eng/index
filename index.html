@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ӘДІС — Әдістемелік платформа</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0B3C5D;
+            --primary-hover: #1C5D99;
+            --secondary: #1C5D99;
+            --accent: #F4A261;
+            --text: #2c3e50;
+            --text-medium: #5d6d7e;
+            --text-light: #7f8c8d;
+            --bg: #ffffff;
+            --bg-light: #f4f7fb;
+            --bg-gray: #E6F0F7;
+            --border: #e5e8e8;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark {
+            --primary: #4A9FD4;
+            --primary-hover: #6BB3E0;
+            --secondary: #4A9FD4;
+            --accent: #F4A261;
+            --text: #E8F4F8;
+            --text-medium: #B8D4E3;
+            --text-light: #8FB8D4;
+            --bg: #0A1628;
+            --bg-light: #0F1F35;
+            --bg-gray: #152238;
+            --border: #1E3A5F;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Decorative Clouds */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 100px;
+            opacity: 0.8;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .dark .cloud {
+            background: rgba(74, 159, 212, 0.1);
+        }
+
+        .cloud::before {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 100px;
+        }
+
+        .cloud-1 {
+            width: 100px;
+            height: 40px;
+            top: 20%;
+            left: -100px;
+        }
+        .cloud-1::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 10px;
+        }
+
+        .cloud-2 {
+            width: 80px;
+            height: 35px;
+            top: 40%;
+            right: -80px;
+            animation-delay: 5s;
+        }
+        .cloud-2::before {
+            width: 60px;
+            height: 40px;
+            top: -20px;
+            right: 15px;
+        }
+
+        .cloud-3 {
+            width: 120px;
+            height: 45px;
+            bottom: 30%;
+            left: -120px;
+            animation-delay: 10s;
+        }
+        .cloud-3::before {
+            width: 70px;
+            height: 60px;
+            top: -30px;
+            left: 20px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(50px) translateY(-20px); }
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .dark .header {
+            background: #0B3C5D;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-area img {
+            width: 70px;
+            margin-right: 18px;
+            border-radius: 50%;
+        }
+
+        .logo-text h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            margin: 0;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: rgba(255,255,255,0.85);
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.8);
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-solid {
+            background: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-solid:hover {
+            background: #e8954e;
+            border-color: #e8954e;
+            transform: translateY(-2px);
+        }
+
+        .toggle-theme {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            margin-left: 10px;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .toggle-theme:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(15deg);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 90px;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 999;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dark .mobile-menu {
+            background: #0B3C5D;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+            padding-left: 0.5rem;
+        }
+
+        .mobile-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .mobile-buttons .btn {
+            width: 100%;
+            padding: 0.875rem;
+        }
+
+        /* Section 1: Hero with Panoramic Animation */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-gray) 100%);
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            display: flex;
+            animation: slideBackground 30s infinite linear;
+        }
+
+        .hero-bg-half {
+            width: 50%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Жаңартылған суреттер - білім/мұғалім тақырыбына сай */
+        .hero-bg-1 {
+            background-image: linear-gradient(rgba(11, 60, 93, 0.7), rgba(11, 60, 93, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1920');
+        }
+
+        .hero-bg-2 {
+            background-image: linear-gradient(rgba(11, 60, 93, 0.7), rgba(11, 60, 93, 0.7)), url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920');
+        }
+
+        @keyframes slideBackground {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-welcome {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btn {
+            background: var(--accent);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(244, 162, 97, 0.4);
+            border: 2px solid var(--accent);
+        }
+
+        .hero-btn:hover {
+            background: transparent;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(244, 162, 97, 0.6);
+        }
+
+        /* Section 2: Target Audience */
+        .target-section {
+            padding: 6rem 2rem;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+
+        .target-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border: 2px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .target-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .target-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .target-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Жаңартылған минималистік иконкалар */
+        .target-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+            border: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .target-card:hover .target-icon {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .target-icon::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 3px dashed var(--accent);
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .target-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .target-card p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Жаңартылған "Неліктен осы үш топқа?" бөлігі */
+        .why-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            color: white;
+        }
+
+        .why-section h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .why-section h3::before,
+        .why-section h3::after {
+            content: '💡';
+            font-size: 1.5rem;
+        }
+
+        .why-section p {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        /* Ақпараттық тег стилі */
+        .info-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Section 3: Why ADIS */
+        .why-adis-section {
+            padding: 6rem 2rem;
+            background: var(--bg-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .adis-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .adis-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .adis-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            filter: blur(0px);
+            transition: filter 0.5s ease;
+        }
+
+        .adis-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid var(--accent);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .adis-content {
+            flex: 1;
+        }
+
+        .adis-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .adis-content h2 span {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .adis-answer {
+            background: var(--bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--accent);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .adis-answer::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .adis-answer p {
+            color: var(--text-medium);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        /* Section 4: 3 Reasons */
+        .reasons-section {
+            padding: 6rem 2rem;
+            background: var(--bg);
+            position: relative;
+        }
+
+        .reasons-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .reason-item {
+            text-align: center;
+            max-width: 280px;
+        }
+
+        /* Жаңартылған себеп иконкалары */
+        .reason-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(11, 60, 93, 0.3);
+            transition: var(--transition);
+        }
+
+        .reason-circle::after {
+            content: '';
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            opacity: 0.5;
+            transition: var(--transition);
+        }
+
+        .reason-item:hover .reason-circle {
+            transform: scale(1.1);
+        }
+
+        .reason-item:hover .reason-circle::after {
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        .reason-item h4 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .reason-item p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Section 5: Advantages Carousel */
+        .advantages-section {
+            padding: 6rem 2rem;
+            background: var(--bg-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantages-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .advantages-carousel {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.5s ease;
+        }
+
+        .advantage-card {
+            min-width: calc(33.333% - 1.33rem);
+            background: var(--bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            animation: cardPulse 6s infinite;
+        }
+
+        @keyframes cardPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .advantage-card:nth-child(2) { animation-delay: 0.5s; }
+        .advantage-card:nth-child(3) { animation-delay: 1s; }
+        .advantage-card:nth-child(4) { animation-delay: 1.5s; }
+        .advantage-card:nth-child(5) { animation-delay: 2s; }
+        .advantage-card:nth-child(6) { animation-delay: 2.5s; }
+
+        .advantage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        /* Жаңартылған артықшылық иконкалары */
+        .advantage-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-light);
+            border-radius: 20px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .advantage-card:hover .advantage-icon {
+            background: var(--primary);
+            color: white;
+            transform: rotate(5deg);
+        }
+
+        .advantage-card h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .advantage-card p {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Section 6: Opportunities with Sticker Design */
+        .opportunities-section {
+            padding: 6rem 2rem;
+            background: var(--bg);
+            position: relative;
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        /* Жаңартылған фон - тақта стилі */
+        .opportunities-bg {
+            background: linear-gradient(145deg, #f5f5f0 0%, #e8e8e0 100%);
+            border-radius: 20px;
+            padding: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 400px;
+            box-shadow: 
+                inset 0 2px 4px rgba(0,0,0,0.1),
+                0 10px 30px rgba(0,0,0,0.1);
+            border: 8px solid #d4d4c8;
+        }
+
+        .dark .opportunities-bg {
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            border-color: #0f3460;
+        }
+
+        /* Тақта жиектері */
+        .opportunities-bg::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px dashed rgba(0,0,0,0.1);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .stickers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Жаңартылған стикер стилі */
+        .sticker {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 
+                3px 3px 10px rgba(0,0,0,0.15),
+                inset 0 -2px 0 rgba(0,0,0,0.05);
+            transform: rotate(-3deg);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text);
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .sticker:nth-child(even) {
+            transform: rotate(3deg);
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .sticker:nth-child(3n) {
+            background: #e8f4f8;
+            color: var(--primary);
+        }
+
+        .sticker:nth-child(4n) {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        /* Түйреуіштер */
+        .sticker::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b);
+            border-radius: 50%;
+            box-shadow: 
+                0 3px 6px rgba(0,0,0,0.3),
+                inset 0 -3px 3px rgba(0,0,0,0.2);
+        }
+
+        .sticker:nth-child(even)::before {
+            background: radial-gradient(circle at 30% 30%, #4ecdc4, #1a936f);
+        }
+
+        .sticker:nth-child(3n)::before {
+            background: radial-gradient(circle at 30% 30%, #ffe66d, #f39c12);
+        }
+
+        .sticker:nth-child(4n)::before {
+            background: radial-gradient(circle at 30% 30%, #a8e6cf, #27ae60);
+        }
+
+        .sticker:hover {
+            transform: rotate(0deg) scale(1.05) translateY(-5px);
+            z-index: 10;
+            box-shadow: 
+                5px 5px 20px rgba(0,0,0,0.2),
+                inset 0 -2px 0 rgba(0,0,0,0.05);
+        }
+
+        /* Help Section */
+        .help {
+            padding: 6rem 2rem;
+            background: var(--bg);
+        }
+
+        .help-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Жаңартылған тақырып стилі - орталықта */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-tag {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title-centered {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title-centered::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .accordion {
+            margin-bottom: 4rem;
+        }
+
+        .accordion-item {
+            background: var(--bg-light);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .accordion-item:hover {
+            border-color: rgba(244, 162, 97, 0.3);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--bg);
+            transition: var(--transition);
+            user-select: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-light);
+            color: var(--primary);
+        }
+
+        .accordion-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+            background: var(--accent);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: var(--bg);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 300px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .accordion-content p {
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        /* Contact Form */
+        .contact-section {
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .contact-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .contact-section > p {
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 159, 212, 0.1);
+        }
+
+        .dark .form-group input:focus,
+        .dark .form-group textarea:focus,
+        .dark .form-group select:focus {
+            box-shadow: 0 0 0 3px rgba(74, 159, 212, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 60, 93, 0.25);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .dark footer {
+            background: #0B3C5D;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: inline-block;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom strong {
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            
+            .adis-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .advantage-card {
+                min-width: calc(50% - 1rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .nav-menu,
+            .nav-actions {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title, .section-title-centered {
+                font-size: 1.75rem;
+            }
+
+            .reasons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .advantage-card {
+                min-width: 100%;
+            }
+
+            .contact-section {
+                padding: 2rem;
+            }
+
+            .opportunities-bg {
+                padding: 2rem;
+            }
+
+            .sticker {
+                min-width: 150px;
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 28px;
+            }
+
+            .logo-area img {
+                width: 50px;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .why-section {
+                padding: 2rem;
+            }
+
+            .sticker {
+                padding: 1rem 1.5rem;
+                min-width: 140px;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 2rem; }
+        
+        /* Loading Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" id="navbar">
+        <div class="logo-area">
+            <img src="adis.png" alt="ӘДІС Logo">
+            <div class="logo-text">
+                <h1>ÄDIS</h1>
+                <p>tez • jeńil • naqty</p>
+            </div>
+        </div>
+        
+        <!-- Жаңартылған навигация мәзірі -->
+        <ul class="nav-menu">
+            <li><a href="#home">Басты бет</a></li>
+            <li><a href="#target">Аудитория</a></li>
+            <li><a href="#why-adis">Платформа туралы</a></li>
+            <li><a href="#help">Көмек</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <!-- Жаңартылған сілтемелер -->
+            <a href="кіру.html" class="btn btn-outline">Кіру</a>
+            <a href="тіркелу.html" class="btn btn-solid">Тіркелу</a>
+            <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <!-- Жаңартылған мобильді мәзір -->
+        <a href="#home" onclick="toggleMenu()">Басты бет</a>
+        <a href="#target" onclick="toggleMenu()">Аудитория</a>
+        <a href="#why-adis" onclick="toggleMenu()">Платформа туралы</a>
+        <a href="#help" onclick="toggleMenu()">Көмек</a>
+        <div class="mobile-buttons">
+            <a href="кіру.html" class="btn btn-outline">Кіру</a>
+            <a href="тіркелу.html" class="btn btn-solid">Тіркелу</a>
+            <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button> 
+        </div>
+    </div>
+
+    <!-- Section 1: Hero with Panoramic Animation -->
+    <section class="hero-section" id="home">
+        <div class="hero-background">
+            <div class="hero-bg-half hero-bg-1"></div>
+            <div class="hero-bg-half hero-bg-2"></div>
+        </div>
+        
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        
+        <div class="hero-content">
+            <p class="hero-welcome">Қош келдіңіз!</p>
+            <h1 class="hero-title">Әдістемелік платформа</h1>
+            <p class="hero-subtitle">Заманауи педагогика, инновациялық әдістер және сараптамалық материалдар. Білім беруді жаңа деңгейге көтеріңіз.</p>
+            <a href="#target" class="hero-btn">Бастау →</a>
+        </div>
+    </section>
+
+    <!-- Section 2: Target Audience -->
+    <section class="target-section" id="target">
+        <div class="cloud cloud-3"></div>
+        
+        <h2 class="section-title">Сайт кімдерге арналған?</h2>
+        
+        <div class="cards-container">
+            <!-- Жаңартылған минималистикалық иконкалар -->
+            <div class="target-card fade-in">
+                <div class="target-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3>Мұғалімдерге</h3>
+                <p>Сабақтарды түрлендіруге арналған инновациялық әдістер мен оқу құралдары</p>
+            </div>
+            
+            <div class="target-card fade-in">
+                <div class="target-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3>Практиканттарға</h3>
+                <p>Тәжірибе жинақтауға және кәсіби дағдыларды дамытуға көмектесетін материалдар</p>
+            </div>
+            
+            <div class="target-card fade-in">
+                <div class="target-icon">
+                    <i class="fas fa-book-reader"></i>
+                </div>
+                <h3>Студенттерге</h3>
+                <p>Педагогикалық білім алушыларға арналған теориялық және практикалық база</p>
+            </div>
+        </div>
+        
+        <!-- Жаңартылған "Неліктен осы үш топқа?" бөлігі -->
+        <div class="why-section fade-in">
+            <h3>Неліктен осы үш топқа?</h3>
+            <p>Біз білім беру процесінің барлық қатысушыларына — тәжірибелі ұстаздардан бастап болашақ педагогтарға дейін — қолдау көрсетеміз. Әрбір деңгейде кәсіби өсуге және сапалы білім беруге жағдай жасаймыз. Бірлесе отырып, біз қазақ білім беру жүйесін жаңғыртамыз!</p>
+            
+        </div>
+    </section>
+
+    <!-- Section 3: Why ADIS -->
+    <section class="why-adis-section" id="why-adis">
+        <div class="cloud cloud-1"></div>
+        
+        <div class="adis-container">
+            <div class="adis-image fade-in">
+                <!-- Жаңартылған сурет - білім тақырыбына сай -->
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800" alt="Оқыту процесі">
+            </div>
+            
+            <div class="adis-content fade-in">
+                <h2>Оқытуда <span>ÄDIS</span> не үшін қолданылады?</h2>
+                <div class="adis-answer">
+                    <p><strong>ÄDIS</strong> — бұл оқыту процесін жеңілдететін, сабақтарды интерактивті ететін және оқушылардың белсенділігін арттыратын заманауи әдістемелік құрал. Біздің платформа мұғалімдерге уақытты үнемдеп, сабақ сапасын арттыруға мүмкіндік береді!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: 3 Reasons -->
+    <section class="reasons-section" id="reasons">
+        <h2 class="section-title">Бізді таңдаудың 3 себебі</h2>
+        
+        <div class="reasons-container">
+            <!-- Жаңартылған себеп иконкалары -->
+            <div class="reason-item fade-in">
+                <div class="reason-circle">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h4>Сапа кепілі</h4>
+                <p>Барлық материалдар сарапшылар тарапынан тексерілген және білім беру стандарттарына сәйкес келеді</p>
+            </div>
+            
+            <div class="reason-item fade-in">
+                <div class="reason-circle">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h4>Жылдам қол жетімділік</h4>
+                <p>Кез келген уақытта, кез келген құрылғыдан қолжетімді. Жүктеп алуға немесе онлайн қарауға болады</p>
+            </div>
+            
+            <div class="reason-item fade-in">
+                <div class="reason-circle">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h4>Үздіксіз жаңарту</h4>
+                <p>Материалдар базасы тұрақты түрде толықтырылып, заманауи талаптарға сай жаңартылып отырады</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Advantages -->
+    <section class="advantages-section" id="advantages">
+        <div class="cloud cloud-2"></div>
+        
+        <h2 class="section-title">Артықшылықтарымыз</h2>
+        
+        <div class="advantages-wrapper">
+            <div class="advantages-carousel" id="advantagesCarousel">
+                <!-- Жаңартылған артықшылық иконкалары -->
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-th-list"></i>
+                    </div>
+                    <h4>Жүйеленген материалдар</h4>
+                    <p>Сыныптар бойынша және пәндер бойынша ыңғайлы түрде топтастырылған</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h4>Нақты нәтиже</h4>
+                    <p>Әр әдіс оқу нәтижелерін арттыруға бағытталған</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>Инновациялық тәсілдер</h4>
+                    <p>Заманауи педагогиканың ең тиімді әдістері</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Қауымдастық</h4>
+                    <p>Басқа мұғалімдермен тәжірибе алмасу мүмкіндігі</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Мобильді нұсқа</h4>
+                    <p>Телефон және планшет арқылы ыңғайлы қолдану</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Қауіпсіздік</h4>
+                    <p>Деректеріңіздің қорғалуы кепілдендірілген</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Opportunities with Sticker Design -->
+    <section class="opportunities-section" id="opportunities">
+        <h2 class="section-title">Сіз қол жеткізетін мүмкіндіктер</h2>
+        
+        <div class="opportunities-bg">
+            <!-- Мұғалім анимациясы алынып тасталды -->
+            
+            <div class="stickers-container">
+                <div class="sticker">500+ әдістемелік материалдар</div>
+                <div class="sticker">Тегін жүктеп алу</div>
+                <div class="sticker">Күн сайын жаңартылып отырады</div>
+                <div class="sticker">Сарапшылардан кеңестер</div>
+                <div class="sticker">Видео нұсқаулықтар</div>
+                <div class="sticker">Онлайн вебинарлар</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Help Section -->
+    <section class="help" id="help">
+        <div class="help-container">
+            <!-- Жаңартылған тақырып - орталықта -->
+            <div class="section-header">
+                <div class="section-tag">Көмек</div>
+                <h2 class="section-title-centered">Сұрақ-жауап</h2>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-item active">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Платформаға қалай тіркелуге болады?</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>«Тіркелу» батырмасын басып, электрондық поштаңызды енгізіңіз. Растау хаты келгеннен кейін тіркелу аяқталады.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Әдістерді жүктеп алуға бола ма?</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Иә, әр әдістің бетінде толық нұсқаулық бар. Платформаға тіркелген пайдаланушыларға тегін.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Өз әдісімді қосуға бола ма?</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Әрине! «Ұсыныстар» бөлімінен өз әдісіңізді жібере аласыз. Модерациядан кейін платформада жарияланады.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Техникалық қолдау қызметі қалай жұмыс істейді?</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Төмендегі форманы толтырып хабарлама жіберу арқылы қолдау қызметіне жүгіне аласыз. 24 сағат ішінде жауап аласыз.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-section fade-in">
+                <h3>Бізге хабарласыңыз</h3>
+                <p>Сұрағыңыз бар ма? Төмендегі форманы толтырыңыз, біз жауап береміз.</p>
+                <form action="send.php" method="POST">
+                    <div class="form-group">
+                        <label for="fullName">Аты-жөніңіз</label>
+                        <input type="text" id="fullName" required placeholder="Мысалы: Айгүл Серікқызы">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email немесе телефон</label>
+                        <input type="text" id="email" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Сұрақтың түрі</label>
+                        <select id="category" required>
+                            <option value="">Таңдаңыз...</option>
+                            <option value="technical">Техникалық мәселе</option>
+                            <option value="content">Материалдар туралы</option>
+                            <option value="other">Басқа</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Хабарлама</label>
+                        <textarea id="message" required placeholder="Сұрағыңызды толық жазыңыз..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" onclick="location.href='contact.php'">Жіберу</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Әдістемелік Платформа</div>
+            <!-- Жаңартылған footer навигациясы -->
+            <div class="footer-links">
+                <a href="#home">Басты бет</a>
+                <a href="#target">Аудитория</a>
+                <a href="#why-adis">Платформа туралы</a>
+                <a href="#help">Көмек</a>
+            </div>
+            <div class="footer-bottom">
+                <p>Жасағандар: <strong>Хавазматова М. & Шералиева И.</strong></p>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem;">©️ 2026 ӘДІС — әдістемелік платформа</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('active');
+            });
+            
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Form Submit Handler
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                category: document.getElementById('category').value,
+                message: document.getElementById('message').value
+            };
+            
+            alert('Рахмет, ' + formData.name + '! Хабарламаңыз қабылданды. Жақын арада байланысамыз.');
+            e.target.reset();
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const themeBtn = document.querySelector('.toggle-theme');
+            if (document.body.classList.contains('dark')) {
+                themeBtn.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeBtn.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            document.querySelector('.toggle-theme').textContent = '☀️';
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+        // Advantages Carousel Auto-scroll
+        let currentSlide = 0;
+        const carousel = document.getElementById('advantagesCarousel');
+        const cards = carousel.querySelectorAll('.advantage-card');
+        const totalSlides = cards.length - 3;
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % (totalSlides + 1);
+            carousel.style.transform = `translateX(-${currentSlide * (33.333 + 1.33)}%)`;
+        }
+
+        setInterval(nextSlide, 3000);
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
