@@ -1886,12 +1886,13 @@ footer strong{
     display: none;
 }
 </style>
+<base target="_blank">
 </head>
 <body>
 
 <div class="header">
 
-    <div class="logo-area" onclick="loadFrame('home.html')">
+    <div class="logo-area" onclick="loadFrame('home.html'); return false;">
         <img src="adis.png" alt="ÄDIS Logo">
         <div class="logo-text">
             <h1>ÄDIS</h1>
@@ -1906,8 +1907,8 @@ footer strong{
     </div>
 
     <div class="auth">
-        <a href="#" class="btn login" onclick="showProfile()"><i class="fas fa-user"></i> Жеке кабинет</a>
-        <a href="#" class="btn login" onclick="showMyMethods()"><i class="fas fa-bookmark"></i> Менің әдістерім</a>
+        <a href="#" class="btn login" onclick="showProfile(); return false;"><i class="fas fa-user"></i> Жеке кабинет</a>
+        <a href="#" class="btn login" onclick="showMyMethods(); return false;"><i class="fas fa-bookmark"></i> Менің әдістерім</a>
         <button class="toggle" onclick="toggleMode()" title="Түнгі/күнгі режим">🌙</button>
     </div>
 
@@ -1949,16 +1950,16 @@ footer strong{
             <i class="fas fa-chevron-down"></i>
         </button>
         <div class="mobile-nav-content" id="mobileCategories">
-            <a href="#" onclick="loadFrame('bastauysh.html'); toggleMobileMenu()">Бастауыш сынып</a>
-            <a href="#" onclick="loadFrame('orta.html'); toggleMobileMenu()">Орта сынып</a>
-            <a href="#" onclick="loadFrame('jogary.html'); toggleMobileMenu()">Жоғары сынып</a>
-            <a href="#" onclick="loadFrame('sergitu.html'); toggleMobileMenu()">Сергіту сәті</a>
-            <a href="#" onclick="loadFrame('basta.html'); toggleMobileMenu()">Сабақты бастау</a>
-            <a href="#" onclick="loadFrame('talda.html'); toggleMobileMenu()">Талдау</a>
-            <a href="#" onclick="loadFrame('qoryt.html'); toggleMobileMenu()">Қорытынды</a>
-            <a href="#" onclick="loadFrame('topbol.html'); toggleMobileMenu()">Топтық тапсырмалар</a>
-            <a href="#" onclick="loadFrame('jeke.html'); toggleMobileMenu()">Жеке тапсырма</a>
-            <a href="#" onclick="loadFrame('pan.html'); toggleMobileMenu()">Интерактив тапсырмалар</a>
+            <a href="#" onclick="loadFrame('bastauysh.html'); toggleMobileMenu(); return false;">Бастауыш сынып</a>
+            <a href="#" onclick="loadFrame('orta.html'); toggleMobileMenu(); return false;">Орта сынып</a>
+            <a href="#" onclick="loadFrame('jogary.html'); toggleMobileMenu(); return false;">Жоғары сынып</a>
+            <a href="#" onclick="loadFrame('sergitu.html'); toggleMobileMenu(); return false;">Сергіту сәті</a>
+            <a href="#" onclick="loadFrame('basta.html'); toggleMobileMenu(); return false;">Сабақты бастау</a>
+            <a href="#" onclick="loadFrame('talda.html'); toggleMobileMenu(); return false;">Талдау</a>
+            <a href="#" onclick="loadFrame('qoryt.html'); toggleMobileMenu(); return false;">Қорытынды</a>
+            <a href="#" onclick="loadFrame('topbol.html'); toggleMobileMenu(); return false;">Топтық тапсырмалар</a>
+            <a href="#" onclick="loadFrame('jeke.html'); toggleMobileMenu(); return false;">Жеке тапсырма</a>
+            <a href="#" onclick="loadFrame('interactive.html'); toggleMobileMenu(); return false;">Интерактив тапсырмалар</a>
         </div>
     </div>
     
@@ -1978,12 +1979,12 @@ footer strong{
 </div>
 <!-- TOP MENU -->
 <div class="top-menu">
-    <a href="#" onclick="loadPage('home.html', 'menuHome')" id="menuHome">Басты бет</a>
-    <a href="#" onclick="loadPage('popular.html', 'menuPopular')" id="menuPopular">Танымал әдістер</a>
-    <a href="#" onclick="loadPage('new.html', 'menuNew')" id="menuNew">Жаңа әдістер</a>
-    <a href="#" onclick="loadPage('saved.html', 'menuSaved')" id="menuSaved">Сақталған әдістер</a>
-    <a href="#" onclick="loadPage('interactive.html', 'menuInteractive')" id="menuInteractive">Интерактив тапсырмалар</a>
-    <a href="#" onclick="loadPage('suggestions.html', 'menuSuggest')" id="menuSuggest">Ұсыныстар</a>
+    <a href="#" onclick="loadPage('home.html', 'menuHome'); return false;" id="menuHome">Басты бет</a>
+    <a href="#" onclick="loadPage('popular.html', 'menuPopular'); return false;" id="menuPopular">Танымал әдістер</a>
+    <a href="#" onclick="loadPage('new.html', 'menuNew'); return false;" id="menuNew">Жаңа әдістер</a>
+    <a href="#" onclick="loadPage('saved.html', 'menuSaved'); return false;" id="menuSaved">Сақталған әдістер</a>
+    <a href="#" onclick="loadPage('interactive.html', 'menuInteractive'); return false;" id="menuInteractive">Интерактив тапсырмалар</a>
+    <a href="#" onclick="loadPage('suggestions.html', 'menuSuggest'); return false;" id="menuSuggest">Ұсыныстар</a>
 </div>
 
 <div class="main">
@@ -2248,13 +2249,19 @@ footer strong{
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Өзім туралы</label>
-                            <textarea id="userBio" rows="3" placeholder="Өзіңіз туралы қысқаша..."></textarea>
-                        </div>
-                        <button class="btn-primary" onclick="saveProfile()">
-                            <i class="fas fa-save"></i> Сақтау
-                        </button>
-                    </div>
+    <label>Өзім туралы</label>
+    <textarea id="userBio" rows="3" placeholder="Өзіңіз туралы қысқаша..."></textarea>
+</div>
+
+<!-- МІНА ЖЕРГЕ ҚОЮ -->
+<div style="display: flex; gap: 15px; margin-top: 20px;">
+    <button class="btn-primary" onclick="saveProfile()">
+        <i class="fas fa-save"></i> Сақтау
+    </button>
+    <button class="btn-danger" onclick="logoutFromProfile()" style="background: #e74c3c; color: white; border: 2px solid #e74c3c; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+        <i class="fas fa-sign-out-alt"></i> Шығу
+    </button>
+</div>
                 </div>
             </div>
 
@@ -2510,12 +2517,15 @@ function toggleMode() {
 
 // ===== PAGE LOADING =====
 function loadFrame(url) {
+    console.log('Loading frame:', url);
     const frame = document.getElementById('contentFrame');
     if (frame) {
         frame.src = url;
         updateAIContext(url);
+    } else {
+        console.error('Content frame not found!');
     }
-    
+
     if (window.innerWidth <= 768) {
         const sidebar = document.getElementById('sidebar');
         if (sidebar && sidebar.classList.contains('show')) {
@@ -2792,24 +2802,30 @@ function closeProfile() {
 }
 
 function switchTab(tabName, clickedTab) {
+    console.log('Switching to tab:', tabName);
+
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
     document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
     });
-    
+
     const tabContent = document.getElementById(tabName + 'Tab');
     if (tabContent) {
         tabContent.classList.add('active');
+        console.log('Tab activated:', tabName + 'Tab');
+    } else {
+        console.error('Tab content not found:', tabName + 'Tab');
     }
-    
+
     if (clickedTab) {
         clickedTab.classList.add('active');
     } else {
         const tabs = document.querySelectorAll('.tab');
         tabs.forEach(tab => {
-            if (tab.getAttribute('onclick') && tab.getAttribute('onclick').includes(tabName)) {
+            const onclick = tab.getAttribute('onclick');
+            if (onclick && (onclick.includes("'" + tabName + "'") || onclick.includes('"' + tabName + '"'))) {
                 tab.classList.add('active');
             }
         });
@@ -3138,6 +3154,29 @@ function toggleAccordion(header, menuId) {
     
     // Ағымды submenu-ны ашу/жабу
     menuItem.classList.toggle('open');
+}
+
+// ===== FIREBASE LOGOUT FROM PROFILE - ТОЛЫҚ ДҰРЫСТАЛҒАН =====
+function logoutFromProfile() {
+    // Алдымен localStorage-ты тазалау (жеке кабинет деректерін)
+    localStorage.removeItem('profile');
+    localStorage.removeItem('avatar');
+    localStorage.removeItem('savedMethods');
+    localStorage.removeItem('myMethods');
+    localStorage.removeItem('viewedCount');
+
+    if (typeof firebase !== 'undefined' && firebase.auth) {
+        firebase.auth().signOut().then(() => {
+            console.log('Firebase-тан сәтті шықылды');
+            window.location.href = 'index.html';
+        }).catch((error) => {
+            console.error('Шығу қатесі:', error);
+            window.location.href = 'index.html';
+        });
+    } else {
+        console.log('Firebase табылмады, тікелей бетке өтуде...');
+        window.location.href = 'index.html';
+    }
 }
 </script>
 

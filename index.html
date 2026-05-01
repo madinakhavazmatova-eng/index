@@ -31,7 +31,7 @@
             --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .dark {
             --primary: #4A9FD4;
             --primary-hover: #6BB3E0;
@@ -69,7 +69,7 @@
             opacity: 0.8;
             animation: float 20s infinite ease-in-out;
         }
-        
+
         .dark .cloud {
             background: rgba(74, 159, 212, 0.1);
         }
@@ -351,7 +351,7 @@
             padding: 0.875rem;
         }
 
-        /* Section 1: Hero with Panoramic Animation */
+        /* Section 1: Hero with 360 Panorama */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -362,35 +362,36 @@
             background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-gray) 100%);
         }
 
-        .hero-background {
+        .hero-panorama {
             position: absolute;
             top: 0;
             left: 0;
-            width: 200%;
+            width: 100%;
             height: 100%;
-            display: flex;
-            animation: slideBackground 30s infinite linear;
+            overflow: hidden;
         }
 
-        .hero-bg-half {
-            width: 50%;
+        .panorama-image {
+            width: 300%;
             height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=2400');
             background-size: cover;
             background-position: center;
+            animation: panoramaRotate 40s linear infinite;
         }
 
-        /* Жаңартылған суреттер - білім/мұғалім тақырыбына сай */
-        .hero-bg-1 {
-            background-image: linear-gradient(rgba(11, 60, 93, 0.7), rgba(11, 60, 93, 0.7)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1920');
+        .panorama-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(11, 60, 93, 0.75) 0%, rgba(28, 93, 153, 0.65) 100%);
         }
 
-        .hero-bg-2 {
-            background-image: linear-gradient(rgba(11, 60, 93, 0.7), rgba(11, 60, 93, 0.7)), url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920');
-        }
-
-        @keyframes slideBackground {
+        @keyframes panoramaRotate {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            100% { transform: translateX(-66.666%); }
         }
 
         .hero-content {
@@ -527,7 +528,6 @@
             transform: scaleX(1);
         }
 
-        /* Жаңартылған минималистік иконкалар */
         .target-icon {
             width: 100px;
             height: 100px;
@@ -579,38 +579,31 @@
         /* Жаңартылған "Неліктен осы үш топқа?" бөлігі */
         .why-section {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 30px;
-            padding: 3rem;
+            border-radius: 24px;
+            padding: 3.5rem;
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
             color: white;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
         }
 
         .why-section h3 {
-            text-align: center;
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .why-section h3::before,
-        .why-section h3::after {
-            content: '💡';
-            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .why-section p {
-            text-align: center;
             font-size: 1.1rem;
             line-height: 1.8;
             opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        /* Ақпараттық тег стилі */
         .info-badge {
             display: inline-block;
             background: rgba(255,255,255,0.2);
@@ -646,8 +639,6 @@
             width: 100%;
             border-radius: 20px;
             box-shadow: var(--shadow-lg);
-            filter: blur(0px);
-            transition: filter 0.5s ease;
         }
 
         .adis-image::before {
@@ -726,7 +717,6 @@
             max-width: 280px;
         }
 
-        /* Жаңартылған себеп иконкалары */
         .reason-circle {
             width: 150px;
             height: 150px;
@@ -823,7 +813,6 @@
             border-color: var(--accent);
         }
 
-        /* Жаңартылған артықшылық иконкалары */
         .advantage-icon {
             width: 80px;
             height: 80px;
@@ -866,7 +855,6 @@
             overflow: hidden;
         }
 
-        /* Жаңартылған фон - тақта стилі */
         .opportunities-bg {
             background: linear-gradient(145deg, #f5f5f0 0%, #e8e8e0 100%);
             border-radius: 20px;
@@ -875,9 +863,7 @@
             margin: 0 auto;
             position: relative;
             min-height: 400px;
-            box-shadow: 
-                inset 0 2px 4px rgba(0,0,0,0.1),
-                0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.1);
             border: 8px solid #d4d4c8;
         }
 
@@ -886,7 +872,6 @@
             border-color: #0f3460;
         }
 
-        /* Тақта жиектері */
         .opportunities-bg::before {
             content: '';
             position: absolute;
@@ -899,6 +884,10 @@
             pointer-events: none;
         }
 
+        .dark .opportunities-bg::before {
+            border-color: rgba(255,255,255,0.1);
+        }
+
         .stickers-container {
             display: flex;
             flex-wrap: wrap;
@@ -908,14 +897,11 @@
             z-index: 2;
         }
 
-        /* Жаңартылған стикер стилі */
         .sticker {
             background: white;
             padding: 1.5rem 2rem;
             border-radius: 10px;
-            box-shadow: 
-                3px 3px 10px rgba(0,0,0,0.15),
-                inset 0 -2px 0 rgba(0,0,0,0.05);
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.15), inset 0 -2px 0 rgba(0,0,0,0.05);
             transform: rotate(-3deg);
             position: relative;
             border: 1px solid rgba(0,0,0,0.1);
@@ -926,8 +912,21 @@
             text-align: center;
         }
 
+        .dark .sticker {
+            background: #1a1a2e;
+            color: var(--text);
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.4), inset 0 -2px 0 rgba(0,0,0,0.2);
+        }
+
         .sticker:nth-child(even) {
             transform: rotate(3deg);
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .dark .sticker:nth-child(even) {
             background: var(--accent);
             color: white;
             border-color: var(--accent);
@@ -938,12 +937,21 @@
             color: var(--primary);
         }
 
+        .dark .sticker:nth-child(3n) {
+            background: #152238;
+            color: var(--primary);
+        }
+
         .sticker:nth-child(4n) {
             background: #fff3e0;
             color: #e65100;
         }
 
-        /* Түйреуіштер */
+        .dark .sticker:nth-child(4n) {
+            background: #2a1a10;
+            color: #ff9800;
+        }
+
         .sticker::before {
             content: '';
             position: absolute;
@@ -954,9 +962,7 @@
             height: 24px;
             background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b);
             border-radius: 50%;
-            box-shadow: 
-                0 3px 6px rgba(0,0,0,0.3),
-                inset 0 -3px 3px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 -3px 3px rgba(0,0,0,0.2);
         }
 
         .sticker:nth-child(even)::before {
@@ -974,9 +980,7 @@
         .sticker:hover {
             transform: rotate(0deg) scale(1.05) translateY(-5px);
             z-index: 10;
-            box-shadow: 
-                5px 5px 20px rgba(0,0,0,0.2),
-                inset 0 -2px 0 rgba(0,0,0,0.05);
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.2), inset 0 -2px 0 rgba(0,0,0,0.05);
         }
 
         /* Help Section */
@@ -990,7 +994,6 @@
             margin: 0 auto;
         }
 
-        /* Жаңартылған тақырып стилі - орталықта */
         .section-header {
             text-align: center;
             margin-bottom: 3rem;
@@ -1245,12 +1248,12 @@
                 grid-template-columns: 1fr;
                 max-width: 400px;
             }
-            
+
             .adis-container {
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             .advantage-card {
                 min-width: calc(50% - 1rem);
             }
@@ -1327,7 +1330,7 @@
         /* Utility Classes */
         .text-center { text-align: center; }
         .mt-2 { margin-top: 2rem; }
-        
+
         /* Loading Animation */
         .fade-in {
             opacity: 0;
@@ -1339,10 +1342,21 @@
             opacity: 1;
             transform: translateY(0);
         }
-    </style>
+    
+        /* Auth buttons - ensure visible by default */
+        #authButtons, #mobileAuthButtons {
+            display: flex !important;
+        }
+
+        #loginBtn, #registerBtn, #mobileLoginBtn, #mobileRegisterBtn {
+            display: inline-flex !important;
+        }
+</style>
     <!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<base target="_self">
+<base target="_self">
 </head>
 <body>
 
@@ -1355,8 +1369,7 @@
                 <p>tez • jeńil • naqty</p>
             </div>
         </div>
-        
-        <!-- Жаңартылған навигация мәзірі -->
+
         <ul class="nav-menu">
             <li><a href="#home">Басты бет</a></li>
             <li><a href="#target">Аудитория</a></li>
@@ -1365,16 +1378,10 @@
         </ul>
 
         <div class="nav-actions" id="authButtons">
-    <!-- Кірмеген пайдаланушы -->
-    <a href="кіру.html" class="btn btn-outline" id="loginBtn">Кіру</a>
-    <a href="тіркелу.html" class="btn btn-solid" id="registerBtn">Тіркелу</a>
-    
-    <!-- Кірген пайдаланушы (бастапқыда жасырын) -->
-    <span id="userName" style="color: white; margin-right: 1rem; display: none; font-weight: 500;"></span>
-    <button class="btn btn-outline" id="logoutBtn" style="display: none;" onclick="logout()">Шығу</button>
-    
-    <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button>
-</div>
+            <a href="кіру.html" class="btn btn-outline" id="loginBtn">Кіру</a>
+            <a href="тіркелу.html" class="btn btn-solid" id="registerBtn">Тіркелу</a>
+            <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button>
+        </div>
 
         <div class="hamburger" onclick="toggleMenu()">
             <span></span>
@@ -1385,30 +1392,27 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <!-- Жаңартылған мобильді мәзір -->
         <a href="#home" onclick="toggleMenu()">Басты бет</a>
         <a href="#target" onclick="toggleMenu()">Аудитория</a>
         <a href="#why-adis" onclick="toggleMenu()">Платформа туралы</a>
         <a href="#help" onclick="toggleMenu()">Көмек</a>
         <div class="mobile-buttons" id="mobileAuthButtons">
-    <a href="кіру.html" class="btn btn-outline" id="mobileLoginBtn">Кіру</a>
-    <a href="тіркелу.html" class="btn btn-solid" id="mobileRegisterBtn">Тіркелу</a>
-    <span id="mobileUserName" style="color: white; margin-bottom: 0.5rem; display: none;"></span>
-    <button class="btn btn-outline" id="mobileLogoutBtn" style="display: none;" onclick="logout()">Шығу</button>
-    <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button> 
-</div>
+            <a href="кіру.html" class="btn btn-outline" id="mobileLoginBtn">Кіру</a>
+            <a href="тіркелу.html" class="btn btn-solid" id="mobileRegisterBtn">Тіркелу</a>
+            <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button> 
+        </div>
     </div>
 
-    <!-- Section 1: Hero with Panoramic Animation -->
+    <!-- Section 1: Hero with 360 Panorama -->
     <section class="hero-section" id="home">
-        <div class="hero-background">
-            <div class="hero-bg-half hero-bg-1"></div>
-            <div class="hero-bg-half hero-bg-2"></div>
+        <div class="hero-panorama">
+            <div class="panorama-image"></div>
+            <div class="panorama-overlay"></div>
         </div>
-        
+
         <div class="cloud cloud-1"></div>
         <div class="cloud cloud-2"></div>
-        
+
         <div class="hero-content">
             <p class="hero-welcome">Қош келдіңіз!</p>
             <h1 class="hero-title">Әдістемелік платформа</h1>
@@ -1420,11 +1424,10 @@
     <!-- Section 2: Target Audience -->
     <section class="target-section" id="target">
         <div class="cloud cloud-3"></div>
-        
+
         <h2 class="section-title">Сайт кімдерге арналған?</h2>
-        
+
         <div class="cards-container">
-            <!-- Жаңартылған минималистикалық иконкалар -->
             <div class="target-card fade-in">
                 <div class="target-icon">
                     <i class="fas fa-chalkboard-teacher"></i>
@@ -1432,7 +1435,7 @@
                 <h3>Мұғалімдерге</h3>
                 <p>Сабақтарды түрлендіруге арналған инновациялық әдістер мен оқу құралдары</p>
             </div>
-            
+
             <div class="target-card fade-in">
                 <div class="target-icon">
                     <i class="fas fa-user-graduate"></i>
@@ -1440,7 +1443,7 @@
                 <h3>Практиканттарға</h3>
                 <p>Тәжірибе жинақтауға және кәсіби дағдыларды дамытуға көмектесетін материалдар</p>
             </div>
-            
+
             <div class="target-card fade-in">
                 <div class="target-icon">
                     <i class="fas fa-book-reader"></i>
@@ -1449,25 +1452,22 @@
                 <p>Педагогикалық білім алушыларға арналған теориялық және практикалық база</p>
             </div>
         </div>
-        
-        <!-- Жаңартылған "Неліктен осы үш топқа?" бөлігі -->
+
         <div class="why-section fade-in">
             <h3>Неліктен осы үш топқа?</h3>
             <p>Біз білім беру процесінің барлық қатысушыларына — тәжірибелі ұстаздардан бастап болашақ педагогтарға дейін — қолдау көрсетеміз. Әрбір деңгейде кәсіби өсуге және сапалы білім беруге жағдай жасаймыз. Бірлесе отырып, біз қазақ білім беру жүйесін жаңғыртамыз!</p>
-            
         </div>
     </section>
 
     <!-- Section 3: Why ADIS -->
     <section class="why-adis-section" id="why-adis">
         <div class="cloud cloud-1"></div>
-        
+
         <div class="adis-container">
             <div class="adis-image fade-in">
-                <!-- Жаңартылған сурет - білім тақырыбына сай -->
                 <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800" alt="Оқыту процесі">
             </div>
-            
+
             <div class="adis-content fade-in">
                 <h2>Оқытуда <span>ÄDIS</span> не үшін қолданылады?</h2>
                 <div class="adis-answer">
@@ -1480,9 +1480,8 @@
     <!-- Section 4: 3 Reasons -->
     <section class="reasons-section" id="reasons">
         <h2 class="section-title">Бізді таңдаудың 3 себебі</h2>
-        
+
         <div class="reasons-container">
-            <!-- Жаңартылған себеп иконкалары -->
             <div class="reason-item fade-in">
                 <div class="reason-circle">
                     <i class="fas fa-award"></i>
@@ -1490,7 +1489,7 @@
                 <h4>Сапа кепілі</h4>
                 <p>Барлық материалдар сарапшылар тарапынан тексерілген және білім беру стандарттарына сәйкес келеді</p>
             </div>
-            
+
             <div class="reason-item fade-in">
                 <div class="reason-circle">
                     <i class="fas fa-bolt"></i>
@@ -1498,7 +1497,7 @@
                 <h4>Жылдам қол жетімділік</h4>
                 <p>Кез келген уақытта, кез келген құрылғыдан қолжетімді. Жүктеп алуға немесе онлайн қарауға болады</p>
             </div>
-            
+
             <div class="reason-item fade-in">
                 <div class="reason-circle">
                     <i class="fas fa-sync-alt"></i>
@@ -1512,12 +1511,11 @@
     <!-- Section 5: Advantages -->
     <section class="advantages-section" id="advantages">
         <div class="cloud cloud-2"></div>
-        
+
         <h2 class="section-title">Артықшылықтарымыз</h2>
-        
+
         <div class="advantages-wrapper">
             <div class="advantages-carousel" id="advantagesCarousel">
-                <!-- Жаңартылған артықшылық иконкалары -->
                 <div class="advantage-card">
                     <div class="advantage-icon">
                         <i class="fas fa-th-list"></i>
@@ -1525,7 +1523,7 @@
                     <h4>Жүйеленген материалдар</h4>
                     <p>Сыныптар бойынша және пәндер бойынша ыңғайлы түрде топтастырылған</p>
                 </div>
-                
+
                 <div class="advantage-card">
                     <div class="advantage-icon">
                         <i class="fas fa-bullseye"></i>
@@ -1533,7 +1531,7 @@
                     <h4>Нақты нәтиже</h4>
                     <p>Әр әдіс оқу нәтижелерін арттыруға бағытталған</p>
                 </div>
-                
+
                 <div class="advantage-card">
                     <div class="advantage-icon">
                         <i class="fas fa-lightbulb"></i>
@@ -1541,15 +1539,15 @@
                     <h4>Инновациялық тәсілдер</h4>
                     <p>Заманауи педагогиканың ең тиімді әдістері</p>
                 </div>
-                
+
                 <div class="advantage-card">
                     <div class="advantage-icon">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-tasks"></i>
                     </div>
-                    <h4>Қауымдастық</h4>
-                    <p>Басқа мұғалімдермен тәжірибе алмасу мүмкіндігі</p>
+                    <h4>Сабақ барысын ұйымдастыру</h4>
+                    <p>Платформа арқылы сабақтың барлық кезеңдерін жоспарлап, интерактивті тапсырмаларды қосуға болады</p>
                 </div>
-                
+
                 <div class="advantage-card">
                     <div class="advantage-icon">
                         <i class="fas fa-mobile-alt"></i>
@@ -1557,13 +1555,13 @@
                     <h4>Мобильді нұсқа</h4>
                     <p>Телефон және планшет арқылы ыңғайлы қолдану</p>
                 </div>
-                
+
                 <div class="advantage-card">
                     <div class="advantage-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-gamepad"></i>
                     </div>
-                    <h4>Қауіпсіздік</h4>
-                    <p>Деректеріңіздің қорғалуы кепілдендірілген</p>
+                    <h4>Интерактив тапсырмалар</h4>
+                    <p>Оқушылардың қызығушылығын арттыратын ойындар мен интерактивті жаттығулар</p>
                 </div>
             </div>
         </div>
@@ -1572,17 +1570,15 @@
     <!-- Section 6: Opportunities with Sticker Design -->
     <section class="opportunities-section" id="opportunities">
         <h2 class="section-title">Сіз қол жеткізетін мүмкіндіктер</h2>
-        
+
         <div class="opportunities-bg">
-            <!-- Мұғалім анимациясы алынып тасталды -->
-            
             <div class="stickers-container">
-                <div class="sticker">500+ әдістемелік материалдар</div>
+                <div class="sticker">Әдістемелік материалдар</div>
                 <div class="sticker">Тегін жүктеп алу</div>
-                <div class="sticker">Күн сайын жаңартылып отырады</div>
-                <div class="sticker">Сарапшылардан кеңестер</div>
                 <div class="sticker">Видео нұсқаулықтар</div>
-                <div class="sticker">Онлайн вебинарлар</div>
+                <div class="sticker">Интерактив ойындар</div>
+                <div class="sticker">Заманауи әдістер</div>
+                <div class="sticker">Ыңғайлы жұмыс ортасы</div>
             </div>
         </div>
     </section>
@@ -1590,12 +1586,11 @@
     <!-- Help Section -->
     <section class="help" id="help">
         <div class="help-container">
-            <!-- Жаңартылған тақырып - орталықта -->
             <div class="section-header">
                 <div class="section-tag">Көмек</div>
                 <h2 class="section-title-centered">Сұрақ-жауап</h2>
             </div>
-            
+
             <div class="accordion">
                 <div class="accordion-item active">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
@@ -1641,32 +1636,33 @@
             <div class="contact-section fade-in">
                 <h3>Бізге хабарласыңыз</h3>
                 <p>Сұрағыңыз бар ма? Төмендегі форманы толтырыңыз, біз жауап береміз.</p>
-                 <form action="https://formspree.io/f/mlgaokoz" method="POST">
-    <input type="hidden" name="_replyto" value="madinakhavazmatova@gmail.com">
-    
-    <div class="form-group">
-        <label for="fullName">Аты-жөніңіз</label>
-        <input type="text" id="fullName" name="name" required placeholder="Мысалы: Айгүл Серікқызы">
-    </div>
-    <div class="form-group">
-        <label for="email">Email немесе телефон</label>
-        <input type="text" id="email" name="email" required placeholder="email@example.com">
-    </div>
-    <div class="form-group">
-        <label for="category">Сұрақтың түрі</label>
-        <select id="category" name="category" required>
-            <option value="">Таңдаңыз...</option>
-            <option value="technical">Техникалық мәселе</option>
-            <option value="content">Материалдар туралы</option>
-            <option value="other">Басқа</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="message">Хабарлама</label>
-        <textarea id="message" name="message" required placeholder="Сұрағыңызды толық жазыңыз..."></textarea>
-    </div>
-    <button type="submit" class="submit-btn">Жіберу</button>
-</form>
+                <!-- target="_self" қосылды — Formspree сол бетте ашылады -->
+                <form action="https://formspree.io/f/mlgaokoz" method="POST" target="_self">
+                    <input type="hidden" name="_replyto" value="madinakhavazmatova@gmail.com">
+
+                    <div class="form-group">
+                        <label for="fullName">Аты-жөніңіз</label>
+                        <input type="text" id="fullName" name="name" required placeholder="Мысалы: Айгүл Серікқызы">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email немесе телефон</label>
+                        <input type="text" id="email" name="email" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Сұрақтың түрі</label>
+                        <select id="category" name="category" required>
+                            <option value="">Таңдаңыз...</option>
+                            <option value="technical">Техникалық мәселе</option>
+                            <option value="content">Материалдар туралы</option>
+                            <option value="other">Басқа</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Хабарлама</label>
+                        <textarea id="message" name="message" required placeholder="Сұрағыңызды толық жазыңыз..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Жіберу</button>
+                </form>
             </div>
         </div>
     </section>
@@ -1675,7 +1671,6 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">Әдістемелік Платформа</div>
-            <!-- Жаңартылған footer навигациясы -->
             <div class="footer-links">
                 <a href="#home">Басты бет</a>
                 <a href="#target">Аудитория</a>
@@ -1694,10 +1689,10 @@
         function toggleMenu() {
             const hamburger = document.querySelector('.hamburger');
             const mobileMenu = document.getElementById('mobileMenu');
-            
+
             hamburger.classList.toggle('active');
             mobileMenu.classList.toggle('active');
-            
+
             document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         }
 
@@ -1705,29 +1700,14 @@
         function toggleAccordion(element) {
             const item = element.parentElement;
             const isActive = item.classList.contains('active');
-            
+
             document.querySelectorAll('.accordion-item').forEach(acc => {
                 acc.classList.remove('active');
             });
-            
+
             if (!isActive) {
                 item.classList.add('active');
             }
-        }
-
-        // Form Submit Handler
-        function handleSubmit(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('fullName').value,
-                email: document.getElementById('email').value,
-                category: document.getElementById('category').value,
-                message: document.getElementById('message').value
-            };
-            
-            alert('Рахмет, ' + formData.name + '! Хабарламаңыз қабылданды. Жақын арада байланысамыз.');
-            e.target.reset();
         }
 
         // Theme Toggle
@@ -1783,7 +1763,7 @@
         document.addEventListener('click', (e) => {
             const mobileMenu = document.getElementById('mobileMenu');
             const hamburger = document.querySelector('.hamburger');
-            
+
             if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains('active')) {
                 toggleMenu();
             }
@@ -1802,55 +1782,88 @@
                 }
             });
         });
+
         // ============================================
-// FIREBASE AUTHENTICATION
-// ============================================
+        // FIREBASE AUTHENTICATION - ТОЛЫҚ ДҰРЫСТАЛҒАН НҮСҚА
+        // ============================================
 
-const firebaseConfig = {
-    apiKey: "AIzaSyC2NjVhAxz6o0orZsLvZO6DBpmefGWtdbs",
-    authDomain: "adis11.firebaseapp.com",
-    projectId: "adis11",
-    storageBucket: "adis11.firebasestorage.app",
-    messagingSenderId: "1076245506221",
-    appId: "1:1076245506221:web:163729dc73b8bc4b957e24",
-    measurementId: "G-ZDK8R92RMY"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyC2NjVhAxz6o0orZsLvZO6DBpmefGWtdbs",
+            authDomain: "adis11.firebaseapp.com",
+            projectId: "adis11",
+            storageBucket: "adis11.firebasestorage.app",
+            messagingSenderId: "1076245506221",
+            appId: "1:1076245506221:web:163729dc73b8bc4b957e24",
+            measurementId: "G-ZDK8R92RMY"
+        };
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-// Авторизация күйін бақылау
-auth.onAuthStateChanged((user) => {
-    const loginBtn = document.getElementById('loginBtn');
-    const registerBtn = document.getElementById('registerBtn');
-    const userName = document.getElementById('userName');
-    const logoutBtn = document.getElementById('logoutBtn');
-    
-    if (user) {
-        // Кірген
-        if (loginBtn) loginBtn.style.display = 'none';
-        if (registerBtn) registerBtn.style.display = 'none';
-        if (userName) {
-            userName.textContent = 'Қош келдіңіз, ' + (user.displayName || user.email);
-            userName.style.display = 'inline';
+        // Firebase-ті инициализациялау
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
         }
-        if (logoutBtn) logoutBtn.style.display = 'inline-flex';
-    } else {
-        // Кірмеген
-        if (loginBtn) loginBtn.style.display = 'inline-flex';
-        if (registerBtn) registerBtn.style.display = 'inline-flex';
-        if (userName) userName.style.display = 'none';
-        if (logoutBtn) logoutBtn.style.display = 'none';
-    }
-});
+        const auth = firebase.auth();
 
-function logout() {
-    auth.signOut().then(() => {
-        window.location.href = 'index.html';
-    }).catch((error) => {
-        console.error('Шығу қатесі:', error);
-    });
-}
+        // Бастапқы күйді орнату функциясы
+        function setInitialAuthState() {
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+            const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+            const authButtons = document.getElementById('authButtons');
+            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+
+            // Бастапқыда барлық батырмаларды көрсету (Firebase тексергенше)
+            if (loginBtn) loginBtn.style.display = 'inline-flex';
+            if (registerBtn) registerBtn.style.display = 'inline-flex';
+            if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+            if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'block';
+            if (authButtons) authButtons.style.display = 'flex';
+            if (mobileAuthButtons) mobileAuthButtons.style.display = 'flex';
+        }
+
+        // Бет жүктелгенде бастапқы күйді орнату
+        setInitialAuthState();
+
+        // Авторизация күйін бақылау - ТОЛЫҚ ДҰРЫСТАЛҒАН
+        auth.onAuthStateChanged((user) => {
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+            const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+            const authButtons = document.getElementById('authButtons');
+            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+
+            if (user) {
+                // Кірген пайдаланушы - кіру/тіркелу батырмалары жасырылады
+                console.log('Пайдаланушы кірген:', user.email);
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (registerBtn) registerBtn.style.display = 'none';
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+                if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+            } else {
+                // Кірмеген пайдаланушы - кіру/тіркелу батырмалары көрсетіледі
+                console.log('Пайдаланушы кірмеген');
+                if (loginBtn) loginBtn.style.display = 'inline-flex';
+                if (registerBtn) registerBtn.style.display = 'inline-flex';
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+                if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'block';
+                if (authButtons) authButtons.style.display = 'flex';
+                if (mobileAuthButtons) mobileAuthButtons.style.display = 'flex';
+            }
+        });
+
+        function logout() {
+            auth.signOut().then(() => {
+                console.log('Сәтті шықылды');
+                // localStorage-ты тазалау (қаласаңыз)
+                // localStorage.removeItem('profile');
+                // localStorage.removeItem('avatar');
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error('Шығу қатесі:', error);
+                alert('Шығу кезінде қате орын алды: ' + error.message);
+            });
+        }
     </script>
 
 </body>
