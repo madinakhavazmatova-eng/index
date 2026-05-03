@@ -372,13 +372,20 @@
         }
 
         .panorama-image {
-            width: 300%;
-            height: 100%;
-            background-image: url('басты.jpeg');
-            background-size: cover;
-            background-position: center;
-            animation: panoramaRotate 40s linear infinite;
-        }
+    width: 300%;
+    height: 100%;
+    background-image: url('басты.jpeg');
+    background-size: auto 100%;      /* Биіктігін 100% етіп, енін автоматты */
+    background-repeat: repeat-x;     /* Көлденең қайталау */
+    background-position: 0 center;
+    animation: panoramaRotate 40s linear infinite;
+}
+
+@keyframes panoramaRotate {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); }  /* 1/3 ғана жылжыту */
+}
+
 
         .panorama-overlay {
             position: absolute;
