@@ -14,7 +14,7 @@
     --primary:#0B3C5D;
     --primary-hover:#1C5D99;
     --secondary:#1C5D99;
-    --accent:#F4A261;
+    --accent:#f2BB16;
     --text:#2c3e50;
     --text-medium:#5d6d7e;
     --text-light:#7f8c8d;
@@ -35,7 +35,7 @@
     --primary:#4A9FD4;
     --primary-hover:#6BB3E0;
     --secondary:#4A9FD4;
-    --accent:#F4A261;
+    --accent:#f2BB16;
     --text:#E8F4F8;
     --text-medium:#B8D4E3;
     --text-light:#8FB8D4;
@@ -79,10 +79,25 @@ body{
     position:sticky;
     top:0;
     z-index:1000;
+    transition:padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+               background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+               box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header.scrolled{
+    padding:8px 40px;
+    background:rgba(11, 60, 93, 0.95);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    backdrop-filter:saturate(180%) blur(20px);
+    box-shadow:0 4px 20px rgba(0,0,0,0.15);
 }
 
 .dark .header{
     background:#0B3C5D;
+}
+
+.dark .header.scrolled{
+    background:rgba(11, 60, 93, 0.92);
 }
 
 .logo-area{
@@ -100,7 +115,13 @@ body{
     width:70px;
     border-radius:50%;
     margin-right:18px;
-    transition:transform 0.3s ease;
+    transition:width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+               transform 0.3s ease;
+}
+
+.header.scrolled .logo-area img{
+    width:45px;
+    margin-right:14px;
 }
 
 .logo-area:hover img{
@@ -112,13 +133,30 @@ body{
     font-size:42px;
     margin:0;
     letter-spacing:2px;
-    transition:color 0.3s ease;
+    transition:font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+               color 0.3s ease;
+}
+
+.header.scrolled .logo-text h1{
+    font-size:28px;
 }
 
 .logo-text p{
     margin:5px 0 0 0;
     font-size:14px;
     color:rgba(255,255,255,0.85);
+    transition:opacity 0.3s ease,
+               transform 0.3s ease,
+               height 0.3s ease,
+               margin 0.3s ease;
+}
+
+.header.scrolled .logo-text p{
+    opacity:0;
+    transform:translateY(-5px);
+    height:0;
+    margin:0;
+    overflow:hidden;
 }
 
 /* ===== SEARCH BAR ===== */
@@ -127,6 +165,13 @@ body{
     max-width:500px;
     margin:0 30px;
     position:relative;
+    transition:max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+               margin 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header.scrolled .search-container{
+    max-width:400px;
+    margin:0 20px;
 }
 
 .search-box{
@@ -137,8 +182,13 @@ body{
     background:rgba(255,255,255,0.15);
     color:white;
     font-size:14px;
-    transition:all 0.3s ease;
+    transition:all 0.3s ease, padding 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter:blur(10px);
+}
+
+.header.scrolled .search-box{
+    padding:8px 40px 8px 16px;
+    font-size:13px;
 }
 
 .search-box::placeholder{
@@ -474,6 +524,7 @@ body{
     border-bottom:1px solid var(--border);
     background:var(--bg-light);
     padding:0 25px;
+    flex-shrink:0;
 }
 
 .tab{
@@ -486,6 +537,7 @@ body{
     position:relative;
     transition:all 0.3s;
     font-size:14px;
+    font-family:inherit;
 }
 
 .tab:hover{
@@ -563,7 +615,6 @@ body{
 .profile-avatar button:hover{
     background:var(--primary);
     color:white;
-    transform:translateY(-2px);
 }
 
 .profile-details h3{
@@ -595,6 +646,7 @@ body{
     color:var(--text);
     font-size:14px;
     transition:all 0.2s;
+    font-family:inherit;
 }
 
 .form-group input:focus,
@@ -675,6 +727,8 @@ body{
     transition:all 0.3s;
     position:relative;
     overflow:hidden;
+    font-family:inherit;
+    font-size:14px;
 }
 
 .btn-primary::after{
@@ -753,6 +807,8 @@ body{
     cursor:pointer;
     font-weight:600;
     transition:all 0.3s;
+    font-family:inherit;
+    font-size:14px;
 }
 
 .btn-secondary:hover{
@@ -794,6 +850,7 @@ body{
     font-size:20px;
     margin-right:15px;
     transition:transform 0.3s;
+    flex-shrink:0;
 }
 
 .saved-method-item:hover .saved-method-icon{
@@ -802,6 +859,7 @@ body{
 
 .saved-method-info{
     flex:1;
+    min-width:0;
 }
 
 .saved-method-title{
@@ -829,6 +887,9 @@ body{
     cursor:pointer;
     color:var(--text-medium);
     transition:all 0.2s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .saved-method-actions button:hover{
@@ -843,6 +904,11 @@ body{
     display:flex;
     align-items:center;
     gap:15px;
+    transition:gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header.scrolled .auth{
+    gap:10px;
 }
 
 .btn{
@@ -850,11 +916,18 @@ body{
     border-radius:8px;
     text-decoration:none;
     font-weight:600;
-    transition:all 0.3s;
+    transition:all 0.3s, padding 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     font-size:14px;
     cursor:pointer;
     position:relative;
     overflow:hidden;
+    border:none;
+    font-family:inherit;
+}
+
+.header.scrolled .btn{
+    padding:7px 14px;
+    font-size:12px;
 }
 
 .login{
@@ -887,10 +960,23 @@ body{
     margin-left:15px;
     padding:8px;
     border-radius:50%;
-    transition:all 0.3s;
+    transition:all 0.3s, width 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     background:rgba(255,255,255,0.1);
     border:none;
     color:white;
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.header.scrolled .toggle{
+    width:32px;
+    height:32px;
+    font-size:16px;
+    margin-left:10px;
+    padding:6px;
 }
 
 .toggle:hover{
@@ -905,8 +991,16 @@ body{
     padding:12px;
     box-shadow:var(--shadow-sm);
     position:sticky;
-    top:70px;
+    top:86px;
     z-index:999;
+    transition:top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+               padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+               background-color 0.3s ease;
+}
+
+body.header-scrolled .top-menu{
+    top:52px;
+    padding:8px;
 }
 
 .dark .top-menu{
@@ -950,6 +1044,7 @@ body{
     min-height:calc(100vh - 180px);
 }
 
+/* ===== SIDEBAR - HOVER АРҚЫЛЫ АШЫЛАДЫ ===== */
 .sidebar{
     width:70px;
     background:var(--primary);
@@ -976,7 +1071,7 @@ body{
     align-items:center;
     justify-content:flex-start;
     position:relative;
-    gap: 12px;
+    gap:12px;
 }
 
 /* НЕГІЗГИ ИКОНКА - үлкенірек, басқаларынан ерекше */
@@ -1017,7 +1112,7 @@ body{
     opacity:1;
 }
 
-/* Toggle button - ТОЛЫҚ АЛЫП ТАСТАЛДЫ */
+/* Toggle button - ТОЛЫҚ ЖОЙЫЛДЫ */
 .sidebar-toggle{
     display:none !important;
 }
@@ -1033,30 +1128,26 @@ body{
     position:relative;
 }
 
-.menu-link{
+/* Accordion Header */
+.accordion-header{
     display:flex;
     align-items:center;
     padding:14px 0;
     color:rgba(255,255,255,0.85);
-    text-decoration:none;
-    transition:all 0.3s ease;
     cursor:pointer;
     position:relative;
     height:50px;
+    transition:all 0.3s ease;
+    text-decoration:none;
+    user-select:none;
 }
 
-.menu-link:hover{
+.accordion-header:hover{
     background:rgba(255,255,255,0.1);
     color:white;
 }
 
-.menu-link.active{
-    background:rgba(255,255,255,0.15);
-    color:white;
-    border-left:3px solid var(--accent);
-}
-
-.menu-icon{
+.accordion-header .menu-icon{
     width:70px;
     min-width:70px;
     display:flex;
@@ -1066,16 +1157,15 @@ body{
     transition:transform 0.3s ease;
 }
 
-/* ӘДІСТЕР БӨЛІМДЕРІ иконкасы үлкенірек */
 .sidebar-logo-icon i{
     font-size:24px;
 }
 
-.menu-link:hover .menu-icon{
+.accordion-header:hover .menu-icon{
     transform:scale(1.15);
 }
 
-.menu-text{
+.accordion-header .menu-text{
     font-size:14px;
     font-weight:500;
     white-space:nowrap;
@@ -1085,12 +1175,11 @@ body{
     padding-right:15px;
 }
 
-/* Hover кезінде text көрінеді */
-.sidebar:hover .menu-text{
+.sidebar:hover .accordion-header .menu-text{
     opacity:1;
 }
 
-.menu-arrow{
+.accordion-header .menu-arrow{
     font-size:12px;
     margin-right:15px;
     opacity:0;
@@ -1098,12 +1187,11 @@ body{
     transform:rotate(0deg);
 }
 
-/* Hover кезінде arrow көрінеді */
-.sidebar:hover .menu-arrow{
+.sidebar:hover .accordion-header .menu-arrow{
     opacity:1;
 }
 
-.menu-item.open .menu-arrow{
+.menu-item.open .accordion-header .menu-arrow{
     transform:rotate(180deg);
 }
 
@@ -1111,17 +1199,17 @@ body{
 .submenu{
     max-height:0;
     overflow:hidden;
-    transition:max-height 0.3s ease, opacity 0.3s ease;
-    background: #f0f5fa;
+    transition:max-height 0.4s ease, opacity 0.3s ease;
+    background:#f0f5fa;
     opacity:0;
 }
 
-.dark .submenu {
-    background: #1a2d47;
+.dark .submenu{
+    background:#1a2d47;
 }
 
 .menu-item.open .submenu{
-    max-height:300px;
+    max-height:400px;
     opacity:1;
 }
 
@@ -1129,16 +1217,17 @@ body{
     display:flex;
     align-items:center;
     padding:12px 20px 12px 70px;
-    color: #1C5D99;
+    color:#1C5D99;
     text-decoration:none;
     font-size:13px;
     transition:all 0.2s ease;
     position:relative;
     border-left:3px solid transparent;
+    white-space:nowrap;
 }
 
-.dark .submenu-item {
-    color: #7dd3fc;
+.dark .submenu-item{
+    color:#7dd3fc;
 }
 
 .submenu-item::before{
@@ -1156,15 +1245,15 @@ body{
 }
 
 .submenu-item:hover{
-    background: #e1ecf7;
-    color: #0B3C5D;
+    background:#e1ecf7;
+    color:#0B3C5D;
     padding-left:75px;
     border-left-color:var(--accent);
 }
 
-.dark .submenu-item:hover {
-    background: #243b5d;
-    color: white;
+.dark .submenu-item:hover{
+    background:#243b5d;
+    color:white;
 }
 
 .submenu-item:hover::before{
@@ -1172,14 +1261,14 @@ body{
 }
 
 .submenu-item.active{
-    background: #e1ecf7;
-    color: #0B3C5D;
+    background:#e1ecf7;
+    color:#0B3C5D;
     border-left-color:var(--accent);
 }
 
-.dark .submenu-item.active {
-    background: #243b5d;
-    color: white;
+.dark .submenu-item.active{
+    background:#243b5d;
+    color:white;
 }
 
 /* Tooltip */
@@ -1231,19 +1320,30 @@ body{
 /* ===== CONTENT ===== */
 .content{
     flex:1;
-    padding:25px;
+    padding:6px;
     background:var(--bg);
     transition:margin-left 0.3s ease;
+    min-width:0;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    height:calc(100vh - 130px);
+    transition:height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.header-scrolled .content{
+    height:calc(100vh - 96px);
 }
 
 iframe{
     width:100%;
-    height:700px;
+    flex:1;
+    min-height:0;
     border:none;
-    border-radius:14px;
-    box-shadow:var(--shadow-lg);
-    background:var(--bg);
+    border-radius:6px;
+    background:#fff;
     transition:all 0.3s ease;
+    display:block;
 }
 
 .dark iframe{
@@ -1254,23 +1354,134 @@ iframe{
 footer{
     background:var(--primary);
     color:rgba(255,255,255,0.9);
-    text-align:center;
-    padding:20px;
-    font-size:14px;
+    padding:16px 40px;
+    font-size:15px;
     margin-top:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:'Inter', sans-serif;
+    letter-spacing:0.3px;
 }
 
 .dark footer{
     background:#0B3C5D;
 }
 
-footer p{
-    margin:5px 0;
+.footer-left{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:flex-start;
+}
+
+.footer-center{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    align-items:center;
+    text-align:center;
+}
+
+.footer-right{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:flex-end;
+    text-align:right;
+}
+
+.footer-left p,
+.footer-center p,
+.footer-right p{
+    margin:0;
+    line-height:1.5;
+    font-size:14px;
+    font-weight:400;
+    color:rgba(255,255,255,0.9);
+}
+
+.footer-brand{
+    font-family:'Cormorant Garamond', serif;
+    font-size:22px;
+    font-weight:700;
+    color:var(--accent);
+    letter-spacing:2px;
+}
+
+.footer-contact{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:rgba(255,255,255,0.9);
+    font-size:14px;
+    font-weight:500;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    padding:6px 14px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.1);
+    text-decoration:none;
+    white-space:nowrap;
+    font-family:'Inter', sans-serif;
+}
+
+.footer-contact:hover{
+    color:var(--accent);
+    background:rgba(255,255,255,0.2);
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+.footer-contact i{
+    font-size:15px;
+    color:var(--accent);
+    transition:transform 0.3s ease;
+    width:18px;
+    text-align:center;
+}
+
+.footer-contact:hover i{
+    transform:scale(1.2);
 }
 
 footer strong{
     color:var(--accent);
-    font-weight:600;
+    font-weight:700;
+}
+
+@media (max-width:768px){
+    footer{
+        padding:14px 20px;
+        justify-content:center;
+        text-align:center;
+        gap:16px;
+    }
+
+    .footer-left,
+    .footer-center,
+    .footer-right{
+        align-items:center;
+        text-align:center;
+        width:100%;
+    }
+
+    .footer-left p,
+    .footer-center p,
+    .footer-right p{
+        font-size:13px;
+    }
+
+    .footer-brand{
+        font-size:20px;
+    }
+
+    .footer-contact{
+        font-size:13px;
+        padding:5px 12px;
+    }
 }
 
 /* ===== RESPONSIVE ===== */
@@ -1302,11 +1513,11 @@ footer strong{
         opacity:1;
     }
     
-    .menu-text{
+    .accordion-header .menu-text{
         opacity:1;
     }
     
-    .menu-arrow{
+    .accordion-header .menu-arrow{
         opacity:1;
     }
     
@@ -1333,7 +1544,8 @@ footer strong{
     }
     
     iframe{
-        height:500px;
+        height:auto;
+        min-height:400px;
     }
     
     .auth{
@@ -1488,114 +1700,129 @@ footer strong{
 }
 
 /* ===== AI CHAT ===== */
-.ai-robot-container {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 9999;
-    pointer-events: none;
+.ai-robot-container{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    z-index:9999;
+    pointer-events:none;
 }
 
-.ai-robot-wrapper {
-    position: relative;
-    width: 140px;
-    height: 196px;
-    cursor: pointer;
-    pointer-events: auto;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform: translateX(25px) translateY(25px);
+.ai-robot-wrapper{
+    position:relative;
+    width:120px;
+    height:168px;
+    cursor:grab;
+    pointer-events:auto;
+    transition:transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    user-select:none;
 }
 
-.ai-robot-wrapper:hover {
-    transform: translateX(0) translateY(0) scale(1.08);
+.ai-robot-wrapper:active{
+    cursor:grabbing;
 }
 
-.ai-robot-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 25px rgba(11, 60, 93, 0.35));
-    transition: all 0.3s ease;
-    animation: robotFloat 3s ease-in-out infinite;
+.ai-robot-wrapper:hover{
+    transform:scale(1.08);
 }
 
-@keyframes robotFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
+.ai-robot-wrapper.dragging{
+    transition:none;
+    animation:none !important;
 }
 
-.ai-robot-wrapper:hover .ai-robot-img {
-    filter: drop-shadow(0 12px 35px rgba(11, 60, 93, 0.5));
-    animation-play-state: paused;
+.ai-robot-wrapper.dragging .ai-robot-img{
+    animation:none !important;
 }
 
-.ai-robot-tooltip {
-    position: absolute;
-    top: 50px;
-    left: -160px;
-    background: white;
-    padding: 10px 14px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    font-size: 12px;
-    color: var(--text);
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateX(15px);
-    transition: all 0.3s ease;
-    pointer-events: none;
+.ai-robot-img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    filter:drop-shadow(0 8px 25px rgba(11, 60, 93, 0.35));
+    transition:all 0.3s ease;
+    animation:robotFloat 3s ease-in-out infinite;
+    pointer-events:none;
 }
 
-.ai-robot-tooltip::after {
-    content: '';
-    position: absolute;
-    right: -6px;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 6px solid transparent;
-    border-left-color: white;
+@keyframes robotFloat{
+    0%, 100%{transform:translateY(0px);}
+    50%{transform:translateY(-8px);}
 }
 
-.ai-robot-wrapper:hover .ai-robot-tooltip {
-    opacity: 1;
-    transform: translateX(0);
+.ai-robot-wrapper:hover .ai-robot-img{
+    filter:drop-shadow(0 12px 35px rgba(11, 60, 93, 0.5));
+    animation-play-state:paused;
 }
 
-.dark .ai-robot-img {
-    filter: drop-shadow(0 8px 25px rgba(74, 159, 212, 0.35));
+.ai-robot-tooltip{
+    position:absolute;
+    top:40px;
+    left:-180px;
+    background:white;
+    padding:10px 14px;
+    border-radius:12px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.15);
+    font-size:12px;
+    color:var(--text);
+    white-space:nowrap;
+    opacity:0;
+    transform:translateX(15px);
+    transition:all 0.3s ease;
+    pointer-events:none;
+    font-family:'Inter', sans-serif;
 }
 
-.dark .ai-robot-wrapper:hover .ai-robot-img {
-    filter: drop-shadow(0 12px 35px rgba(74, 159, 212, 0.5));
+.ai-robot-tooltip::after{
+    content:'';
+    position:absolute;
+    right:-6px;
+    top:50%;
+    transform:translateY(-50%);
+    border:6px solid transparent;
+    border-left-color:white;
 }
 
-.dark .ai-robot-tooltip {
-    background: var(--bg-light);
-    color: var(--text);
+.ai-robot-wrapper:hover .ai-robot-tooltip{
+    opacity:1;
+    transform:translateX(0);
 }
 
-.dark .ai-robot-tooltip::after {
-    border-left-color: var(--bg-light);
+.dark .ai-robot-img{
+    filter:drop-shadow(0 8px 25px rgba(74, 159, 212, 0.35));
 }
 
-.ai-chat-window {
-    position: fixed;
-    bottom: 180px;
-    right: 20px;
-    width: 380px;
-    height: 450px;
-    background: var(--bg);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    z-index: 10000;
+.dark .ai-robot-wrapper:hover .ai-robot-img{
+    filter:drop-shadow(0 12px 35px rgba(74, 159, 212, 0.5));
 }
 
-.ai-chat-window.show {
-    display: flex !important;
+.dark .ai-robot-tooltip{
+    background:var(--bg-light);
+    color:var(--text);
+}
+
+.dark .ai-robot-tooltip::after{
+    border-left-color:var(--bg-light);
+}
+
+.ai-chat-window{
+    position:fixed;
+    bottom:200px;
+    right:20px;
+    width:380px;
+    height:450px;
+    background:var(--bg);
+    border-radius:20px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+    border:1px solid var(--border);
+    z-index:10000;
+}
+
+.ai-chat-window.show{
+    display:flex !important;
 }
 
 .ai-chat-header{
@@ -1605,6 +1832,7 @@ footer strong{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    flex-shrink:0;
 }
 
 .ai-chat-header h4{
@@ -1659,6 +1887,7 @@ footer strong{
     display:flex;
     gap:10px;
     background:var(--bg);
+    flex-shrink:0;
 }
 
 .ai-chat-input{
@@ -1671,6 +1900,7 @@ footer strong{
     outline:none;
     font-size:14px;
     transition:all 0.2s;
+    font-family:inherit;
 }
 
 .ai-chat-input:focus{
@@ -1690,6 +1920,7 @@ footer strong{
     display:flex;
     align-items:center;
     justify-content:center;
+    flex-shrink:0;
 }
 
 .ai-chat-send:hover{
@@ -1767,6 +1998,7 @@ footer strong{
     gap:8px;
     padding:0 15px 15px;
     background:var(--bg-light);
+    flex-shrink:0;
 }
 
 .quick-suggestion{
@@ -1778,6 +2010,7 @@ footer strong{
     cursor:pointer;
     transition:all 0.2s;
     color:var(--text);
+    font-family:inherit;
 }
 
 .quick-suggestion:hover{
@@ -1787,116 +2020,76 @@ footer strong{
     transform:translateY(-2px);
 }
 
-@media (max-width: 768px) {
-    .ai-robot-wrapper {
-        width: 110px;
-        height: 154px;
-        transform: translateX(20px) translateY(20px);
+/* Notification */
+.notification{
+    position:fixed;
+    top:90px;
+    right:20px;
+    padding:15px 20px;
+    background:var(--success);
+    color:white;
+    border-radius:10px;
+    box-shadow:var(--shadow-lg);
+    z-index:3000;
+    transform:translateX(400px);
+    transition:transform 0.3s ease;
+    font-weight:500;
+}
+
+.notification.show{
+    transform:translateX(0);
+}
+
+.notification.error{
+    background:var(--new-badge);
+}
+
+@media (max-width: 768px){
+    .ai-robot-wrapper{
+        width:110px;
+        height:154px;
     }
     
-    .ai-robot-tooltip {
-        left: -130px;
-        font-size: 11px;
-        padding: 8px 12px;
-        top: 40px;
+    .ai-robot-tooltip{
+        left:-130px;
+        font-size:11px;
+        padding:8px 12px;
+        top:40px;
     }
     
-    .ai-chat-window {
-        width: calc(100vw - 40px);
-        right: 10px;
-        bottom: 140px;
-        height: 55vh;
-        max-height: 380px;
+    .ai-chat-window{
+        width:calc(100vw - 40px);
+        right:10px;
+        bottom:160px;
+        height:55vh;
+        max-height:380px;
     }
 }
 
-@media (max-width: 480px) {
-    .ai-robot-wrapper {
-        width: 90px;
-        height: 126px;
-        transform: translateX(15px) translateY(15px);
-    }
-    
-    .ai-robot-tooltip {
-        left: -110px;
-        font-size: 10px;
+@media (max-width: 480px){
+    .ai-robot-wrapper{
+        width:90px;
+        height:126px;
     }
     
-    .ai-chat-window {
-        bottom: 120px;
-        height: 50vh;
+    .ai-robot-tooltip{
+        left:-110px;
+        font-size:10px;
     }
-}
-/* ===== БҰЛ ЖЕРГЕ ҚОСУ ===== */
-.accordion-header {
-    display: flex;
-    align-items: center;
-    padding: 14px 0;
-    color: rgba(255,255,255,0.85);
-    cursor: pointer;
-    position: relative;
-    height: 50px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-.accordion-header:hover {
-    background: rgba(255,255,255,0.1);
-    color: white;
-}
-
-.accordion-header .menu-icon {
-    width: 70px;
-    min-width: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
-
-.accordion-header .menu-text {
-    font-size: 14px;
-    font-weight: 500;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s ease 0.1s;
-    flex: 1;
-    padding-right: 15px;
-}
-
-.sidebar:hover .accordion-header .menu-text {
-    opacity: 1;
-}
-
-.accordion-header .menu-arrow {
-    font-size: 12px;
-    margin-right: 15px;
-    opacity: 0;
-    transition: all 0.3s ease 0.1s;
-}
-
-.sidebar:hover .accordion-header .menu-arrow {
-    opacity: 1;
-}
-
-.menu-item.open .accordion-header .menu-arrow {
-    transform: rotate(180deg);
-}
-.menu-link {
-    display: none;
+    
+    .ai-chat-window{
+        bottom:130px;
+        height:50vh;
+    }
 }
 </style>
 <base target="_self">
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<base target="_self">
 <base target="_self">
 </head>
 <body>
-
+<!-- ===== HEADER ===== -->
 <div class="header">
-
     <div class="logo-area" onclick="loadFrame('home.html'); return false;">
         <img src="adis.png" alt="ÄDIS Logo">
         <div class="logo-text">
@@ -1923,7 +2116,6 @@ footer strong{
         <span></span>
         <span></span>
     </button>
-
 </div>
 
 <!-- MOBILE MENU OVERLAY -->
@@ -1981,7 +2173,6 @@ footer strong{
     </div>
 </nav>
 
-</div>
 <!-- TOP MENU -->
 <div class="top-menu">
     <a href="#" onclick="loadPage('home.html', 'menuHome'); return false;" id="menuHome">Басты бет</a>
@@ -1992,163 +2183,160 @@ footer strong{
     <a href="#" onclick="loadPage('suggestions.html', 'menuSuggest'); return false;" id="menuSuggest">Ұсыныстар</a>
 </div>
 
+<!-- ===== MAIN CONTENT ===== -->
 <div class="main">
-
-    <!-- ===== ЖИНАЛАТЫН SIDEBAR ===== -->
+    <!-- ===== SIDEBAR - HOVER АРҚЫЛЫ АШЫЛАДЫ ===== -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-logo-icon" onclick="toggleSidebar()" title="Мәзірді ашу/жабу">
+            <div class="sidebar-logo-icon" title="Әдістер бөлімдері">
                 <i class="fas fa-layer-group"></i>
             </div>
             <span class="sidebar-title">Әдістер бөлімдері</span>
-            <div class="sidebar-toggle" onclick="toggleSidebar()">
-                <i class="fas fa-chevron-right"></i>
-            </div>
         </div>
         
         <ul class="sidebar-menu">
-           <!-- БАСТАУЫШ СЫНЫП -->
-<li class="menu-item" data-menu="bastauysh">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'bastauysh'); loadFrame('bastauysh.html')">
-        <div class="menu-icon"><i class="fas fa-child"></i></div>
-        <span class="menu-text">Бастауыш сынып</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Бастауыш сынып</div>
-    <div class="submenu" id="submenu-bastauysh">
-        <a href="#" class="submenu-item" onclick="loadFrame('magic.html')">Менің есімім</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('picture.html')">Сурет арқылы ойлау</a>
-    </div>
-</li>
+            <!-- БАСТАУЫШ СЫНЫП -->
+            <li class="menu-item" data-menu="bastauysh">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'bastauysh'); loadFrame('bastauysh.html')">
+                    <div class="menu-icon"><i class="fas fa-child"></i></div>
+                    <span class="menu-text">Бастауыш сынып</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Бастауыш сынып</div>
+                <div class="submenu" id="submenu-bastauysh">
+                    <a href="#" class="submenu-item" onclick="loadFrame('magic.html')">Менің есімім</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('picture.html')">Сурет арқылы ойлау</a>
+                </div>
+            </li>
 
-<!-- ОРТА СЫНЫП -->
-<li class="menu-item" data-menu="orta">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'orta'); loadFrame('orta.html')">
-        <div class="menu-icon"><i class="fas fa-user-graduate"></i></div>
-        <span class="menu-text">Орта сынып</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Орта сынып</div>
-    <div class="submenu" id="submenu-orta">
-        <a href="#" class="submenu-item" onclick="loadFrame('insert.html')">Шатасқан әріптер әдісі</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('debate.html')">Пікірталас әдісі</a>
-    </div>
-</li>
+            <!-- ОРТА СЫНЫП -->
+            <li class="menu-item" data-menu="orta">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'orta'); loadFrame('orta.html')">
+                    <div class="menu-icon"><i class="fas fa-user-graduate"></i></div>
+                    <span class="menu-text">Орта сынып</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Орта сынып</div>
+                <div class="submenu" id="submenu-orta">
+                    <a href="#" class="submenu-item" onclick="loadFrame('insert.html')">Шатасқан әріптер әдісі</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('debate.html')">Пікірталас әдісі</a>
+                </div>
+            </li>
 
-<!-- ЖОҒАРЫ СЫНЫП -->
-<li class="menu-item" data-menu="jogary">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'jogary'); loadFrame('jogary.html')">
-        <div class="menu-icon"><i class="fas fa-graduation-cap"></i></div>
-        <span class="menu-text">Жоғары сынып</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Жоғары сынып</div>
-    <div class="submenu" id="submenu-jogary">
-        <a href="#" class="submenu-item" onclick="loadFrame('Case.html')">Case study әдісі</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('Алты%20қалпақ.html')">Алты қалпақ әдісі</a>
-    </div>
-</li>
+            <!-- ЖОҒАРЫ СЫНЫП -->
+            <li class="menu-item" data-menu="jogary">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'jogary'); loadFrame('jogary.html')">
+                    <div class="menu-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <span class="menu-text">Жоғары сынып</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Жоғары сынып</div>
+                <div class="submenu" id="submenu-jogary">
+                    <a href="#" class="submenu-item" onclick="loadFrame('Case.html')">Case study әдісі</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('Алты%20қалпақ.html')">Алты қалпақ әдісі</a>
+                </div>
+            </li>
 
-<!-- СЕРГІТУ СӘТІ -->
-<li class="menu-item" data-menu="sergitu">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'sergitu'); loadFrame('sergitu.html')">
-        <div class="menu-icon"><i class="fas fa-running"></i></div>
-        <span class="menu-text">Сергіту сәті</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Сергіту сәті</div>
-    <div class="submenu" id="submenu-sergitu">
-        <a href="#" class="submenu-item" onclick="loadFrame('suraq.html')">Сұрақ-қозғалыс әдісі</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('қарама-қарсы.html')">Қарама-қарсы әрекет әдісі</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('гимнастика.html')">Көзге арналған гимнастика</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('3-қимыл.html')">3 қимыл сергіту әдісі</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('ритм.html')">Ритмді қайталау әдісі</a>
-    </div>
-</li>
+            <!-- СЕРГІТУ СӘТІ -->
+            <li class="menu-item" data-menu="sergitu">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'sergitu'); loadFrame('sergitu.html')">
+                    <div class="menu-icon"><i class="fas fa-running"></i></div>
+                    <span class="menu-text">Сергіту сәті</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Сергіту сәті</div>
+                <div class="submenu" id="submenu-sergitu">
+                    <a href="#" class="submenu-item" onclick="loadFrame('suraq.html')">Сұрақ-қозғалыс әдісі</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('қарама-қарсы.html')">Қарама-қарсы әрекет әдісі</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('гимнастика.html')">Көзге арналған гимнастика</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('3-қимыл.html')">3 қимыл сергіту әдісі</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('ритм.html')">Ритмді қайталау әдісі</a>
+                </div>
+            </li>
 
-<!-- САБАҚТЫ БАСТАУ -->
-<li class="menu-item" data-menu="basta">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'basta'); loadFrame('basta.html')">
-        <div class="menu-icon"><i class="fas fa-play-circle"></i></div>
-        <span class="menu-text">Сабақты бастау</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Сабақты бастау</div>
-    <div class="submenu" id="submenu-basta">
-        <a href="#" class="submenu-item" onclick="loadFrame('basta-intro.html')">Кіріспе</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('basta-motivation.html')">Мотивация</a>
-    </div>
-</li>
+            <!-- САБАҚТЫ БАСТАУ -->
+            <li class="menu-item" data-menu="basta">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'basta'); loadFrame('basta.html')">
+                    <div class="menu-icon"><i class="fas fa-play-circle"></i></div>
+                    <span class="menu-text">Сабақты бастау</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Сабақты бастау</div>
+                <div class="submenu" id="submenu-basta">
+                    <a href="#" class="submenu-item" onclick="loadFrame('basta-intro.html')">Кіріспе</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('basta-motivation.html')">Мотивация</a>
+                </div>
+            </li>
 
-<!-- ТАЛДАУ -->
-<li class="menu-item" data-menu="talda">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'talda'); loadFrame('talda.html')">
-        <div class="menu-icon"><i class="fas fa-chart-line"></i></div>
-        <span class="menu-text">Талдау</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Талдау</div>
-    <div class="submenu" id="submenu-talda">
-        <a href="#" class="submenu-item" onclick="loadFrame('talda-mindmap.html')">Mind Mapping</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('talda-cluster.html')">Кластер</a>
-    </div>
-</li>
+            <!-- ТАЛДАУ -->
+            <li class="menu-item" data-menu="talda">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'talda'); loadFrame('talda.html')">
+                    <div class="menu-icon"><i class="fas fa-chart-line"></i></div>
+                    <span class="menu-text">Талдау</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Талдау</div>
+                <div class="submenu" id="submenu-talda">
+                    <a href="#" class="submenu-item" onclick="loadFrame('talda-mindmap.html')">Mind Mapping</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('talda-cluster.html')">Кластер</a>
+                </div>
+            </li>
 
-<!-- ҚОРЫТЫНДЫ -->
-<li class="menu-item" data-menu="qoryt">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'qoryt'); loadFrame('qoryt.html')">
-        <div class="menu-icon"><i class="fas fa-flag-checkered"></i></div>
-        <span class="menu-text">Қорытынды</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Қорытынды</div>
-    <div class="submenu" id="submenu-qoryt">
-        <a href="#" class="submenu-item" onclick="loadFrame('qoryt-test.html')">Тестілеу</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('qoryt-reflection.html')">Рефлексия</a>
-    </div>
-</li>
+            <!-- ҚОРЫТЫНДЫ -->
+            <li class="menu-item" data-menu="qoryt">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'qoryt'); loadFrame('qoryt.html')">
+                    <div class="menu-icon"><i class="fas fa-flag-checkered"></i></div>
+                    <span class="menu-text">Қорытынды</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Қорытынды</div>
+                <div class="submenu" id="submenu-qoryt">
+                    <a href="#" class="submenu-item" onclick="loadFrame('qoryt-test.html')">Тестілеу</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('qoryt-reflection.html')">Рефлексия</a>
+                </div>
+            </li>
 
-<!-- ТОПТЫҚ ТАПСЫРМАЛАР -->
-<li class="menu-item" data-menu="topbol">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'topbol'); loadFrame('topbol.html')">
-        <div class="menu-icon"><i class="fas fa-users"></i></div>
-        <span class="menu-text">Топтық тапсырмалар</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Топтық тапсырмалар</div>
-    <div class="submenu" id="submenu-topbol">
-        <a href="#" class="submenu-item" onclick="loadFrame('topbol-mixed.html')">Аралас топтар</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('topbol-ability.html')">Қабілет бойынша</a>
-    </div>
-</li>
+            <!-- ТОПТЫҚ ТАПСЫРМАЛАР -->
+            <li class="menu-item" data-menu="topbol">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'topbol'); loadFrame('topbol.html')">
+                    <div class="menu-icon"><i class="fas fa-users"></i></div>
+                    <span class="menu-text">Топтық тапсырмалар</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Топтық тапсырмалар</div>
+                <div class="submenu" id="submenu-topbol">
+                    <a href="#" class="submenu-item" onclick="loadFrame('topbol-mixed.html')">Аралас топтар</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('topbol-ability.html')">Қабілет бойынша</a>
+                </div>
+            </li>
 
-<!-- ЖЕКЕ ТАПСЫРМА -->
-<li class="menu-item" data-menu="jeke">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'jeke'); loadFrame('jeke.html')">
-        <div class="menu-icon"><i class="fas fa-user"></i></div>
-        <span class="menu-text">Жеке тапсырма</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Жеке тапсырма</div>
-    <div class="submenu" id="submenu-jeke">
-        <a href="#" class="submenu-item" onclick="loadFrame('jeke-card.html')">Карточкалар</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('jeke-different.html')">Дифференциация</a>
-    </div>
-</li>
+            <!-- ЖЕКЕ ТАПСЫРМА -->
+            <li class="menu-item" data-menu="jeke">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'jeke'); loadFrame('jeke.html')">
+                    <div class="menu-icon"><i class="fas fa-user"></i></div>
+                    <span class="menu-text">Жеке тапсырма</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Жеке тапсырма</div>
+                <div class="submenu" id="submenu-jeke">
+                    <a href="#" class="submenu-item" onclick="loadFrame('jeke-card.html')">Карточкалар</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('jeke-different.html')">Дифференциация</a>
+                </div>
+            </li>
 
-<!-- ИНТЕРАКТИВ ТАПСЫРМАЛАР -->
-<li class="menu-item" data-menu="pan">
-    <div class="accordion-header" onclick="toggleAccordion(this, 'pan'); loadFrame('interactive.html')">
-        <div class="menu-icon"><i class="fas fa-bolt"></i></div>
-        <span class="menu-text">Интерактив тапсырмалар</span>
-        <i class="fas fa-chevron-down menu-arrow"></i>
-    </div>
-    <div class="menu-tooltip">Интерактив тапсырмалар</div>
-    <div class="submenu" id="submenu-pan">
-        <a href="#" class="submenu-item" onclick="loadFrame('Bauyrsaq.html')">Бауырсақ арқылы топқа бөлу</a>
-        <a href="#" class="submenu-item" onclick="loadFrame('arqan.html')">Арқан тартыс ойыны</a>
-    </div>
-</li>
+            <!-- ИНТЕРАКТИВ ТАПСЫРМАЛАР -->
+            <li class="menu-item" data-menu="pan">
+                <div class="accordion-header" onclick="toggleAccordion(this, 'pan'); loadFrame('interactive.html')">
+                    <div class="menu-icon"><i class="fas fa-bolt"></i></div>
+                    <span class="menu-text">Интерактив тапсырмалар</span>
+                    <i class="fas fa-chevron-down menu-arrow"></i>
+                </div>
+                <div class="menu-tooltip">Интерактив тапсырмалар</div>
+                <div class="submenu" id="submenu-pan">
+                    <a href="#" class="submenu-item" onclick="loadFrame('Bauyrsaq.html')">Бауырсақ арқылы топқа бөлу</a>
+                    <a href="#" class="submenu-item" onclick="loadFrame('arqan.html')">Арқан тартыс ойыны</a>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -2156,10 +2344,7 @@ footer strong{
     <div class="content">
         <iframe name="contentFrame" id="contentFrame" title="Контент"></iframe>
     </div>
-
 </div>
-
-
 <!-- Search Results Modal -->
 <div class="search-results-overlay" id="searchResultsOverlay">
     <div class="search-results-modal">
@@ -2254,19 +2439,18 @@ footer strong{
                             </select>
                         </div>
                         <div class="form-group">
-    <label>Өзім туралы</label>
-    <textarea id="userBio" rows="3" placeholder="Өзіңіз туралы қысқаша..."></textarea>
-</div>
-
-<!-- МІНА ЖЕРГЕ ҚОЮ -->
-<div style="display: flex; gap: 15px; margin-top: 20px;">
-    <button class="btn-primary" onclick="saveProfile()">
-        <i class="fas fa-save"></i> Сақтау
-    </button>
-    <button class="btn-danger" onclick="logout()" style="background: #e74c3c; color: white; border: 2px solid #e74c3c; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">
-        <i class="fas fa-sign-out-alt"></i> Шығу
-    </button>
-</div>
+                            <label>Өзім туралы</label>
+                            <textarea id="userBio" rows="3" placeholder="Өзіңіз туралы қысқаша..."></textarea>
+                        </div>
+                        <div style="display:flex; gap:15px; margin-top:20px;">
+                            <button class="btn-primary" onclick="saveProfile()">
+                                <i class="fas fa-save"></i> Сақтау
+                            </button>
+                            <button class="btn-danger" onclick="logout()" style="background:#e74c3c; color:white; border:2px solid #e74c3c; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; font-family:inherit;">
+                                <i class="fas fa-sign-out-alt"></i> Шығу
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -2344,7 +2528,7 @@ footer strong{
     </div>
 </div>
 
-<!-- AI Chat Робот -->
+<!-- ===== AI CHAT - НЕГІЗГІ БЕТТЕ ТҰРАТЫН БОЛДЫ ===== -->
 <div class="ai-robot-container" id="aiRobotContainer">
     <div class="ai-robot-wrapper" onclick="toggleChat()">
         <img src="ai-assistant.png" alt="ÄDIS AI көмекші" class="ai-robot-img">
@@ -2354,45 +2538,71 @@ footer strong{
     </div>
 </div>
 
-    <!-- Чат терезесі -->
-    <div class="ai-chat-window" id="aiChatWindow">
-        <div class="ai-chat-header">
-            <div>
-                <h4><i class="fas fa-robot"></i> ӘДІС AI көмекші</h4>
-                <div class="ai-chat-context" id="aiContext">
-                    <i class="fas fa-map-marker-alt"></i> <span>Басты бет</span>
-                </div>
-            </div>
-            <button class="ai-chat-close" onclick="toggleChat()" title="Жабу">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="ai-chat-messages" id="chatMessages">
-            <div class="message ai">
-                Сәлеметсіз бе! 👋 Мен сізге қажетті әдістерді табуға көмектесемін.
-                <div class="message-time">Бүгін</div>
+<!-- Чат терезесі -->
+<div class="ai-chat-window" id="aiChatWindow">
+    <div class="ai-chat-header">
+        <div>
+            <h4><i class="fas fa-robot"></i> ӘДІС AI көмекші</h4>
+            <div class="ai-chat-context" id="aiContext">
+                <i class="fas fa-map-marker-alt"></i> <span>Басты бет</span>
             </div>
         </div>
-        <div class="quick-suggestions" id="quickSuggestions">
-            <button class="quick-suggestion" onclick="sendQuickMessage('Бастауышқа арналған әдіс')">Бастауыш</button>
-            <button class="quick-suggestion" onclick="sendQuickMessage('Сергіту сәті керек')">Сергіту</button>
-            <button class="quick-suggestion" onclick="sendQuickMessage('Топқа бөлу тәсілі')">Топқа бөлу</button>
-            <button class="quick-suggestion" onclick="sendQuickMessage('Қорытындылау әдісі')">Қорытынды</button>
-        </div>
-        <div class="ai-chat-input-area">
-            <input type="text" class="ai-chat-input" id="chatInput" placeholder="Сұрағыңызды жазыңыз..." onkeypress="if(event.key==='Enter')sendMessage()">
-            <button class="ai-chat-send" onclick="sendMessage()" title="Жіберу">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+        <button class="ai-chat-close" onclick="toggleChat()" title="Жабу">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages">
+        <div class="message ai">
+            Сәлеметсіз бе! 👋 Мен сізге қажетті әдістерді табуға көмектесемін.
+            <div class="message-time">Бүгін</div>
         </div>
     </div>
+    <div class="quick-suggestions" id="quickSuggestions">
+        <button class="quick-suggestion" onclick="sendQuickMessage('Бастауышқа арналған әдіс')">Бастауыш</button>
+        <button class="quick-suggestion" onclick="sendQuickMessage('Сергіту сәті керек')">Сергіту</button>
+        <button class="quick-suggestion" onclick="sendQuickMessage('Топқа бөлу тәсілі')">Топқа бөлу</button>
+        <button class="quick-suggestion" onclick="sendQuickMessage('Қорытындылау әдісі')">Қорытынды</button>
+    </div>
+    <div class="ai-chat-input-area">
+        <input type="text" class="ai-chat-input" id="chatInput" placeholder="Сұрағыңызды жазыңыз..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <button class="ai-chat-send" onclick="sendMessage()" title="Жіберу">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
 </div>
-<footer>
-    <p>Жасағандар: <strong>Хавазматова М.& Шералиева И.</strong></p>
-    <p>©️ 2026 ӘДІС — әдістемелік платформа</p>
-</footer>
 
+<!-- Notification -->
+<div class="notification" id="notification"></div>
+
+<footer>
+    <div class="footer-left">
+        <a href="tel:87478732341" class="footer-contact"><i class="fas fa-phone"></i> 8 747 873 23 41</a>
+        <a href="https://wa.me/87786421462" target="_blank" class="footer-contact"><i class="fab fa-whatsapp"></i> 8 778 642 14 62</a>
+    </div>
+    <div class="footer-center">
+        <p>Жасағандар: <strong>Хавазматова М.& Шералиева И.</strong></p>
+        <p><span class="footer-brand">ÄDIS</span> — әдістемелік платформа © 2026</p>
+    </div>
+    <div class="footer-right">
+        <a href="mailto:madinakhavazmatova@gmail.com" class="footer-contact"><i class="fas fa-envelope"></i> madinakhavazmatova@gmail.com</a>
+        <a href="https://youtube.com" target="_blank" class="footer-contact"><i class="fab fa-youtube"></i> ÄDIS — жинағы</a>
+    </div>
+</footer>
 <script>
+// ===== NOTIFICATION FUNCTION =====
+function showNotification(message, type = 'success') {
+    const notification = document.getElementById('notification');
+    if (!notification) return;
+    
+    notification.textContent = message;
+    notification.className = 'notification ' + (type === 'error' ? 'error' : '');
+    notification.classList.add('show');
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3000);
+}
+
 // ===== MOBILE MENU FUNCTIONS =====
 function toggleMobileMenu() {
     const burger = document.querySelector('.burger-menu');
@@ -2461,48 +2671,36 @@ window.addEventListener('resize', () => {
     }
 });
 
-// ===== SIDEBAR FUNCTIONS =====
-function toggleSubmenu(menuId) {
-    const menuItem = document.querySelector(`[data-menu="${menuId}"]`);
+// ===== ACCORDION SIDEBAR FUNCTION =====
+function toggleAccordion(header, menuId) {
+    const menuItem = header.closest('.menu-item');
     const sidebar = document.getElementById('sidebar');
     
-    if (sidebar.classList.contains('expanded') || window.innerWidth <= 768 || sidebar.offsetWidth > 100) {
-        menuItem.classList.toggle('open');
-    } else {
-        const submenu = document.getElementById(`submenu-${menuId}`);
-        const firstLink = submenu.querySelector('.submenu-item');
-        if (firstLink) {
-            firstLink.click();
-        }
+    // Егер sidebar жабық болса (70px), алдымен ашылуын күту керек
+    const isExpanded = sidebar.offsetWidth > 100;
+    
+    if (!isExpanded && window.innerWidth > 768) {
+        // Sidebar жабық - hover арқылы ашылғанша күтеміз
+        // Немесе бірден ашуға болады
+        sidebar.style.width = '280px';
+        setTimeout(() => {
+            menuItem.classList.toggle('open');
+        }, 100);
+        setTimeout(() => {
+            sidebar.style.width = '';
+        }, 3000); // 3 секундтан кейін автоматты жабылады
+        return;
     }
     
+    // Басқа барлық submenu-ларды жабу
     document.querySelectorAll('.menu-item').forEach(item => {
-        if (item.dataset.menu !== menuId) {
+        if (item !== menuItem) {
             item.classList.remove('open');
         }
     });
-}
-
-function toggleMobileSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('mobileMenuOverlay');
-    const burger = document.querySelector('.burger-menu');
     
-    sidebar.classList.toggle('show');
-    overlay.classList.toggle('show');
-    burger.classList.toggle('active');
-    
-    if (sidebar.classList.contains('show')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
-}
-
-function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    sidebar.classList.toggle('expanded');
-    localStorage.setItem('sidebarExpanded', sidebar.classList.contains('expanded'));
+    // Ағымды submenu-ны ашу/жабу
+    menuItem.classList.toggle('open');
 }
 
 // ===== THEME TOGGLE =====
@@ -2527,7 +2725,6 @@ function loadFrame(url) {
     if (frame) {
         frame.src = url;
         updateAIContext(url);
-        // Track view for statistics (only if user is logged in)
         trackView(url);
     } else {
         console.error('Content frame not found!');
@@ -2536,7 +2733,8 @@ function loadFrame(url) {
     if (window.innerWidth <= 768) {
         const sidebar = document.getElementById('sidebar');
         if (sidebar && sidebar.classList.contains('show')) {
-            toggleMobileSidebar();
+            sidebar.classList.remove('show');
+            document.body.style.overflow = '';
         }
     }
 }
@@ -2574,7 +2772,7 @@ function updateAIContext(url) {
     const contextText = contextMap[url] || 'Басты бет';
     const aiContext = document.getElementById('aiContext');
     if (aiContext) {
-        aiContext.innerHTML = `<i class="fas fa-map-marker-alt"></i> <span>${contextText}</span>`;
+        aiContext.innerHTML = '<i class="fas fa-map-marker-alt"></i> <span>' + contextText + '</span>';
     }
 }
 
@@ -2617,7 +2815,7 @@ function performSearch() {
     ];
     
     const results = searchData.filter(item => {
-        const searchText = `${item.title} ${item.category} ${item.tags.join(' ')}`.toLowerCase();
+        const searchText = (item.title + ' ' + item.category + ' ' + item.tags.join(' ')).toLowerCase();
         return searchText.includes(query);
     });
     
@@ -2655,7 +2853,7 @@ function showSearchResults(results, query) {
                         <div class="search-item-title">${item.title}</div>
                         <div class="search-item-category">${item.category}</div>
                         <div class="search-item-tags">
-                            ${item.tags.map(tag => `<span class="search-tag">${tag}</span>`).join('')}
+                            ${item.tags.map(tag => '<span class="search-tag">' + tag + '</span>').join('')}
                         </div>
                     </div>
                 `).join('')}
@@ -2687,6 +2885,93 @@ function toggleChat() {
     if (chatWindow) {
         chatWindow.classList.toggle('show');
     }
+}
+
+// ===== AI ROBOT DRAG FUNCTIONALITY =====
+function initRobotDrag() {
+    const robot = document.querySelector('.ai-robot-wrapper');
+    const container = document.querySelector('.ai-robot-container');
+    if (!robot || !container) return;
+
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+    let hasMoved = false;
+
+    function getPosition() {
+        const rect = container.getBoundingClientRect();
+        return { x: rect.left, y: rect.top };
+    }
+
+    robot.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        hasMoved = false;
+        startX = e.clientX;
+        startY = e.clientY;
+        const pos = getPosition();
+        initialLeft = pos.x;
+        initialTop = pos.y;
+        robot.classList.add('dragging');
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
+        const newX = initialLeft + dx;
+        const newY = initialTop + dy;
+        const maxX = window.innerWidth - robot.offsetWidth;
+        const maxY = window.innerHeight - robot.offsetHeight;
+        container.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
+        container.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
+        container.style.right = 'auto';
+        container.style.bottom = 'auto';
+    });
+
+    document.addEventListener('mouseup', function() {
+        if (!isDragging) return;
+        isDragging = false;
+        robot.classList.remove('dragging');
+        if (!hasMoved) toggleChat();
+    });
+
+    // Touch support
+    robot.addEventListener('touchstart', function(e) {
+        isDragging = true;
+        hasMoved = false;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        const pos = getPosition();
+        initialLeft = pos.x;
+        initialTop = pos.y;
+        robot.classList.add('dragging');
+    }, {passive: false});
+
+    document.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
+        const newX = initialLeft + dx;
+        const newY = initialTop + dy;
+        const maxX = window.innerWidth - robot.offsetWidth;
+        const maxY = window.innerHeight - robot.offsetHeight;
+        container.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
+        container.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
+        container.style.right = 'auto';
+        container.style.bottom = 'auto';
+    }, {passive: false});
+
+    document.addEventListener('touchend', function() {
+        if (!isDragging) return;
+        isDragging = false;
+        robot.classList.remove('dragging');
+        if (!hasMoved) toggleChat();
+    });
 }
 
 function sendMessage() {
@@ -2722,11 +3007,8 @@ function addMessage(text, sender) {
     const time = new Date().toLocaleTimeString('kk-KZ', { hour: '2-digit', minute: '2-digit' });
     
     const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${sender}`;
-    messageDiv.innerHTML = `
-        ${text}
-        <div class="message-time">${time}</div>
-    `;
+    messageDiv.className = 'message ' + sender;
+    messageDiv.innerHTML = text + '<div class="message-time">' + time + '</div>';
     
     container.appendChild(messageDiv);
     container.scrollTop = container.scrollHeight;
@@ -2739,11 +3021,7 @@ function showTyping() {
     const typingDiv = document.createElement('div');
     typingDiv.className = 'message ai typing';
     typingDiv.id = 'typingIndicator';
-    typingDiv.innerHTML = `
-        <span class="typing-dot"></span>
-        <span class="typing-dot"></span>
-        <span class="typing-dot"></span>
-    `;
+    typingDiv.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
     container.appendChild(typingDiv);
     container.scrollTop = container.scrollHeight;
 }
@@ -2783,9 +3061,12 @@ function generateAIResponse(message) {
         }
     ];
     
-    for (let item of responses) {
-        if (item.keywords.some(kw => lowerMsg.includes(kw))) {
-            return item.response;
+    for (let i = 0; i < responses.length; i++) {
+        const item = responses[i];
+        for (let j = 0; j < item.keywords.length; j++) {
+            if (lowerMsg.indexOf(item.keywords[j]) !== -1) {
+                return item.response;
+            }
         }
     }
     
@@ -2794,10 +3075,16 @@ function generateAIResponse(message) {
 
 // ===== PROFILE MODAL FUNCTIONS =====
 function showProfile() {
+    if (!isLoggedIn()) {
+        window.location.href = 'кіру.html';
+        return;
+    }
     const modal = document.getElementById('profileModal');
     if (modal) {
         modal.classList.add('show');
         loadStats();
+        // Бірінші табты белсендіру
+        switchTab('profile', document.querySelector('.tab'));
     }
 }
 
@@ -2808,200 +3095,56 @@ function closeProfile() {
     }
 }
 
-function switchTab(tabName, clickedTab) {
-    console.log('Switching to tab:', tabName);
-
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-    });
+function switchTab(tabName, tabBtn) {
+    // Барлық табтардан active класын алып тастау
     document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
     });
-
-    const tabContent = document.getElementById(tabName + 'Tab');
-    if (tabContent) {
-        tabContent.classList.add('active');
-        console.log('Tab activated:', tabName + 'Tab');
-    } else {
-        console.error('Tab content not found:', tabName + 'Tab');
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Таңдалған табты белсендіру
+    if (tabBtn) {
+        tabBtn.classList.add('active');
     }
-
-    if (clickedTab) {
-        clickedTab.classList.add('active');
-    } else {
-        const tabs = document.querySelectorAll('.tab');
-        tabs.forEach(tab => {
-            const onclick = tab.getAttribute('onclick');
-            if (onclick && (onclick.includes("'" + tabName + "'") || onclick.includes('"' + tabName + '"'))) {
-                tab.classList.add('active');
-            }
-        });
-    }
-}
-
-function saveProfile() {
-    const userName = document.getElementById('userName');
-    const userEmail = document.getElementById('userEmail');
     
-    if (!userName || !userEmail) return;
-    
-    const name = userName.value;
-    const email = userEmail.value;
-    
-    if (name && email) {
-        const subject = document.getElementById('subject');
-        const userGrade = document.getElementById('userGrade');
-        const experience = document.getElementById('experience');
-        const userBio = document.getElementById('userBio');
-        
-        localStorage.setItem('profile', JSON.stringify({
-            name: name,
-            email: email,
-            subject: subject ? subject.value : '',
-            grade: userGrade ? userGrade.value : '',
-            experience: experience ? experience.value : '',
-            bio: userBio ? userBio.value : ''
-        }));
-        
-        showNotification('Профиль сәтті сақталды! ✅');
-    } else {
-        showNotification('Аты-жөні және Email толтырыңыз!', 'error');
-    }
-}
-
-function showNotification(message, type = 'success') {
-    const notif = document.createElement('div');
-    notif.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 25px;
-        background: ${type === 'success' ? 'var(--success)' : '#e74c3c'};
-        color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-        font-weight: 500;
-    `;
-    notif.textContent = message;
-    
-    document.body.appendChild(notif);
-    
-    setTimeout(() => {
-        notif.style.animation = 'slideInRight 0.3s ease reverse';
-        setTimeout(() => notif.remove(), 300);
-    }, 3000);
-}
-
-function changeAvatar() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const profileImage = document.getElementById('profileImage');
-                if (profileImage) {
-                    profileImage.src = e.target.result;
-                    localStorage.setItem('avatar', e.target.result);
-                }
-            };
-            reader.readAsDataURL(file);
-        }
+    // Соответствующий контентты көрсету
+    const tabMap = {
+        'profile': 'profileTab',
+        'stats': 'statsTab',
+        'myMethods': 'myMethodsTab'
     };
-    input.click();
-}
-
-// ===== STATS FUNCTIONS =====
-function loadStats() {
-    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-    const savedMethods = JSON.parse(localStorage.getItem('savedMethods') || '[]');
-    const myMethods = JSON.parse(localStorage.getItem('myMethods') || '[]');
     
-    const statViewed = document.getElementById('statViewed');
-    const statSaved = document.getElementById('statSaved');
-    const statAdded = document.getElementById('statAdded');
-    const statDays = document.getElementById('statDays');
-    
-    if (statViewed) statViewed.textContent = localStorage.getItem('viewedCount') || '0';
-    if (statSaved) statSaved.textContent = savedMethods.length;
-    if (statAdded) statAdded.textContent = myMethods.length;
-    if (statDays) {
-        const joinDate = localStorage.getItem('joinDate');
-        if (joinDate) {
-            const days = Math.floor((Date.now() - parseInt(joinDate)) / (1000 * 60 * 60 * 24));
-            statDays.textContent = days;
-        } else {
-            localStorage.setItem('joinDate', Date.now().toString());
-            statDays.textContent = '0';
+    const contentId = tabMap[tabName];
+    if (contentId) {
+        const content = document.getElementById(contentId);
+        if (content) {
+            content.classList.add('active');
         }
     }
     
-    if (profile.name) {
-        const userName = document.getElementById('userName');
-        if (userName) userName.value = profile.name;
-    }
-    if (profile.email) {
-        const userEmail = document.getElementById('userEmail');
-        if (userEmail) userEmail.value = profile.email;
-    }
-    if (profile.subject) {
-        const subject = document.getElementById('subject');
-        if (subject) subject.value = profile.subject;
-    }
-    if (profile.grade) {
-        const userGrade = document.getElementById('userGrade');
-        if (userGrade) userGrade.value = profile.grade;
-    }
-    if (profile.experience) {
-        const experience = document.getElementById('experience');
-        if (experience) experience.value = profile.experience;
-    }
-    if (profile.bio) {
-        const userBio = document.getElementById('userBio');
-        if (userBio) userBio.value = profile.bio;
+    // Егер статистика табы болса, деректерді жүктеу
+    if (tabName === 'stats') {
+        loadStats();
     }
     
-    const savedAvatar = localStorage.getItem('avatar');
-    if (savedAvatar) {
-        const profileImage = document.getElementById('profileImage');
-        if (profileImage) profileImage.src = savedAvatar;
+    // Егер менің әдістерім табы болса, тізімді жаңарту
+    if (tabName === 'myMethods') {
+        loadStats();
     }
-    
-    const myList = document.getElementById('myMethodsList');
-    if (myList && myMethods.length > 0) {
-        myList.innerHTML = myMethods.map(method => `
-            <div class="saved-method-item">
-                <div class="saved-method-icon"><i class="fas fa-lightbulb"></i></div>
-                <div class="saved-method-info">
-                    <div class="saved-method-title">${method.title}</div>
-                    <div class="saved-method-category">${method.category} • ${method.time}</div>
-                </div>
-                <div class="saved-method-actions">
-                    <button onclick="deleteMyMethod('${method.id}')" title="Жою"><i class="fas fa-trash"></i></button>
-                </div>
-            </div>
-        `).join('');
-    }
-}
-
-function deleteMyMethod(id) {
-    let myMethods = JSON.parse(localStorage.getItem('myMethods') || '[]');
-    myMethods = myMethods.filter(m => m.id !== id);
-    localStorage.setItem('myMethods', JSON.stringify(myMethods));
-    loadStats();
-    showNotification('Әдіс жойылды');
 }
 
 function showMyMethods() {
+    if (!isLoggedIn()) {
+        window.location.href = 'кіру.html';
+        return;
+    }
     showProfile();
     setTimeout(() => {
-        const myMethodsTab = document.querySelector('.tab[onclick*="myMethods"]');
-        if (myMethodsTab) {
-            switchTab('myMethods', myMethodsTab);
+        const tabs = document.querySelectorAll('.tab');
+        if (tabs.length >= 3) {
+            switchTab('myMethods', tabs[2]);
         }
     }, 100);
 }
@@ -3020,53 +3163,15 @@ function hideAddMethodForm() {
     }
 }
 
-function addNewMethod() {
-    const titleInput = document.getElementById('newMethodTitle');
-    const categoryInput = document.getElementById('newMethodCategory');
-    const timeInput = document.getElementById('newMethodTime');
-    const descInput = document.getElementById('newMethodDesc');
-    
-    if (!titleInput || !descInput) return;
-    
-    const title = titleInput.value.trim();
-    const category = categoryInput ? categoryInput.value : '';
-    const time = timeInput ? timeInput.value : '';
-    const desc = descInput.value.trim();
-    
-    if (!title || !desc) {
-        showNotification('Атауы және сипаттамасы міндетті!', 'error');
-        return;
-    }
-    
-    const newMethod = {
-        id: Date.now().toString(),
-        title: title,
-        category: category,
-        time: time,
-        description: desc,
-        date: new Date().toLocaleDateString('kk-KZ')
-    };
-    
-    let myMethods = JSON.parse(localStorage.getItem('myMethods') || '[]');
-    myMethods.push(newMethod);
-    localStorage.setItem('myMethods', JSON.stringify(myMethods));
-    
-    titleInput.value = '';
-    if (timeInput) timeInput.value = '';
-    descInput.value = '';
-    hideAddMethodForm();
-    
-    loadStats();
-    
-    showNotification('Әдіс сәтті қосылды! ✅');
+function changeAvatar() {
+    showNotification('Аватар өзгерту функциясы жақын арада іске қосылады');
 }
 
-// ===== THEME NOTIFICATION TO IFRAMES (FIXED - plain text like index9.html) =====
+// ===== THEME NOTIFICATION TO IFRAMES =====
 function notifyIframesTheme(theme) {
     const frame = document.getElementById('contentFrame');
     if (frame && frame.contentWindow) {
         try {
-            // Send as plain text string (not object) - same as index9.html
             frame.contentWindow.postMessage(theme, '*');
         } catch (e) {
             console.log('Theme notification failed');
@@ -3074,199 +3179,8 @@ function notifyIframesTheme(theme) {
     }
 }
 
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark');
-        const toggleBtn = document.querySelector('.toggle');
-        if (toggleBtn) {
-            toggleBtn.textContent = '☀️';
-        }
-    }
-    
-    // Load saved sidebar expanded state
-    const sidebarExpanded = localStorage.getItem('sidebarExpanded');
-    const sidebar = document.getElementById('sidebar');
-    if (sidebarExpanded === 'true' && sidebar) {
-        sidebar.classList.add('expanded');
-    }
-    
-    // Send theme to iframe on load (plain text)
-    const contentFrame = document.getElementById('contentFrame');
-    if (contentFrame) {
-        contentFrame.addEventListener('load', function() {
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            try {
-                this.contentWindow.postMessage(currentTheme, '*');
-            } catch (e) {
-                console.log('Iframe load message error:', e);
-            }
-        });
-    }
-    
-    // Overlay click to close
-    const searchOverlay = document.getElementById('searchResultsOverlay');
-    if (searchOverlay) {
-        searchOverlay.addEventListener('click', function(e) {
-            if (e.target === this) closeSearch();
-        });
-    }
-    
-    const profileModal = document.getElementById('profileModal');
-    if (profileModal) {
-        profileModal.addEventListener('click', function(e) {
-            if (e.target === this) closeProfile();
-        });
-    }
-    
-    // Escape key to close
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeSearch();
-            closeProfile();
-            const chatWindow = document.getElementById('aiChatWindow');
-            if (chatWindow && chatWindow.classList.contains('show')) {
-                toggleChat();
-            }
-        }
-    });
-    
-    // Load home page
-    loadFrame('home.html');
-});
-
-// Receive messages from iframe pages (FIXED - plain text response)
-window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'getTheme') {
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        try {
-            // Send as plain text (not object) - same as index9.html
-            e.source.postMessage(currentTheme, '*');
-        } catch (err) {
-            console.log('Message response error:', err);
-        }
-    }
-});
-function toggleAccordion(header, menuId) {
-    const menuItem = header.closest('.menu-item');
-    
-    // Басқа барлық submenu-ларды жабу
-    document.querySelectorAll('.menu-item').forEach(item => {
-        if (item !== menuItem) {
-            item.classList.remove('open');
-        }
-    });
-    
-    // Ағымды submenu-ны ашу/жабу
-    menuItem.classList.toggle('open');
-}
-
-// logoutFromProfile replaced by improved logout() function above
-
-
-// ===== FIREBASE AUTHENTICATION & STATISTICS =====
-const firebaseConfig = {
-    apiKey: "AIzaSyC2NjVhAxz6o0orZsLvZO6DBpmefGWtdbs",
-    authDomain: "adis11.firebaseapp.com",
-    projectId: "adis11",
-    storageBucket: "adis11.firebasestorage.app",
-    messagingSenderId: "1076245506221",
-    appId: "1:1076245506221:web:163729dc73b8bc4b957e24",
-    measurementId: "G-ZDK8R92RMY"
-};
-
-// Initialize Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-const auth = firebase.auth();
-
-// Track user login state
-auth.onAuthStateChanged((user) => {
-    const loginBtn = document.getElementById('loginBtn');
-    const registerBtn = document.getElementById('registerBtn');
-    const userBadge = document.getElementById('userBadge');
-    const userBadgeName = document.getElementById('userBadgeName');
-    const mobileProfileBtn = document.getElementById('mobileProfileBtn');
-    const mobileMyMethodsBtn = document.getElementById('mobileMyMethodsBtn');
-
-    if (user) {
-        // User is logged in
-        console.log('User logged in:', user.email);
-
-        if (loginBtn) loginBtn.style.display = 'none';
-        if (registerBtn) registerBtn.style.display = 'none';
-        if (userBadge) {
-            userBadge.style.display = 'flex';
-            userBadgeName.textContent = user.displayName || user.email.split('@')[0] || 'Қолданушы';
-        }
-        if (mobileProfileBtn) {
-            mobileProfileBtn.innerHTML = '<i class="fas fa-user"></i> ' + (user.displayName || 'Жеке кабинет');
-        }
-        if (mobileMyMethodsBtn) {
-            mobileMyMethodsBtn.style.display = 'flex';
-        }
-
-        // Save user data to localStorage for statistics
-        const userData = {
-            name: user.displayName || user.email.split('@')[0] || 'Қолданушы',
-            email: user.email,
-            uid: user.uid,
-            photoURL: user.photoURL || '',
-            subject: localStorage.getItem('userSubject') || '',
-            grade: localStorage.getItem('userGrade') || '',
-            experience: localStorage.getItem('userExperience') || '',
-            bio: localStorage.getItem('userBio') || ''
-        };
-        localStorage.setItem('profile', JSON.stringify(userData));
-
-        // Initialize joinDate if not set
-        if (!localStorage.getItem('joinDate')) {
-            localStorage.setItem('joinDate', Date.now().toString());
-        }
-
-        // Initialize viewedHistory if not set
-        if (!localStorage.getItem('viewedHistory')) {
-            localStorage.setItem('viewedHistory', JSON.stringify([]));
-        }
-
-    } else {
-        // User is not logged in
-        console.log('User not logged in');
-
-        if (loginBtn) loginBtn.style.display = 'inline-flex';
-        if (registerBtn) registerBtn.style.display = 'inline-flex';
-        if (userBadge) userBadge.style.display = 'none';
-        if (mobileProfileBtn) {
-            mobileProfileBtn.innerHTML = '<i class="fas fa-user"></i> Жеке кабинет';
-        }
-        if (mobileMyMethodsBtn) {
-            mobileMyMethodsBtn.style.display = 'none';
-        }
-    }
-});
-
-function logout() {
-    auth.signOut().then(() => {
-        // Clear localStorage auth data
-        localStorage.removeItem('profile');
-        localStorage.removeItem('avatar');
-        showNotification('Сіз платформадан шықтыңыз');
-        closeProfile();
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1000);
-    }).catch((error) => {
-        console.error('Logout error:', error);
-        showNotification('Шығу қатесі!', 'error');
-    });
-}
-
-// ===== IMPROVED STATISTICS FUNCTIONS =====
+// ===== STATISTICS & USER DATA =====
 function initUserStats() {
-    // Initialize all statistics data structures
     if (!localStorage.getItem('joinDate')) {
         localStorage.setItem('joinDate', Date.now().toString());
     }
@@ -3285,18 +3199,16 @@ function initUserStats() {
 }
 
 function isLoggedIn() {
-    const user = auth.currentUser;
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-    return !!user || (!!profile.name && !!profile.email);
+    return !!(profile.name && profile.email);
 }
 
 function trackView(url) {
-    if (!url || url === 'home.html' || !isLoggedIn()) return;
+    if (!url || url === 'home.html') return;
 
     let viewedHistory = JSON.parse(localStorage.getItem('viewedHistory') || '[]');
     const today = new Date().toDateString();
 
-    // Check if this URL was already viewed today
     const existingIndex = viewedHistory.findIndex(item => item.url === url && item.date === today);
 
     if (existingIndex === -1) {
@@ -3306,48 +3218,17 @@ function trackView(url) {
             timestamp: Date.now()
         });
 
-        // Keep only last 100 entries to prevent storage bloat
         if (viewedHistory.length > 100) {
             viewedHistory = viewedHistory.slice(-100);
         }
 
         localStorage.setItem('viewedHistory', JSON.stringify(viewedHistory));
 
-        // Update viewed count (total unique URLs)
         const uniqueUrls = [...new Set(viewedHistory.map(item => item.url))];
         localStorage.setItem('viewedCount', uniqueUrls.length.toString());
     }
 }
 
-// Override showProfile to check login
-function showProfile() {
-    if (!isLoggedIn()) {
-        window.location.href = 'кіру.html';
-        return;
-    }
-    const modal = document.getElementById('profileModal');
-    if (modal) {
-        modal.classList.add('show');
-        loadStats();
-    }
-}
-
-// Override showMyMethods to check login
-function showMyMethods() {
-    if (!isLoggedIn()) {
-        window.location.href = 'кіру.html';
-        return;
-    }
-    showProfile();
-    setTimeout(() => {
-        const myMethodsTab = document.querySelector('.tab[onclick*="myMethods"]');
-        if (myMethodsTab) {
-            switchTab('myMethods', myMethodsTab);
-        }
-    }, 100);
-}
-
-// Improved loadStats function
 function loadStats() {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
     const savedMethods = JSON.parse(localStorage.getItem('savedMethods') || '[]');
@@ -3359,17 +3240,14 @@ function loadStats() {
     const statAdded = document.getElementById('statAdded');
     const statDays = document.getElementById('statDays');
 
-    // Calculate unique viewed methods count
     const uniqueViewed = [...new Set(viewedHistory.map(item => item.url))];
     if (statViewed) statViewed.textContent = uniqueViewed.length;
     if (statSaved) statSaved.textContent = savedMethods.length;
     if (statAdded) statAdded.textContent = myMethods.length;
 
-    // Calculate days on platform
     if (statDays) {
         let joinDate = localStorage.getItem('joinDate');
         if (!joinDate && profile.uid) {
-            // If logged in but no joinDate, set it now
             joinDate = Date.now().toString();
             localStorage.setItem('joinDate', joinDate);
         }
@@ -3381,7 +3259,7 @@ function loadStats() {
         }
     }
 
-    // Auto-fill profile form with saved data
+    // Auto-fill profile form
     if (profile.name) {
         const userName = document.getElementById('userName');
         if (userName) userName.value = profile.name;
@@ -3407,7 +3285,6 @@ function loadStats() {
         if (userBio) userBio.value = profile.bio;
     }
 
-    // Load avatar
     const savedAvatar = localStorage.getItem('avatar') || profile.photoURL;
     if (savedAvatar) {
         const profileImage = document.getElementById('profileImage');
@@ -3442,7 +3319,6 @@ function loadStats() {
     }
 }
 
-// Override saveProfile to also save to localStorage
 function saveProfile() {
     const userName = document.getElementById('userName');
     const userEmail = document.getElementById('userEmail');
@@ -3473,7 +3349,6 @@ function saveProfile() {
 
         showNotification('Профиль сәтті сақталды! ✅');
 
-        // Update badge name
         const userBadgeName = document.getElementById('userBadgeName');
         if (userBadgeName) userBadgeName.textContent = name;
     } else {
@@ -3481,7 +3356,6 @@ function saveProfile() {
     }
 }
 
-// Improved addNewMethod with better validation
 function addNewMethod() {
     if (!isLoggedIn()) {
         showNotification('Әдіс қосу үшін кіру керек!', 'error');
@@ -3526,7 +3400,138 @@ function addNewMethod() {
     loadStats();
     showNotification('Әдіс сәтті қосылды! ✅');
 }
-</script>
 
+function deleteMyMethod(id) {
+    let myMethods = JSON.parse(localStorage.getItem('myMethods') || '[]');
+    myMethods = myMethods.filter(m => m.id !== id);
+    localStorage.setItem('myMethods', JSON.stringify(myMethods));
+    loadStats();
+    showNotification('Әдіс жойылды');
+}
+
+function logout() {
+    localStorage.removeItem('profile');
+    localStorage.removeItem('avatar');
+    showNotification('Сіз платформадан шықтыңыз');
+    closeProfile();
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 1000);
+}
+
+// ===== HEADER SCROLL SHRINK =====
+function initHeaderScroll() {
+    const header = document.querySelector('.header');
+    const body = document.body;
+    if (!header || !body) return;
+
+    let lastScroll = 0;
+    const scrollThreshold = 30;
+
+    function handleScroll() {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScroll > scrollThreshold) {
+            header.classList.add('scrolled');
+            body.classList.add('header-scrolled');
+        } else {
+            header.classList.remove('scrolled');
+            body.classList.remove('header-scrolled');
+        }
+
+        lastScroll = currentScroll;
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                handleScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    handleScroll();
+}
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize header scroll effect
+    initHeaderScroll();
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
+        const toggleBtn = document.querySelector('.toggle');
+        if (toggleBtn) {
+            toggleBtn.textContent = '☀️';
+        }
+    }
+    
+    // Send theme to iframe on load
+    const contentFrame = document.getElementById('contentFrame');
+    if (contentFrame) {
+        contentFrame.addEventListener('load', function() {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            try {
+                this.contentWindow.postMessage(currentTheme, '*');
+            } catch (e) {
+                console.log('Iframe load message error:', e);
+            }
+        });
+    }
+    
+    // Overlay click to close
+    const searchOverlay = document.getElementById('searchResultsOverlay');
+    if (searchOverlay) {
+        searchOverlay.addEventListener('click', function(e) {
+            if (e.target === this) closeSearch();
+        });
+    }
+    
+    const profileModal = document.getElementById('profileModal');
+    if (profileModal) {
+        profileModal.addEventListener('click', function(e) {
+            if (e.target === this) closeProfile();
+        });
+    }
+    
+    // Escape key to close
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeSearch();
+            closeProfile();
+            const chatWindow = document.getElementById('aiChatWindow');
+            if (chatWindow && chatWindow.classList.contains('show')) {
+                toggleChat();
+            }
+        }
+    });
+    
+    // Initialize robot drag
+    initRobotDrag();
+
+    // Initialize user stats
+    initUserStats();
+    
+    // Load home page
+    loadFrame('home.html');
+});
+
+// Receive messages from iframe pages
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'getTheme') {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        try {
+            e.source.postMessage(currentTheme, '*');
+        } catch (err) {
+            console.log('Message response error:', err);
+        }
+    }
+});
+</script>
 </body>
 </html>
