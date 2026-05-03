@@ -35,7 +35,7 @@
     --primary:#4A9FD4;
     --primary-hover:#6BB3E0;
     --secondary:#4A9FD4;
-    --accent:#f2BB16;
+    --accent:#F4A261;
     --text:#E8F4F8;
     --text-medium:#B8D4E3;
     --text-light:#8FB8D4;
@@ -1354,134 +1354,23 @@ iframe{
 footer{
     background:var(--primary);
     color:rgba(255,255,255,0.9);
-    padding:16px 40px;
-    font-size:15px;
+    text-align:center;
+    padding:20px;
+    font-size:14px;
     margin-top:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:12px;
-    font-family:'Inter', sans-serif;
-    letter-spacing:0.3px;
 }
 
 .dark footer{
     background:#0B3C5D;
 }
 
-.footer-left{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    align-items:flex-start;
-}
-
-.footer-center{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    align-items:center;
-    text-align:center;
-}
-
-.footer-right{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    align-items:flex-end;
-    text-align:right;
-}
-
-.footer-left p,
-.footer-center p,
-.footer-right p{
-    margin:0;
-    line-height:1.5;
-    font-size:14px;
-    font-weight:400;
-    color:rgba(255,255,255,0.9);
-}
-
-.footer-brand{
-    font-family:'Cormorant Garamond', serif;
-    font-size:22px;
-    font-weight:700;
-    color:var(--accent);
-    letter-spacing:2px;
-}
-
-.footer-contact{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    color:rgba(255,255,255,0.9);
-    font-size:14px;
-    font-weight:500;
-    transition:all 0.3s ease;
-    cursor:pointer;
-    padding:6px 14px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.1);
-    text-decoration:none;
-    white-space:nowrap;
-    font-family:'Inter', sans-serif;
-}
-
-.footer-contact:hover{
-    color:var(--accent);
-    background:rgba(255,255,255,0.2);
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-.footer-contact i{
-    font-size:15px;
-    color:var(--accent);
-    transition:transform 0.3s ease;
-    width:18px;
-    text-align:center;
-}
-
-.footer-contact:hover i{
-    transform:scale(1.2);
+footer p{
+    margin:5px 0;
 }
 
 footer strong{
     color:var(--accent);
-    font-weight:700;
-}
-
-@media (max-width:768px){
-    footer{
-        padding:14px 20px;
-        justify-content:center;
-        text-align:center;
-        gap:16px;
-    }
-
-    .footer-left,
-    .footer-center,
-    .footer-right{
-        align-items:center;
-        text-align:center;
-        width:100%;
-    }
-
-    .footer-left p,
-    .footer-center p,
-    .footer-right p{
-        font-size:13px;
-    }
-
-    .footer-brand{
-        font-size:20px;
-    }
-
-    .footer-contact{
-        font-size:13px;
-        padding:5px 12px;
-    }
+    font-weight:600;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -1702,37 +1591,23 @@ footer strong{
 /* ===== AI CHAT ===== */
 .ai-robot-container{
     position:fixed;
-    bottom:20px;
-    right:20px;
+    bottom:10px;
+    right:5px;
     z-index:9999;
     pointer-events:none;
 }
 
 .ai-robot-wrapper{
     position:relative;
-    width:120px;
-    height:168px;
-    cursor:grab;
+    width:140px;
+    height:196px;
+    cursor:pointer;
     pointer-events:auto;
-    transition:transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    user-select:none;
-}
-
-.ai-robot-wrapper:active{
-    cursor:grabbing;
+    transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .ai-robot-wrapper:hover{
     transform:scale(1.08);
-}
-
-.ai-robot-wrapper.dragging{
-    transition:none;
-    animation:none !important;
-}
-
-.ai-robot-wrapper.dragging .ai-robot-img{
-    animation:none !important;
 }
 
 .ai-robot-img{
@@ -1742,7 +1617,6 @@ footer strong{
     filter:drop-shadow(0 8px 25px rgba(11, 60, 93, 0.35));
     transition:all 0.3s ease;
     animation:robotFloat 3s ease-in-out infinite;
-    pointer-events:none;
 }
 
 @keyframes robotFloat{
@@ -1757,8 +1631,8 @@ footer strong{
 
 .ai-robot-tooltip{
     position:absolute;
-    top:40px;
-    left:-180px;
+    top:50px;
+    left:-160px;
     background:white;
     padding:10px 14px;
     border-radius:12px;
@@ -1770,7 +1644,6 @@ footer strong{
     transform:translateX(15px);
     transition:all 0.3s ease;
     pointer-events:none;
-    font-family:'Inter', sans-serif;
 }
 
 .ai-robot-tooltip::after{
@@ -1807,8 +1680,8 @@ footer strong{
 
 .ai-chat-window{
     position:fixed;
-    bottom:200px;
-    right:20px;
+    bottom:210px;
+    right:10px;
     width:380px;
     height:450px;
     background:var(--bg);
@@ -2083,9 +1956,8 @@ footer strong{
     }
 }
 </style>
-<base target="_self">
-<base target="_self">
-<base target="_self">
+<base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <!-- ===== HEADER ===== -->
@@ -2575,18 +2447,8 @@ footer strong{
 <div class="notification" id="notification"></div>
 
 <footer>
-    <div class="footer-left">
-        <a href="tel:87478732341" class="footer-contact"><i class="fas fa-phone"></i> 8 747 873 23 41</a>
-        <a href="https://wa.me/87786421462" target="_blank" class="footer-contact"><i class="fab fa-whatsapp"></i> 8 778 642 14 62</a>
-    </div>
-    <div class="footer-center">
-        <p>Жасағандар: <strong>Хавазматова М.& Шералиева И.</strong></p>
-        <p><span class="footer-brand">ÄDIS</span> — әдістемелік платформа © 2026</p>
-    </div>
-    <div class="footer-right">
-        <a href="mailto:madinakhavazmatova@gmail.com" class="footer-contact"><i class="fas fa-envelope"></i> madinakhavazmatova@gmail.com</a>
-        <a href="https://youtube.com" target="_blank" class="footer-contact"><i class="fab fa-youtube"></i> ÄDIS — жинағы</a>
-    </div>
+    <p>Жасағандар: <strong>Хавазматова М.& Шералиева И.</strong></p>
+    <p>©️ 2026 ӘДІС — әдістемелік платформа</p>
 </footer>
 <script>
 // ===== NOTIFICATION FUNCTION =====
@@ -2885,93 +2747,6 @@ function toggleChat() {
     if (chatWindow) {
         chatWindow.classList.toggle('show');
     }
-}
-
-// ===== AI ROBOT DRAG FUNCTIONALITY =====
-function initRobotDrag() {
-    const robot = document.querySelector('.ai-robot-wrapper');
-    const container = document.querySelector('.ai-robot-container');
-    if (!robot || !container) return;
-
-    let isDragging = false;
-    let startX, startY, initialLeft, initialTop;
-    let hasMoved = false;
-
-    function getPosition() {
-        const rect = container.getBoundingClientRect();
-        return { x: rect.left, y: rect.top };
-    }
-
-    robot.addEventListener('mousedown', function(e) {
-        isDragging = true;
-        hasMoved = false;
-        startX = e.clientX;
-        startY = e.clientY;
-        const pos = getPosition();
-        initialLeft = pos.x;
-        initialTop = pos.y;
-        robot.classList.add('dragging');
-        e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', function(e) {
-        if (!isDragging) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
-        const newX = initialLeft + dx;
-        const newY = initialTop + dy;
-        const maxX = window.innerWidth - robot.offsetWidth;
-        const maxY = window.innerHeight - robot.offsetHeight;
-        container.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
-        container.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
-        container.style.right = 'auto';
-        container.style.bottom = 'auto';
-    });
-
-    document.addEventListener('mouseup', function() {
-        if (!isDragging) return;
-        isDragging = false;
-        robot.classList.remove('dragging');
-        if (!hasMoved) toggleChat();
-    });
-
-    // Touch support
-    robot.addEventListener('touchstart', function(e) {
-        isDragging = true;
-        hasMoved = false;
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        const pos = getPosition();
-        initialLeft = pos.x;
-        initialTop = pos.y;
-        robot.classList.add('dragging');
-    }, {passive: false});
-
-    document.addEventListener('touchmove', function(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        const touch = e.touches[0];
-        const dx = touch.clientX - startX;
-        const dy = touch.clientY - startY;
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
-        const newX = initialLeft + dx;
-        const newY = initialTop + dy;
-        const maxX = window.innerWidth - robot.offsetWidth;
-        const maxY = window.innerHeight - robot.offsetHeight;
-        container.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
-        container.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
-        container.style.right = 'auto';
-        container.style.bottom = 'auto';
-    }, {passive: false});
-
-    document.addEventListener('touchend', function() {
-        if (!isDragging) return;
-        isDragging = false;
-        robot.classList.remove('dragging');
-        if (!hasMoved) toggleChat();
-    });
 }
 
 function sendMessage() {
@@ -3511,9 +3286,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Initialize robot drag
-    initRobotDrag();
-
     // Initialize user stats
     initUserStats();
     
