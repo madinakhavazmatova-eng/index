@@ -1,3537 +1,1870 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ӘДІС – басты бет</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-/* ===== ТҮС ПАЛИТРАСЫ ===== */
-:root{
-    --primary:#0B3C5D;
-    --primary-hover:#1C5D99;
-    --secondary:#1C5D99;
-    --accent:#f2BB16;
-    --text:#2c3e50;
-    --text-medium:#5d6d7e;
-    --text-light:#7f8c8d;
-    --bg:#ffffff;
-    --bg-light:#f4f7fb;
-    --bg-gray:#E6F0F7;
-    --border:#e5e8e8;
-    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
-    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
-    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
-    --link-color:#1C5D99;
-    --link-hover:#0B3C5D;
-    --success:#27ae60;
-    --new-badge:#e74c3c;
-}
-
-.dark{
-    --primary:#4A9FD4;
-    --primary-hover:#6BB3E0;
-    --secondary:#4A9FD4;
-    --accent:#f2BB16;
-    --text:#E8F4F8;
-    --text-medium:#B8D4E3;
-    --text-light:#8FB8D4;
-    --bg:#0A1628;
-    --bg-light:#0F1F35;
-    --bg-gray:#152238;
-    --border:#1E3A5F;
-    --shadow-sm:0 2px 4px rgba(0,0,0,0.3);
-    --shadow-md:0 4px 6px rgba(0,0,0,0.4);
-    --shadow-lg:0 10px 25px rgba(0,0,0,0.5);
-    --link-color:#7dd3fc;
-    --link-hover:#38bdf8;
-    --new-badge:#ff6b6b;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:'Inter', sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    transition:background-color 0.3s ease, color 0.3s ease;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-}
-
-/* ===== HEADER ===== */
-.header{
-    background:var(--primary);
-    color:white;
-    padding:18px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:var(--shadow-md);
-    position:sticky;
-    top:0;
-    z-index:1000;
-    transition:padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-               background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-               box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.header.scrolled{
-    padding:8px 40px;
-    background:rgba(11, 60, 93, 0.95);
-    -webkit-backdrop-filter:saturate(180%) blur(20px);
-    backdrop-filter:saturate(180%) blur(20px);
-    box-shadow:0 4px 20px rgba(0,0,0,0.15);
-}
-
-.dark .header{
-    background:#0B3C5D;
-}
-
-.dark .header.scrolled{
-    background:rgba(11, 60, 93, 0.92);
-}
-
-.logo-area{
-    display:flex;
-    align-items:center;
-    cursor:pointer;
-    transition:transform 0.3s ease;
-}
-
-.logo-area:hover{
-    transform:scale(1.02);
-}
-
-.logo-area img{
-    width:70px;
-    border-radius:50%;
-    margin-right:18px;
-    transition:width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-               transform 0.3s ease;
-}
-
-.header.scrolled .logo-area img{
-    width:45px;
-    margin-right:14px;
-}
-
-.logo-area:hover img{
-    transform:rotate(5deg);
-}
-
-.logo-text h1{
-    font-family:'Cormorant Garamond', serif;
-    font-size:42px;
-    margin:0;
-    letter-spacing:2px;
-    transition:font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-               color 0.3s ease;
-}
-
-.header.scrolled .logo-text h1{
-    font-size:28px;
-}
-
-.logo-text p{
-    margin:5px 0 0 0;
-    font-size:14px;
-    color:rgba(255,255,255,0.85);
-    transition:opacity 0.3s ease,
-               transform 0.3s ease,
-               height 0.3s ease,
-               margin 0.3s ease;
-}
-
-.header.scrolled .logo-text p{
-    opacity:0;
-    transform:translateY(-5px);
-    height:0;
-    margin:0;
-    overflow:hidden;
-}
-
-/* ===== SEARCH BAR ===== */
-.search-container{
-    flex:1;
-    max-width:500px;
-    margin:0 30px;
-    position:relative;
-    transition:max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-               margin 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.header.scrolled .search-container{
-    max-width:400px;
-    margin:0 20px;
-}
-
-.search-box{
-    width:100%;
-    padding:12px 45px 12px 20px;
-    border-radius:25px;
-    border:none;
-    background:rgba(255,255,255,0.15);
-    color:white;
-    font-size:14px;
-    transition:all 0.3s ease, padding 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter:blur(10px);
-}
-
-.header.scrolled .search-box{
-    padding:8px 40px 8px 16px;
-    font-size:13px;
-}
-
-.search-box::placeholder{
-    color:rgba(255,255,255,0.7);
-}
-
-.search-box:focus{
-    background:rgba(255,255,255,0.25);
-    outline:none;
-    box-shadow:0 0 0 3px rgba(244,162,97,0.3);
-}
-
-.search-btn{
-    position:absolute;
-    right:15px;
-    top:50%;
-    transform:translateY(-50%);
-    background:none;
-    border:none;
-    color:white;
-    cursor:pointer;
-    font-size:16px;
-    transition:transform 0.2s ease;
-}
-
-.search-btn:hover{
-    transform:translateY(-50%) scale(1.1);
-}
-
-/* ===== BURGER MENU ===== */
-.burger-menu{
-    display:none;
-    flex-direction:column;
-    cursor:pointer;
-    gap:5px;
-    padding:10px;
-    z-index:1001;
-    background:none;
-    border:none;
-}
-
-.burger-menu span{
-    width:25px;
-    height:3px;
-    background:white;
-    transition:all 0.3s ease;
-    border-radius:2px;
-}
-
-.burger-menu.active span:nth-child(1){
-    transform:rotate(45deg) translate(5px,5px);
-}
-
-.burger-menu.active span:nth-child(2){
-    opacity:0;
-}
-
-.burger-menu.active span:nth-child(3){
-    transform:rotate(-45deg) translate(7px,-6px);
-}
-
-/* Mobile Menu Overlay */
-.mobile-menu-overlay{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background:rgba(0,0,0,0.5);
-    z-index:998;
-    opacity:0;
-    transition:opacity 0.3s ease;
-}
-
-.mobile-menu-overlay.show{
-    display:block;
-    opacity:1;
-}
-
-/* Mobile Navigation */
-.mobile-nav{
-    display:none;
-    position:fixed;
-    top:80px;
-    left:0;
-    right:0;
-    background:var(--primary);
-    z-index:999;
-    max-height:calc(100vh - 80px);
-    overflow-y:auto;
-    transform:translateY(-100%);
-    transition:transform 0.3s ease;
-}
-
-.mobile-nav.show{
-    display:block;
-    transform:translateY(0);
-}
-
-.dark .mobile-nav{
-    background:#0B3C5D;
-}
-
-.mobile-nav-header{
-    padding:20px;
-    border-bottom:1px solid rgba(255,255,255,0.1);
-}
-
-.mobile-nav-header h3{
-    color:white;
-    font-size:18px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.mobile-nav-section{
-    border-bottom:1px solid rgba(255,255,255,0.1);
-}
-
-.mobile-nav-toggle{
-    width:100%;
-    padding:15px 20px;
-    background:none;
-    border:none;
-    color:white;
-    font-size:16px;
-    font-weight:500;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    cursor:pointer;
-    font-family:inherit;
-    transition:background 0.2s;
-}
-
-.mobile-nav-toggle:hover{
-    background:rgba(255,255,255,0.1);
-}
-
-.mobile-nav-toggle i{
-    transition:transform 0.3s ease;
-}
-
-.mobile-nav-toggle.active i{
-    transform:rotate(180deg);
-}
-
-.mobile-nav-content{
-    max-height:0;
-    overflow:hidden;
-    transition:max-height 0.3s ease;
-    background:rgba(0,0,0,0.2);
-}
-
-.mobile-nav-content.show{
-    max-height:400px;
-    overflow-y:auto;
-}
-
-.mobile-nav-content a{
-    display:block;
-    padding:12px 20px 12px 40px;
-    color:rgba(255,255,255,0.9);
-    text-decoration:none;
-    font-size:14px;
-    border-bottom:1px solid rgba(255,255,255,0.05);
-    transition:all 0.2s;
-}
-
-.mobile-nav-content a:hover{
-    background:rgba(255,255,255,0.1);
-    padding-left:45px;
-}
-
-.mobile-nav-content a:last-child{
-    border-bottom:none;
-}
-
-.mobile-nav-footer{
-    padding:20px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.mobile-nav-btn{
-    width:100%;
-    padding:12px;
-    border-radius:8px;
-    border:2px solid rgba(255,255,255,0.3);
-    background:transparent;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    font-family:inherit;
-    font-size:14px;
-    transition:all 0.3s;
-}
-
-.mobile-nav-btn:hover{
-    background:rgba(255,255,255,0.1);
-    transform:translateY(-2px);
-}
-
-.mobile-nav-btn.solid{
-    background:var(--accent);
-    border-color:var(--accent);
-}
-
-.mobile-nav-btn.solid:hover{
-    background:#c68b5e;
-}
-
-.mobile-theme-toggle{
-    width:100%;
-    padding:12px;
-    border-radius:8px;
-    border:2px solid rgba(255,255,255,0.3);
-    background:transparent;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    font-family:inherit;
-    font-size:14px;
-    transition:all 0.3s;
-}
-
-.mobile-theme-toggle:hover{
-    background:rgba(255,255,255,0.1);
-}
-
-/* ===== PROFILE MODAL ===== */
-.modal-overlay{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.6);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:2000;
-    padding:20px;
-    backdrop-filter:blur(5px);
-}
-
-.modal-overlay.show{
-    display:flex;
-}
-
-.modal{
-    background:var(--bg);
-    border-radius:20px;
-    width:100%;
-    max-width:900px;
-    max-height:90vh;
-    overflow:hidden;
-    box-shadow:var(--shadow-lg);
-    display:flex;
-    flex-direction:column;
-    animation:modalSlideIn 0.3s ease;
-}
-
-@keyframes modalSlideIn{
-    from{
-        opacity:0;
-        transform:translateY(-50px) scale(0.95);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-}
-
-.modal-header{
-    background:var(--primary);
-    color:white;
-    padding:25px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.modal-header h2{
-    margin:0;
-    font-family:'Cormorant Garamond', serif;
-    font-size:28px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.modal-close{
-    background:none;
-    border:none;
-    color:white;
-    font-size:28px;
-    cursor:pointer;
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:all 0.2s;
-}
-
-.modal-close:hover{
-    background:rgba(255,255,255,0.2);
-    transform:rotate(90deg);
-}
-
-.modal-body{
-    padding:0;
-    overflow-y:auto;
-    flex:1;
-}
-
-/* Tabs */
-.tabs{
-    display:flex;
-    border-bottom:1px solid var(--border);
-    background:var(--bg-light);
-    padding:0 25px;
-    flex-shrink:0;
-}
-
-.tab{
-    padding:15px 25px;
-    background:none;
-    border:none;
-    color:var(--text-medium);
-    font-weight:500;
-    cursor:pointer;
-    position:relative;
-    transition:all 0.3s;
-    font-size:14px;
-    font-family:inherit;
-}
-
-.tab:hover{
-    color:var(--primary);
-    background:rgba(0,0,0,0.05);
-}
-
-.tab.active{
-    color:var(--primary);
-    font-weight:600;
-}
-
-.tab.active::after{
-    content:'';
-    position:absolute;
-    bottom:0;
-    left:0;
-    right:0;
-    height:3px;
-    background:var(--primary);
-}
-
-.tab-content{
-    display:none;
-    padding:25px;
-}
-
-.tab-content.active{
-    display:block;
-    animation:fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn{
-    from{opacity:0;transform:translateY(10px);}
-    to{opacity:1;transform:translateY(0);}
-}
-
-/* Profile Info */
-.profile-info{
-    display:grid;
-    grid-template-columns:200px 1fr;
-    gap:30px;
-    margin-bottom:30px;
-}
-
-.profile-avatar{
-    text-align:center;
-}
-
-.profile-avatar img{
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    object-fit:cover;
-    border:4px solid var(--primary);
-    margin-bottom:15px;
-    transition:transform 0.3s;
-}
-
-.profile-avatar img:hover{
-    transform:scale(1.05);
-}
-
-.profile-avatar button{
-    padding:8px 16px;
-    background:var(--bg-light);
-    border:1px solid var(--border);
-    border-radius:20px;
-    cursor:pointer;
-    font-size:13px;
-    color:var(--text);
-    transition:all 0.2s;
-}
-
-.profile-avatar button:hover{
-    background:var(--primary);
-    color:white;
-}
-
-.profile-details h3{
-    margin-bottom:20px;
-    color:var(--primary);
-    font-size:20px;
-}
-
-.form-group{
-    margin-bottom:20px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:500;
-    color:var(--text);
-    font-size:14px;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea{
-    width:100%;
-    padding:12px 15px;
-    border:1px solid var(--border);
-    border-radius:8px;
-    background:var(--bg);
-    color:var(--text);
-    font-size:14px;
-    transition:all 0.2s;
-    font-family:inherit;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-    border-color:var(--primary);
-    outline:none;
-    box-shadow:0 0 0 3px rgba(11,60,93,0.1);
-}
-
-.form-row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-}
-
-/* Stats Cards */
-.stats-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
-    gap:20px;
-    margin-bottom:30px;
-}
-
-.stat-card{
-    background:var(--bg-light);
-    padding:20px;
-    border-radius:12px;
-    text-align:center;
-    border:1px solid var(--border);
-    transition:all 0.3s;
-    cursor:pointer;
-}
-
-.stat-card:hover{
-    transform:translateY(-5px);
-    box-shadow:var(--shadow-md);
-    border-color:var(--primary);
-}
-
-.stat-number{
-    font-size:36px;
-    font-weight:700;
-    color:var(--primary);
-    display:block;
-    transition:transform 0.3s;
-}
-
-.stat-card:hover .stat-number{
-    transform:scale(1.1);
-}
-
-.stat-label{
-    color:var(--text-light);
-    font-size:13px;
-    margin-top:5px;
-}
-
-/* My Methods */
-.my-methods-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.btn-primary{
-    background:var(--primary);
-    color:white;
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:600;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    transition:all 0.3s;
-    position:relative;
-    overflow:hidden;
-    font-family:inherit;
-    font-size:14px;
-}
-
-.btn-primary::after{
-    content:'';
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:0;
-    height:0;
-    background:rgba(255,255,255,0.2);
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    transition:width 0.6s,height 0.6s;
-}
-
-.btn-primary:hover::after{
-    width:300px;
-    height:300px;
-}
-
-.btn-primary:hover{
-    background:var(--primary-hover);
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(11,60,93,0.3);
-}
-
-.empty-state{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--text-light);
-}
-
-.empty-state i{
-    font-size:64px;
-    margin-bottom:20px;
-    opacity:0.3;
-    transition:transform 0.3s;
-}
-
-.empty-state:hover i{
-    transform:scale(1.1);
-}
-
-.empty-state h4{
-    color:var(--text);
-    margin-bottom:10px;
-}
-
-/* Add Method Form */
-.add-method-form{
-    background:var(--bg-light);
-    padding:25px;
-    border-radius:12px;
-    border:1px solid var(--border);
-    margin-bottom:20px;
-    animation:slideDown 0.3s ease;
-}
-
-@keyframes slideDown{
-    from{opacity:0;transform:translateY(-20px);}
-    to{opacity:1;transform:translateY(0);}
-}
-
-.form-actions{
-    display:flex;
-    gap:15px;
-    margin-top:25px;
-}
-
-.btn-secondary{
-    background:var(--bg);
-    color:var(--text);
-    padding:10px 20px;
-    border:1px solid var(--border);
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:600;
-    transition:all 0.3s;
-    font-family:inherit;
-    font-size:14px;
-}
-
-.btn-secondary:hover{
-    background:var(--border);
-    transform:translateY(-2px);
-}
-
-/* Saved Methods */
-.saved-methods-list{
-    display:grid;
-    gap:15px;
-}
-
-.saved-method-item{
-    display:flex;
-    align-items:center;
-    padding:15px;
-    background:var(--bg-light);
-    border-radius:10px;
-    border:1px solid var(--border);
-    transition:all 0.3s;
-}
-
-.saved-method-item:hover{
-    box-shadow:var(--shadow-md);
-    transform:translateX(5px);
-    border-color:var(--primary);
-}
-
-.saved-method-icon{
-    width:50px;
-    height:50px;
-    background:var(--primary);
-    color:white;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-    margin-right:15px;
-    transition:transform 0.3s;
-    flex-shrink:0;
-}
-
-.saved-method-item:hover .saved-method-icon{
-    transform:rotate(10deg) scale(1.1);
-}
-
-.saved-method-info{
-    flex:1;
-    min-width:0;
-}
-
-.saved-method-title{
-    font-weight:600;
-    color:var(--text);
-    margin-bottom:4px;
-}
-
-.saved-method-category{
-    font-size:12px;
-    color:var(--text-light);
-}
-
-.saved-method-actions{
-    display:flex;
-    gap:10px;
-}
-
-.saved-method-actions button{
-    width:35px;
-    height:35px;
-    border:1px solid var(--border);
-    background:var(--bg);
-    border-radius:8px;
-    cursor:pointer;
-    color:var(--text-medium);
-    transition:all 0.2s;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.saved-method-actions button:hover{
-    background:var(--primary);
-    color:white;
-    border-color:var(--primary);
-    transform:scale(1.1);
-}
-
-/* ===== AUTH ===== */
-.auth{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    transition:gap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.header.scrolled .auth{
-    gap:10px;
-}
-
-.btn{
-    padding:10px 20px;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:600;
-    transition:all 0.3s, padding 0.35s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size:14px;
-    cursor:pointer;
-    position:relative;
-    overflow:hidden;
-    border:none;
-    font-family:inherit;
-}
-
-.header.scrolled .btn{
-    padding:7px 14px;
-    font-size:12px;
-}
-
-.login{
-    background:transparent;
-    border:2px solid rgba(255,255,255,0.8);
-    color:white;
-}
-
-.login:hover{
-    background:white;
-    color:var(--primary);
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-.register{
-    background:var(--accent);
-    color:white;
-}
-
-.register:hover{
-    background:#c68b5e;
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(244,162,97,0.3);
-}
-
-.toggle{
-    cursor:pointer;
-    font-size:20px;
-    margin-left:15px;
-    padding:8px;
-    border-radius:50%;
-    transition:all 0.3s, width 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    background:rgba(255,255,255,0.1);
-    border:none;
-    color:white;
-    width:40px;
-    height:40px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.header.scrolled .toggle{
-    width:32px;
-    height:32px;
-    font-size:16px;
-    margin-left:10px;
-    padding:6px;
-}
-
-.toggle:hover{
-    background:rgba(255,255,255,0.2);
-    transform:rotate(15deg) scale(1.1);
-}
-
-/* ===== TOP MENU ===== */
-.top-menu{
-    background:var(--secondary);
-    text-align:center;
-    padding:12px;
-    box-shadow:var(--shadow-sm);
-    position:sticky;
-    top:86px;
-    z-index:999;
-    transition:top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-               padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-               background-color 0.3s ease;
-}
-
-body.header-scrolled .top-menu{
-    top:52px;
-    padding:8px;
-}
-
-.dark .top-menu{
-    background:#1C5D99;
-}
-
-.top-menu a{
-    color:white;
-    text-decoration:none;
-    margin:0 20px;
-    font-weight:500;
-    transition:all 0.3s ease;
-    position:relative;
-    padding:5px 0;
-    cursor:pointer;
-}
-
-.top-menu a::after{
-    content:'';
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:0;
-    height:2px;
-    background:var(--accent);
-    transition:width 0.3s ease;
-}
-
-.top-menu a:hover{
-    color:var(--accent);
-}
-
-.top-menu a:hover::after{
-    width:100%;
-}
-
-/* ===== MAIN ===== */
-.main{
-    display:flex;
-    flex:1;
-    min-height:calc(100vh - 180px);
-}
-
-/* ===== SIDEBAR - HOVER АРҚЫЛЫ АШЫЛАДЫ ===== */
-.sidebar{
-    width:70px;
-    background:var(--primary);
-    padding:0;
-    border-right:none;
-    transition:width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow:hidden;
-    flex-shrink:0;
-    position:relative;
-    z-index:100;
-}
-
-/* HOVER арқылы ашылу - мышка алып барса ашылады */
-.sidebar:hover{
-    width:280px;
-}
-
-.sidebar-header{
-    padding:20px 15px;
-    text-align:center;
-    border-bottom:1px solid rgba(255,255,255,0.1);
-    height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    position:relative;
-    gap:12px;
-}
-
-/* НЕГІЗГИ ИКОНКА - үлкенірек, басқаларынан ерекше */
-.sidebar-logo-icon{
-    width:48px;
-    height:48px;
-    background:rgba(255,255,255,0.2);
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:24px;
-    cursor:pointer;
-    transition:all 0.3s ease;
-    flex-shrink:0;
-    box-shadow:0 2px 8px rgba(0,0,0,0.2);
-}
-
-.sidebar-logo-icon:hover{
-    background:rgba(255,255,255,0.3);
-    transform:scale(1.1);
-}
-
-.sidebar-title{
-    color:white;
-    font-family:'Cormorant Garamond', serif;
-    font-size:22px;
-    font-weight:700;
-    white-space:nowrap;
-    opacity:0;
-    transition:opacity 0.3s ease 0.1s;
-    pointer-events:none;
-}
-
-/* Hover кезінде title көрінеді */
-.sidebar:hover .sidebar-title{
-    opacity:1;
-}
-
-/* Toggle button - ТОЛЫҚ ЖОЙЫЛДЫ */
-.sidebar-toggle{
-    display:none !important;
-}
-
-/* Menu Items */
-.sidebar-menu{
-    list-style:none;
-    padding:10px 0;
-    margin:0;
-}
-
-.menu-item{
-    position:relative;
-}
-
-/* Accordion Header */
-.accordion-header{
-    display:flex;
-    align-items:center;
-    padding:14px 0;
-    color:rgba(255,255,255,0.85);
-    cursor:pointer;
-    position:relative;
-    height:50px;
-    transition:all 0.3s ease;
-    text-decoration:none;
-    user-select:none;
-}
-
-.accordion-header:hover{
-    background:rgba(255,255,255,0.1);
-    color:white;
-}
-
-.accordion-header .menu-icon{
-    width:70px;
-    min-width:70px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-    transition:transform 0.3s ease;
-}
-
-.sidebar-logo-icon i{
-    font-size:24px;
-}
-
-.accordion-header:hover .menu-icon{
-    transform:scale(1.15);
-}
-
-.accordion-header .menu-text{
-    font-size:14px;
-    font-weight:500;
-    white-space:nowrap;
-    opacity:0;
-    transition:opacity 0.3s ease 0.1s;
-    flex:1;
-    padding-right:15px;
-}
-
-.sidebar:hover .accordion-header .menu-text{
-    opacity:1;
-}
-
-.accordion-header .menu-arrow{
-    font-size:12px;
-    margin-right:15px;
-    opacity:0;
-    transition:all 0.3s ease 0.1s;
-    transform:rotate(0deg);
-}
-
-.sidebar:hover .accordion-header .menu-arrow{
-    opacity:1;
-}
-
-.menu-item.open .accordion-header .menu-arrow{
-    transform:rotate(180deg);
-}
-
-/* Submenu - АШЫҚ ТҮСТЕ */
-.submenu{
-    max-height:0;
-    overflow:hidden;
-    transition:max-height 0.4s ease, opacity 0.3s ease;
-    background:#f0f5fa;
-    opacity:0;
-}
-
-.dark .submenu{
-    background:#1a2d47;
-}
-
-.menu-item.open .submenu{
-    max-height:400px;
-    opacity:1;
-}
-
-.submenu-item{
-    display:flex;
-    align-items:center;
-    padding:12px 20px 12px 70px;
-    color:#1C5D99;
-    text-decoration:none;
-    font-size:13px;
-    transition:all 0.2s ease;
-    position:relative;
-    border-left:3px solid transparent;
-    white-space:nowrap;
-}
-
-.dark .submenu-item{
-    color:#7dd3fc;
-}
-
-.submenu-item::before{
-    content:'';
-    position:absolute;
-    left:50px;
-    top:50%;
-    transform:translateY(-50%);
-    width:5px;
-    height:5px;
-    background:var(--accent);
-    border-radius:50%;
-    opacity:0;
-    transition:opacity 0.2s;
-}
-
-.submenu-item:hover{
-    background:#e1ecf7;
-    color:#0B3C5D;
-    padding-left:75px;
-    border-left-color:var(--accent);
-}
-
-.dark .submenu-item:hover{
-    background:#243b5d;
-    color:white;
-}
-
-.submenu-item:hover::before{
-    opacity:1;
-}
-
-.submenu-item.active{
-    background:#e1ecf7;
-    color:#0B3C5D;
-    border-left-color:var(--accent);
-}
-
-.dark .submenu-item.active{
-    background:#243b5d;
-    color:white;
-}
-
-/* Tooltip */
-.menu-tooltip{
-    position:absolute;
-    left:75px;
-    top:50%;
-    transform:translateY(-50%) translateX(-10px);
-    background:var(--bg);
-    color:var(--text);
-    padding:8px 14px;
-    border-radius:8px;
-    font-size:13px;
-    white-space:nowrap;
-    box-shadow:var(--shadow-lg);
-    opacity:0;
-    visibility:hidden;
-    transition:all 0.2s ease;
-    z-index:1000;
-    border:1px solid var(--border);
-    pointer-events:none;
-}
-
-.menu-tooltip::before{
-    content:'';
-    position:absolute;
-    left:-6px;
-    top:50%;
-    transform:translateY(-50%);
-    border:6px solid transparent;
-    border-right-color:var(--bg);
-}
-
-.dark .menu-tooltip::before{
-    border-right-color:var(--bg);
-}
-
-.menu-item:hover .menu-tooltip{
-    opacity:1;
-    visibility:visible;
-    transform:translateY(-50%) translateX(0);
-}
-
-/* Hover кезінде tooltip жасырылады */
-.sidebar:hover .menu-tooltip{
-    display:none;
-}
-
-/* ===== CONTENT ===== */
-.content{
-    flex:1;
-    padding:6px;
-    background:var(--bg);
-    transition:margin-left 0.3s ease;
-    min-width:0;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    height:calc(100vh - 130px);
-    transition:height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body.header-scrolled .content{
-    height:calc(100vh - 96px);
-}
-
-iframe{
-    width:100%;
-    flex:1;
-    min-height:0;
-    border:none;
-    border-radius:6px;
-    background:#fff;
-    transition:all 0.3s ease;
-    display:block;
-}
-
-.dark iframe{
-    box-shadow:0 10px 25px rgba(0,0,0,0.5);
-}
-
-/* ===== FOOTER ===== */
-footer{
-    background:var(--primary);
-    color:rgba(255,255,255,0.9);
-    padding:16px 40px;
-    font-size:15px;
-    margin-top:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:12px;
-    font-family:'Inter', sans-serif;
-    letter-spacing:0.3px;
-}
-
-.dark footer{
-    background:#0B3C5D;
-}
-
-.footer-left{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    align-items:flex-start;
-}
-
-.footer-center{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    align-items:center;
-    text-align:center;
-}
-
-.footer-right{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    align-items:flex-end;
-    text-align:right;
-}
-
-.footer-left p,
-.footer-center p,
-.footer-right p{
-    margin:0;
-    line-height:1.5;
-    font-size:14px;
-    font-weight:400;
-    color:rgba(255,255,255,0.9);
-}
-
-.footer-brand{
-    font-family:'Cormorant Garamond', serif;
-    font-size:22px;
-    font-weight:700;
-    color:var(--accent);
-    letter-spacing:2px;
-}
-
-.footer-contact{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    color:rgba(255,255,255,0.9);
-    font-size:14px;
-    font-weight:500;
-    transition:all 0.3s ease;
-    cursor:pointer;
-    padding:6px 14px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.1);
-    text-decoration:none;
-    white-space:nowrap;
-    font-family:'Inter', sans-serif;
-}
-
-.footer-contact:hover{
-    color:var(--accent);
-    background:rgba(255,255,255,0.2);
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-}
-
-.footer-contact i{
-    font-size:15px;
-    color:var(--accent);
-    transition:transform 0.3s ease;
-    width:18px;
-    text-align:center;
-}
-
-.footer-contact:hover i{
-    transform:scale(1.2);
-}
-
-footer strong{
-    color:var(--accent);
-    font-weight:700;
-}
-
-@media (max-width:768px){
-    footer{
-        padding:14px 20px;
-        justify-content:center;
-        text-align:center;
-        gap:16px;
-    }
-
-    .footer-left,
-    .footer-center,
-    .footer-right{
-        align-items:center;
-        text-align:center;
-        width:100%;
-    }
-
-    .footer-left p,
-    .footer-center p,
-    .footer-right p{
-        font-size:13px;
-    }
-
-    .footer-brand{
-        font-size:20px;
-    }
-
-    .footer-contact{
-        font-size:13px;
-        padding:5px 12px;
-    }
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width:768px){
-    .main{
-        flex-direction:column;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ӘДІС — Әдістемелік платформа</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0B3C5D;
+            --primary-hover: #1C5D99;
+            --secondary: #1C5D99;
+            --accent: #f2BB16;
+            --text: #2c3e50;
+            --text-medium: #5d6d7e;
+            --text-light: #7f8c8d;
+            --bg: #ffffff;
+            --bg-light: #f4f7fb;
+            --bg-gray: #E6F0F7;
+            --border: #e5e8e8;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark {
+            --primary: #4A9FD4;
+            --primary-hover: #6BB3E0;
+            --secondary: #4A9FD4;
+            --accent: #f2BB16;
+            --text: #E8F4F8;
+            --text-medium: #B8D4E3;
+            --text-light: #8FB8D4;
+            --bg: #0A1628;
+            --bg-light: #0F1F35;
+            --bg-gray: #152238;
+            --border: #1E3A5F;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Decorative Clouds */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 100px;
+            opacity: 0.8;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .dark .cloud {
+            background: rgba(74, 159, 212, 0.1);
+        }
+
+        .cloud::before {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 100px;
+        }
+
+        .cloud-1 {
+            width: 100px;
+            height: 40px;
+            top: 20%;
+            left: -100px;
+        }
+        .cloud-1::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 10px;
+        }
+
+        .cloud-2 {
+            width: 80px;
+            height: 35px;
+            top: 40%;
+            right: -80px;
+            animation-delay: 5s;
+        }
+        .cloud-2::before {
+            width: 60px;
+            height: 40px;
+            top: -20px;
+            right: 15px;
+        }
+
+        .cloud-3 {
+            width: 120px;
+            height: 45px;
+            bottom: 30%;
+            left: -120px;
+            animation-delay: 10s;
+        }
+        .cloud-3::before {
+            width: 70px;
+            height: 60px;
+            top: -30px;
+            left: 20px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(50px) translateY(-20px); }
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .dark .header {
+            background: #0B3C5D;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-area img {
+            width: 70px;
+            margin-right: 18px;
+            border-radius: 50%;
+        }
+
+        .logo-text h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            margin: 0;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: rgba(255,255,255,0.85);
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.8);
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-solid {
+            background: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-solid:hover {
+            background: #e8954e;
+            border-color: #e8954e;
+            transform: translateY(-2px);
+        }
+
+        .toggle-theme {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            margin-left: 10px;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .toggle-theme:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(15deg);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 90px;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 999;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .dark .mobile-menu {
+            background: #0B3C5D;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+            padding-left: 0.5rem;
+        }
+
+        .mobile-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .mobile-buttons .btn {
+            width: 100%;
+            padding: 0.875rem;
+        }
+
+        /* Section 1: Hero with 360 Panorama */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-gray) 100%);
+        }
+
+        .hero-panorama {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .panorama-image {
+            width: 300%;
+            height: 100%;
+            background-image: url('басты.jpeg');
+            background-size: cover;
+            background-position: center;
+            animation: panoramaRotate 40s linear infinite;
+        }
+
+        .panorama-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(11, 60, 93, 0.75) 0%, rgba(28, 93, 153, 0.65) 100%);
+        }
+
+        @keyframes panoramaRotate {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-66.666%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-welcome {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btn {
+            background: var(--accent);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(244, 162, 97, 0.4);
+            border: 2px solid var(--accent);
+        }
+
+        .hero-btn:hover {
+            background: transparent;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(244, 162, 97, 0.6);
+        }
+
+        /* Section 2: Target Audience */
+        .target-section {
+            padding: 6rem 2rem;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+
+        .target-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border: 2px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .target-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .target-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .target-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .target-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+            border: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .target-card:hover .target-icon {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .target-icon::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 3px dashed var(--accent);
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .target-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .target-card p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Жаңартылған "Неліктен осы үш топқа?" бөлігі */
+        .why-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 24px;
+            padding: 3.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .why-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .why-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Section 3: Why ADIS */
+        .why-adis-section {
+            padding: 6rem 2rem;
+            background: var(--bg-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .adis-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .adis-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .adis-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .adis-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid var(--accent);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .adis-content {
+            flex: 1;
+        }
+
+        .adis-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .adis-content h2 span {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .adis-answer {
+            background: var(--bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--accent);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .adis-answer::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .adis-answer p {
+            color: var(--text-medium);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        /* Section 4: 3 Reasons */
+        .reasons-section {
+            padding: 6rem 2rem;
+            background: var(--bg);
+            position: relative;
+        }
+
+        .reasons-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .reason-item {
+            text-align: center;
+            max-width: 280px;
+        }
+
+        .reason-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(11, 60, 93, 0.3);
+            transition: var(--transition);
+        }
+
+        .reason-circle::after {
+            content: '';
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            opacity: 0.5;
+            transition: var(--transition);
+        }
+
+        .reason-item:hover .reason-circle {
+            transform: scale(1.1);
+        }
+
+        .reason-item:hover .reason-circle::after {
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        .reason-item h4 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .reason-item p {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Section 5: Advantages Carousel */
+        .advantages-section {
+            padding: 6rem 2rem;
+            background: var(--bg-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantages-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .advantages-carousel {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.5s ease;
+        }
+
+        .advantage-card {
+            min-width: calc(33.333% - 1.33rem);
+            background: var(--bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            animation: cardPulse 6s infinite;
+        }
+
+        @keyframes cardPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .advantage-card:nth-child(2) { animation-delay: 0.5s; }
+        .advantage-card:nth-child(3) { animation-delay: 1s; }
+        .advantage-card:nth-child(4) { animation-delay: 1.5s; }
+        .advantage-card:nth-child(5) { animation-delay: 2s; }
+        .advantage-card:nth-child(6) { animation-delay: 2.5s; }
+
+        .advantage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .advantage-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-light);
+            border-radius: 20px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .advantage-card:hover .advantage-icon {
+            background: var(--primary);
+            color: white;
+            transform: rotate(5deg);
+        }
+
+        .advantage-card h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .advantage-card p {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Section 6: Opportunities with Sticker Design */
+        .opportunities-section {
+            padding: 6rem 2rem;
+            background: var(--bg);
+            position: relative;
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        .opportunities-bg {
+            background: linear-gradient(145deg, #f5f5f0 0%, #e8e8e0 100%);
+            border-radius: 20px;
+            padding: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 400px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.1);
+            border: 8px solid #d4d4c8;
+        }
+
+        .dark .opportunities-bg {
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+            border-color: #0f3460;
+        }
+
+        .opportunities-bg::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px dashed rgba(0,0,0,0.1);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .dark .opportunities-bg::before {
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .stickers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sticker {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.15), inset 0 -2px 0 rgba(0,0,0,0.05);
+            transform: rotate(-3deg);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text);
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .dark .sticker {
+            background: #1a1a2e;
+            color: var(--text);
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.4), inset 0 -2px 0 rgba(0,0,0,0.2);
+        }
+
+        .sticker:nth-child(even) {
+            transform: rotate(3deg);
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .dark .sticker:nth-child(even) {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .sticker:nth-child(3n) {
+            background: #e8f4f8;
+            color: var(--primary);
+        }
+
+        .dark .sticker:nth-child(3n) {
+            background: #152238;
+            color: var(--primary);
+        }
+
+        .sticker:nth-child(4n) {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .dark .sticker:nth-child(4n) {
+            background: #2a1a10;
+            color: #ff9800;
+        }
+
+        .sticker::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b);
+            border-radius: 50%;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 -3px 3px rgba(0,0,0,0.2);
+        }
+
+        .sticker:nth-child(even)::before {
+            background: radial-gradient(circle at 30% 30%, #4ecdc4, #1a936f);
+        }
+
+        .sticker:nth-child(3n)::before {
+            background: radial-gradient(circle at 30% 30%, #ffe66d, #f39c12);
+        }
+
+        .sticker:nth-child(4n)::before {
+            background: radial-gradient(circle at 30% 30%, #a8e6cf, #27ae60);
+        }
+
+        .sticker:hover {
+            transform: rotate(0deg) scale(1.05) translateY(-5px);
+            z-index: 10;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.2), inset 0 -2px 0 rgba(0,0,0,0.05);
+        }
+
+        /* Help Section */
+        .help {
+            padding: 6rem 2rem;
+            background: var(--bg);
+        }
+
+        .help-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-tag {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title-centered {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title-centered::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .accordion {
+            margin-bottom: 4rem;
+        }
+
+        .accordion-item {
+            background: var(--bg-light);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .accordion-item:hover {
+            border-color: rgba(244, 162, 97, 0.3);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--bg);
+            transition: var(--transition);
+            user-select: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-light);
+            color: var(--primary);
+        }
+
+        .accordion-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+            background: var(--accent);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: var(--bg);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 300px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .accordion-content p {
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        /* Contact Form */
+        .contact-section {
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .contact-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .contact-section > p {
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 159, 212, 0.1);
+        }
+
+        .dark .form-group input:focus,
+        .dark .form-group textarea:focus,
+        .dark .form-group select:focus {
+            box-shadow: 0 0 0 3px rgba(74, 159, 212, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 60, 93, 0.25);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .dark footer {
+            background: #0B3C5D;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: inline-block;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom strong {
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .adis-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .advantage-card {
+                min-width: calc(50% - 1rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .nav-menu,
+            .nav-actions {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title, .section-title-centered {
+                font-size: 1.75rem;
+            }
+
+            .reasons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .advantage-card {
+                min-width: 100%;
+            }
+
+            .contact-section {
+                padding: 2rem;
+            }
+
+            .opportunities-bg {
+                padding: 2rem;
+            }
+
+            .sticker {
+                min-width: 150px;
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 28px;
+            }
+
+            .logo-area img {
+                width: 50px;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .why-section {
+                padding: 2rem;
+            }
+
+            .sticker {
+                padding: 1rem 1.5rem;
+                min-width: 140px;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 2rem; }
+
+        /* Loading Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     
-    .sidebar{
-        position:fixed;
-        left:0;
-        top:70px;
-        bottom:0;
-        z-index:999;
-        width:280px !important;
-        transform:translateX(-100%);
-        transition:transform 0.3s ease;
-    }
-    
-    .sidebar.show{
-        transform:translateX(0);
-    }
-    
-    .sidebar-toggle{
-        display:none;
-    }
-    
-    .sidebar-title{
-        opacity:1;
-    }
-    
-    .accordion-header .menu-text{
-        opacity:1;
-    }
-    
-    .accordion-header .menu-arrow{
-        opacity:1;
-    }
-    
-    .menu-tooltip{
-        display:none;
-    }
-    
-    .content{
-        width:100%;
-        margin-left:0;
-    }
-    
-    .header{
-        padding:15px 20px;
-        flex-wrap:wrap;
-        height:70px;
-    }
-    
-    .search-container{
-        order:3;
-        width:100%;
-        margin:10px 0 0 0;
-        max-width:none;
-    }
-    
-    iframe{
-        height:auto;
-        min-height:400px;
-    }
-    
-    .auth{
-        display:none;
-    }
-    
-    .top-menu{
-        display:none;
-    }
-    
-    .burger-menu{
-        display:flex;
-        order:3;
-        margin-left:10px;
-    }
-    
-    .logo-text p{
-        display:none;
-    }
-    
-    .profile-info{
-        grid-template-columns:1fr;
-    }
-    
-    .form-row{
-        grid-template-columns:1fr;
-    }
-    
-    .stats-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
+        /* Auth buttons - ensure visible by default */
+        #authButtons, #mobileAuthButtons {
+            display: flex !important;
+        }
 
-/* ===== SEARCH RESULTS ===== */
-.search-results-overlay{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.5);
-    display:none;
-    justify-content:center;
-    align-items:flex-start;
-    z-index:1500;
-    padding-top:100px;
-    backdrop-filter:blur(5px);
-}
-
-.search-results-overlay.show{
-    display:flex;
-}
-
-.search-results-modal{
-    background:var(--bg);
-    border-radius:15px;
-    width:90%;
-    max-width:800px;
-    max-height:70vh;
-    overflow-y:auto;
-    box-shadow:var(--shadow-lg);
-    animation:slideDown 0.3s ease;
-}
-
-.search-results-header{
-    background:var(--primary);
-    color:white;
-    padding:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.search-results-header h3{
-    margin:0;
-}
-
-.search-close{
-    background:none;
-    border:none;
-    color:white;
-    font-size:24px;
-    cursor:pointer;
-    transition:transform 0.2s;
-}
-
-.search-close:hover{
-    transform:rotate(90deg);
-}
-
-.search-results-body{
-    padding:20px;
-}
-
-.search-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
-    gap:15px;
-}
-
-.search-item{
-    background:var(--bg-light);
-    padding:15px;
-    border-radius:10px;
-    border:1px solid var(--border);
-    cursor:pointer;
-    transition:all 0.3s ease;
-}
-
-.search-item:hover{
-    transform:translateY(-5px);
-    box-shadow:var(--shadow-md);
-    border-color:var(--primary);
-}
-
-.search-item-title{
-    font-weight:600;
-    color:var(--text);
-    margin-bottom:5px;
-}
-
-.search-item-category{
-    font-size:12px;
-    color:var(--text-light);
-}
-
-.search-item-tags{
-    display:flex;
-    flex-wrap:wrap;
-    gap:5px;
-    margin-top:8px;
-}
-
-.search-tag{
-    padding:2px 8px;
-    background:var(--bg-gray);
-    border-radius:10px;
-    font-size:11px;
-    color:var(--text-medium);
-}
-
-.no-results{
-    text-align:center;
-    padding:40px;
-    color:var(--text-light);
-}
-
-.no-results i{
-    font-size:48px;
-    margin-bottom:15px;
-    opacity:0.5;
-}
-
-/* ===== AI CHAT ===== */
-.ai-robot-container{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    z-index:9999;
-    pointer-events:none;
-}
-
-.ai-robot-wrapper{
-    position:relative;
-    width:120px;
-    height:168px;
-    cursor:grab;
-    pointer-events:auto;
-    transition:transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    user-select:none;
-}
-
-.ai-robot-wrapper:active{
-    cursor:grabbing;
-}
-
-.ai-robot-wrapper:hover{
-    transform:scale(1.08);
-}
-
-.ai-robot-wrapper.dragging{
-    transition:none;
-    animation:none !important;
-}
-
-.ai-robot-wrapper.dragging .ai-robot-img{
-    animation:none !important;
-}
-
-.ai-robot-img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    filter:drop-shadow(0 8px 25px rgba(11, 60, 93, 0.35));
-    transition:all 0.3s ease;
-    animation:robotFloat 3s ease-in-out infinite;
-    pointer-events:none;
-}
-
-@keyframes robotFloat{
-    0%, 100%{transform:translateY(0px);}
-    50%{transform:translateY(-8px);}
-}
-
-.ai-robot-wrapper:hover .ai-robot-img{
-    filter:drop-shadow(0 12px 35px rgba(11, 60, 93, 0.5));
-    animation-play-state:paused;
-}
-
-.ai-robot-tooltip{
-    position:absolute;
-    top:40px;
-    left:-180px;
-    background:white;
-    padding:10px 14px;
-    border-radius:12px;
-    box-shadow:0 4px 20px rgba(0,0,0,0.15);
-    font-size:12px;
-    color:var(--text);
-    white-space:nowrap;
-    opacity:0;
-    transform:translateX(15px);
-    transition:all 0.3s ease;
-    pointer-events:none;
-    font-family:'Inter', sans-serif;
-}
-
-.ai-robot-tooltip::after{
-    content:'';
-    position:absolute;
-    right:-6px;
-    top:50%;
-    transform:translateY(-50%);
-    border:6px solid transparent;
-    border-left-color:white;
-}
-
-.ai-robot-wrapper:hover .ai-robot-tooltip{
-    opacity:1;
-    transform:translateX(0);
-}
-
-.dark .ai-robot-img{
-    filter:drop-shadow(0 8px 25px rgba(74, 159, 212, 0.35));
-}
-
-.dark .ai-robot-wrapper:hover .ai-robot-img{
-    filter:drop-shadow(0 12px 35px rgba(74, 159, 212, 0.5));
-}
-
-.dark .ai-robot-tooltip{
-    background:var(--bg-light);
-    color:var(--text);
-}
-
-.dark .ai-robot-tooltip::after{
-    border-left-color:var(--bg-light);
-}
-
-.ai-chat-window{
-    position:fixed;
-    bottom:200px;
-    right:20px;
-    width:380px;
-    height:450px;
-    background:var(--bg);
-    border-radius:20px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.3);
-    display:none;
-    flex-direction:column;
-    overflow:hidden;
-    border:1px solid var(--border);
-    z-index:10000;
-}
-
-.ai-chat-window.show{
-    display:flex !important;
-}
-
-.ai-chat-header{
-    background:var(--primary);
-    color:white;
-    padding:15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-shrink:0;
-}
-
-.ai-chat-header h4{
-    margin:0;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:16px;
-}
-
-.ai-chat-context{
-    font-size:11px;
-    opacity:0.8;
-    margin-top:4px;
-    display:flex;
-    align-items:center;
-    gap:5px;
-}
-
-.ai-chat-close{
-    background:none;
-    border:none;
-    color:white;
-    font-size:20px;
-    cursor:pointer;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:background 0.2s;
-}
-
-.ai-chat-close:hover{
-    background:rgba(255,255,255,0.2);
-}
-
-.ai-chat-messages{
-    flex:1;
-    padding:15px;
-    overflow-y:auto;
-    background:var(--bg-light);
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.ai-chat-input-area{
-    padding:15px;
-    border-top:1px solid var(--border);
-    display:flex;
-    gap:10px;
-    background:var(--bg);
-    flex-shrink:0;
-}
-
-.ai-chat-input{
-    flex:1;
-    padding:12px 15px;
-    border:1px solid var(--border);
-    border-radius:25px;
-    background:var(--bg);
-    color:var(--text);
-    outline:none;
-    font-size:14px;
-    transition:all 0.2s;
-    font-family:inherit;
-}
-
-.ai-chat-input:focus{
-    border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(11,60,93,0.1);
-}
-
-.ai-chat-send{
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    background:var(--primary);
-    color:white;
-    border:none;
-    cursor:pointer;
-    transition:all 0.3s ease;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-shrink:0;
-}
-
-.ai-chat-send:hover{
-    background:var(--primary-hover);
-    transform:scale(1.1);
-}
-
-.message{
-    padding:12px 16px;
-    border-radius:18px;
-    max-width:85%;
-    font-size:14px;
-    line-height:1.5;
-    animation:messageSlide 0.3s ease;
-}
-
-@keyframes messageSlide{
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.message.user{
-    background:var(--primary);
-    color:white;
-    margin-left:auto;
-    border-bottom-right-radius:5px;
-}
-
-.message.ai{
-    background:var(--bg-gray);
-    color:var(--text);
-    border-bottom-left-radius:5px;
-    border:1px solid var(--border);
-}
-
-.message.ai.typing{
-    display:flex;
-    gap:4px;
-    align-items:center;
-    padding:15px 20px;
-}
-
-.typing-dot{
-    width:8px;
-    height:8px;
-    background:var(--text-light);
-    border-radius:50%;
-    animation:typing 1.4s infinite;
-}
-
-.typing-dot:nth-child(2){animation-delay:0.2s;}
-.typing-dot:nth-child(3){animation-delay:0.4s;}
-
-@keyframes typing{
-    0%, 60%, 100%{transform:translateY(0);}
-    30%{transform:translateY(-10px);}
-}
-
-.message-time{
-    font-size:10px;
-    opacity:0.7;
-    margin-top:5px;
-    text-align:right;
-}
-
-.quick-suggestions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    padding:0 15px 15px;
-    background:var(--bg-light);
-    flex-shrink:0;
-}
-
-.quick-suggestion{
-    padding:6px 12px;
-    background:var(--bg);
-    border:1px solid var(--border);
-    border-radius:15px;
-    font-size:12px;
-    cursor:pointer;
-    transition:all 0.2s;
-    color:var(--text);
-    font-family:inherit;
-}
-
-.quick-suggestion:hover{
-    background:var(--primary);
-    color:white;
-    border-color:var(--primary);
-    transform:translateY(-2px);
-}
-
-/* Notification */
-.notification{
-    position:fixed;
-    top:90px;
-    right:20px;
-    padding:15px 20px;
-    background:var(--success);
-    color:white;
-    border-radius:10px;
-    box-shadow:var(--shadow-lg);
-    z-index:3000;
-    transform:translateX(400px);
-    transition:transform 0.3s ease;
-    font-weight:500;
-}
-
-.notification.show{
-    transform:translateX(0);
-}
-
-.notification.error{
-    background:var(--new-badge);
-}
-
-@media (max-width: 768px){
-    .ai-robot-wrapper{
-        width:110px;
-        height:154px;
-    }
-    
-    .ai-robot-tooltip{
-        left:-130px;
-        font-size:11px;
-        padding:8px 12px;
-        top:40px;
-    }
-    
-    .ai-chat-window{
-        width:calc(100vw - 40px);
-        right:10px;
-        bottom:160px;
-        height:55vh;
-        max-height:380px;
-    }
-}
-
-@media (max-width: 480px){
-    .ai-robot-wrapper{
-        width:90px;
-        height:126px;
-    }
-    
-    .ai-robot-tooltip{
-        left:-110px;
-        font-size:10px;
-    }
-    
-    .ai-chat-window{
-        bottom:130px;
-        height:50vh;
-    }
-}
+        #loginBtn, #registerBtn, #mobileLoginBtn, #mobileRegisterBtn {
+            display: inline-flex !important;
+        }
 </style>
-<base target="_self">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 <base target="_self">
 <base target="_self">
 </head>
 <body>
-<!-- ===== HEADER ===== -->
-<div class="header">
-    <div class="logo-area" onclick="loadFrame('home.html'); return false;">
-        <img src="adis.png" alt="ÄDIS Logo">
-        <div class="logo-text">
-            <h1>ÄDIS</h1>
-            <p>tez • jeńil • naqty</p>
-        </div>
-    </div>
 
-    <!-- ІЗДЕУ ЖҮЙЕСІ -->
-    <div class="search-container">
-        <input type="text" class="search-box" id="searchInput" placeholder="Әдістерді іздеу (мысалы: сергіту, топ, тест)..." onkeyup="handleSearch(event)">
-        <button class="search-btn" onclick="performSearch()"><i class="fas fa-search"></i></button>
-    </div>
-
-    <div class="auth">
-        <a href="#" class="btn login" onclick="showProfile(); return false;"><i class="fas fa-user"></i> Жеке кабинет</a>
-        <a href="#" class="btn login" onclick="showMyMethods(); return false;"><i class="fas fa-bookmark"></i> Менің әдістерім</a>
-        <button class="toggle" onclick="toggleMode()" title="Түнгі/күнгі режим">🌙</button>
-    </div>
-
-    <!-- BURGER MENU BUTTON -->
-    <button class="burger-menu" onclick="toggleMobileMenu()" aria-label="Меню">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-</div>
-
-<!-- MOBILE MENU OVERLAY -->
-<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
-
-<!-- MOBILE NAVIGATION -->
-<nav class="mobile-nav" id="mobileNav">
-    <div class="mobile-nav-header">
-        <h3><i class="fas fa-th-large"></i> Навигация</h3>
-    </div>
-    
-    <div class="mobile-nav-section">
-        <button class="mobile-nav-toggle" onclick="toggleMobileSubmenu('mobileTopMenu', this)">
-            <span><i class="fas fa-home"></i> Негізгі меню</span>
-            <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="mobile-nav-content" id="mobileTopMenu">
-            <a href="#" onclick="loadPage('home.html', 'menuHome'); toggleMobileMenu()">Басты бет</a>
-            <a href="#" onclick="loadPage('popular.html', 'menuPopular'); toggleMobileMenu()">Танымал әдістер</a>
-            <a href="#" onclick="loadPage('new.html', 'menuNew'); toggleMobileMenu()">Жаңа әдістер</a>
-            <a href="#" onclick="loadPage('saved.html', 'menuSaved'); toggleMobileMenu()">Сақталған әдістер</a>
-            <a href="#" onclick="loadPage('suggestions.html', 'menuSuggest'); toggleMobileMenu()">Ұсыныстар</a>
-        </div>
-    </div>
-    
-    <div class="mobile-nav-section">
-        <button class="mobile-nav-toggle" onclick="toggleMobileSubmenu('mobileCategories', this)">
-            <span><i class="fas fa-layer-group"></i> Әдістер бөлімдері</span>
-            <i class="fas fa-chevron-down"></i>
-        </button>
-        <div class="mobile-nav-content" id="mobileCategories">
-            <a href="#" onclick="loadFrame('bastauysh.html'); toggleMobileMenu(); return false;">Бастауыш сынып</a>
-            <a href="#" onclick="loadFrame('orta.html'); toggleMobileMenu(); return false;">Орта сынып</a>
-            <a href="#" onclick="loadFrame('jogary.html'); toggleMobileMenu(); return false;">Жоғары сынып</a>
-            <a href="#" onclick="loadFrame('sergitu.html'); toggleMobileMenu(); return false;">Сергіту сәті</a>
-            <a href="#" onclick="loadFrame('basta.html'); toggleMobileMenu(); return false;">Сабақты бастау</a>
-            <a href="#" onclick="loadFrame('talda.html'); toggleMobileMenu(); return false;">Талдау</a>
-            <a href="#" onclick="loadFrame('qoryt.html'); toggleMobileMenu(); return false;">Қорытынды</a>
-            <a href="#" onclick="loadFrame('topbol.html'); toggleMobileMenu(); return false;">Топтық тапсырмалар</a>
-            <a href="#" onclick="loadFrame('jeke.html'); toggleMobileMenu(); return false;">Жеке тапсырма</a>
-            <a href="#" onclick="loadFrame('interactive.html'); toggleMobileMenu(); return false;">Интерактив тапсырмалар</a>
-        </div>
-    </div>
-    
-    <div class="mobile-nav-footer">
-        <button class="mobile-nav-btn" onclick="showProfile(); toggleMobileMenu()">
-            <i class="fas fa-user"></i> Жеке кабинет
-        </button>
-        <button class="mobile-nav-btn solid" onclick="showMyMethods(); toggleMobileMenu()">
-            <i class="fas fa-bookmark"></i> Менің әдістерім
-        </button>
-        <button class="mobile-theme-toggle" onclick="toggleMode(); updateThemeText()">
-            <i class="fas fa-moon"></i> <span id="themeText">Түнгі режим</span>
-        </button>
-    </div>
-</nav>
-
-<!-- TOP MENU -->
-<div class="top-menu">
-    <a href="#" onclick="loadPage('home.html', 'menuHome'); return false;" id="menuHome">Басты бет</a>
-    <a href="#" onclick="loadPage('popular.html', 'menuPopular'); return false;" id="menuPopular">Танымал әдістер</a>
-    <a href="#" onclick="loadPage('new.html', 'menuNew'); return false;" id="menuNew">Жаңа әдістер</a>
-    <a href="#" onclick="loadPage('saved.html', 'menuSaved'); return false;" id="menuSaved">Сақталған әдістер</a>
-    <a href="#" onclick="loadPage('interactive.html', 'menuInteractive'); return false;" id="menuInteractive">Интерактив тапсырмалар</a>
-    <a href="#" onclick="loadPage('suggestions.html', 'menuSuggest'); return false;" id="menuSuggest">Ұсыныстар</a>
-</div>
-
-<!-- ===== MAIN CONTENT ===== -->
-<div class="main">
-    <!-- ===== SIDEBAR - HOVER АРҚЫЛЫ АШЫЛАДЫ ===== -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo-icon" title="Әдістер бөлімдері">
-                <i class="fas fa-layer-group"></i>
+    <!-- Header -->
+    <header class="header" id="navbar">
+        <div class="logo-area">
+            <img src="adis.png" alt="ӘДІС Logo">
+            <div class="logo-text">
+                <h1>ÄDIS</h1>
+                <p>tez • jeńil • naqty</p>
             </div>
-            <span class="sidebar-title">Әдістер бөлімдері</span>
         </div>
-        
-        <ul class="sidebar-menu">
-            <!-- БАСТАУЫШ СЫНЫП -->
-            <li class="menu-item" data-menu="bastauysh">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'bastauysh'); loadFrame('bastauysh.html')">
-                    <div class="menu-icon"><i class="fas fa-child"></i></div>
-                    <span class="menu-text">Бастауыш сынып</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Бастауыш сынып</div>
-                <div class="submenu" id="submenu-bastauysh">
-                    <a href="#" class="submenu-item" onclick="loadFrame('magic.html')">Менің есімім</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('picture.html')">Сурет арқылы ойлау</a>
-                </div>
-            </li>
 
-            <!-- ОРТА СЫНЫП -->
-            <li class="menu-item" data-menu="orta">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'orta'); loadFrame('orta.html')">
-                    <div class="menu-icon"><i class="fas fa-user-graduate"></i></div>
-                    <span class="menu-text">Орта сынып</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Орта сынып</div>
-                <div class="submenu" id="submenu-orta">
-                    <a href="#" class="submenu-item" onclick="loadFrame('insert.html')">Шатасқан әріптер әдісі</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('debate.html')">Пікірталас әдісі</a>
-                </div>
-            </li>
-
-            <!-- ЖОҒАРЫ СЫНЫП -->
-            <li class="menu-item" data-menu="jogary">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'jogary'); loadFrame('jogary.html')">
-                    <div class="menu-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <span class="menu-text">Жоғары сынып</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Жоғары сынып</div>
-                <div class="submenu" id="submenu-jogary">
-                    <a href="#" class="submenu-item" onclick="loadFrame('Case.html')">Case study әдісі</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('Алты%20қалпақ.html')">Алты қалпақ әдісі</a>
-                </div>
-            </li>
-
-            <!-- СЕРГІТУ СӘТІ -->
-            <li class="menu-item" data-menu="sergitu">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'sergitu'); loadFrame('sergitu.html')">
-                    <div class="menu-icon"><i class="fas fa-running"></i></div>
-                    <span class="menu-text">Сергіту сәті</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Сергіту сәті</div>
-                <div class="submenu" id="submenu-sergitu">
-                    <a href="#" class="submenu-item" onclick="loadFrame('suraq.html')">Сұрақ-қозғалыс әдісі</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('қарама-қарсы.html')">Қарама-қарсы әрекет әдісі</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('гимнастика.html')">Көзге арналған гимнастика</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('3-қимыл.html')">3 қимыл сергіту әдісі</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('ритм.html')">Ритмді қайталау әдісі</a>
-                </div>
-            </li>
-
-            <!-- САБАҚТЫ БАСТАУ -->
-            <li class="menu-item" data-menu="basta">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'basta'); loadFrame('basta.html')">
-                    <div class="menu-icon"><i class="fas fa-play-circle"></i></div>
-                    <span class="menu-text">Сабақты бастау</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Сабақты бастау</div>
-                <div class="submenu" id="submenu-basta">
-                    <a href="#" class="submenu-item" onclick="loadFrame('basta-intro.html')">Кіріспе</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('basta-motivation.html')">Мотивация</a>
-                </div>
-            </li>
-
-            <!-- ТАЛДАУ -->
-            <li class="menu-item" data-menu="talda">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'talda'); loadFrame('talda.html')">
-                    <div class="menu-icon"><i class="fas fa-chart-line"></i></div>
-                    <span class="menu-text">Талдау</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Талдау</div>
-                <div class="submenu" id="submenu-talda">
-                    <a href="#" class="submenu-item" onclick="loadFrame('talda-mindmap.html')">Mind Mapping</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('talda-cluster.html')">Кластер</a>
-                </div>
-            </li>
-
-            <!-- ҚОРЫТЫНДЫ -->
-            <li class="menu-item" data-menu="qoryt">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'qoryt'); loadFrame('qoryt.html')">
-                    <div class="menu-icon"><i class="fas fa-flag-checkered"></i></div>
-                    <span class="menu-text">Қорытынды</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Қорытынды</div>
-                <div class="submenu" id="submenu-qoryt">
-                    <a href="#" class="submenu-item" onclick="loadFrame('qoryt-test.html')">Тестілеу</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('qoryt-reflection.html')">Рефлексия</a>
-                </div>
-            </li>
-
-            <!-- ТОПТЫҚ ТАПСЫРМАЛАР -->
-            <li class="menu-item" data-menu="topbol">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'topbol'); loadFrame('topbol.html')">
-                    <div class="menu-icon"><i class="fas fa-users"></i></div>
-                    <span class="menu-text">Топтық тапсырмалар</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Топтық тапсырмалар</div>
-                <div class="submenu" id="submenu-topbol">
-                    <a href="#" class="submenu-item" onclick="loadFrame('topbol-mixed.html')">Аралас топтар</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('topbol-ability.html')">Қабілет бойынша</a>
-                </div>
-            </li>
-
-            <!-- ЖЕКЕ ТАПСЫРМА -->
-            <li class="menu-item" data-menu="jeke">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'jeke'); loadFrame('jeke.html')">
-                    <div class="menu-icon"><i class="fas fa-user"></i></div>
-                    <span class="menu-text">Жеке тапсырма</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Жеке тапсырма</div>
-                <div class="submenu" id="submenu-jeke">
-                    <a href="#" class="submenu-item" onclick="loadFrame('jeke-card.html')">Карточкалар</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('jeke-different.html')">Дифференциация</a>
-                </div>
-            </li>
-
-            <!-- ИНТЕРАКТИВ ТАПСЫРМАЛАР -->
-            <li class="menu-item" data-menu="pan">
-                <div class="accordion-header" onclick="toggleAccordion(this, 'pan'); loadFrame('interactive.html')">
-                    <div class="menu-icon"><i class="fas fa-bolt"></i></div>
-                    <span class="menu-text">Интерактив тапсырмалар</span>
-                    <i class="fas fa-chevron-down menu-arrow"></i>
-                </div>
-                <div class="menu-tooltip">Интерактив тапсырмалар</div>
-                <div class="submenu" id="submenu-pan">
-                    <a href="#" class="submenu-item" onclick="loadFrame('Bauyrsaq.html')">Бауырсақ арқылы топқа бөлу</a>
-                    <a href="#" class="submenu-item" onclick="loadFrame('arqan.html')">Арқан тартыс ойыны</a>
-                </div>
-            </li>
+        <ul class="nav-menu">
+            <li><a href="#home">Басты бет</a></li>
+            <li><a href="#target">Аудитория</a></li>
+            <li><a href="#why-adis">Платформа туралы</a></li>
+            <li><a href="#help">Көмек</a></li>
         </ul>
+
+        <div class="nav-actions" id="authButtons">
+            <a href="кіру.html" class="btn btn-outline" id="loginBtn">Кіру</a>
+            <a href="тіркелу.html" class="btn btn-solid" id="registerBtn">Тіркелу</a>
+            <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="toggleMenu()">Басты бет</a>
+        <a href="#target" onclick="toggleMenu()">Аудитория</a>
+        <a href="#why-adis" onclick="toggleMenu()">Платформа туралы</a>
+        <a href="#help" onclick="toggleMenu()">Көмек</a>
+        <div class="mobile-buttons" id="mobileAuthButtons">
+            <a href="кіру.html" class="btn btn-outline" id="mobileLoginBtn">Кіру</a>
+            <a href="тіркелу.html" class="btn btn-solid" id="mobileRegisterBtn">Тіркелу</a>
+            <button class="toggle-theme" onclick="toggleTheme()" title="Тақырыпты ауыстыру">🌙</button> 
+        </div>
     </div>
 
-    <!-- Content -->
-    <div class="content">
-        <iframe name="contentFrame" id="contentFrame" title="Контент"></iframe>
-    </div>
-</div>
-<!-- Search Results Modal -->
-<div class="search-results-overlay" id="searchResultsOverlay">
-    <div class="search-results-modal">
-        <div class="search-results-header">
-            <h3><i class="fas fa-search"></i> Іздеу нәтижелері</h3>
-            <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+    <!-- Section 1: Hero with 360 Panorama -->
+    <section class="hero-section" id="home">
+        <div class="hero-panorama">
+            <div class="panorama-image"></div>
+            <div class="panorama-overlay"></div>
         </div>
-        <div class="search-results-body" id="searchResultsBody">
-            <!-- Нәтижелер осында -->
-        </div>
-    </div>
-</div>
 
-<!-- Profile Modal -->
-<div class="modal-overlay" id="profileModal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2><i class="fas fa-user-circle"></i> Жеке кабинет</h2>
-            <button class="modal-close" onclick="closeProfile()"><i class="fas fa-times"></i></button>
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+
+        <div class="hero-content">
+            <p class="hero-welcome">Қош келдіңіз!</p>
+            <h1 class="hero-title">Әдістемелік платформа</h1>
+            <p class="hero-subtitle">Заманауи педагогика, инновациялық әдістер және сараптамалық материалдар. Білім беруді жаңа деңгейге көтеріңіз.</p>
+            <a href="#target" class="hero-btn">Бастау →</a>
         </div>
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('profile', this)">Профиль</button>
-            <button class="tab" onclick="switchTab('stats', this)">Статистика</button>
-            <button class="tab" onclick="switchTab('myMethods', this)">Менің әдістерім</button>
-        </div>
-        <div class="modal-body">
-            <!-- Profile Tab -->
-            <div class="tab-content active" id="profileTab">
-                <div class="profile-info">
-                    <div class="profile-avatar">
-                        <img src="https://via.placeholder.com/150" alt="Профиль" id="profileImage">
-                        <button onclick="changeAvatar()"><i class="fas fa-camera"></i> Фото өзгерту</button>
-                    </div>
-                    <div class="profile-details">
-                        <h3>Жеке ақпарат</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Аты-жөні</label>
-                                <input type="text" id="userName" placeholder="Аты-жөніңіз">
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" id="userEmail" placeholder="email@example.com">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Оқытатын пән</label>
-                                <select id="subject" name="subject" required>
-                                    <option value="informatics">Информатика</option>
-                                    <option value="math">Математика</option>
-                                    <option value="algebra">Алгебра</option>
-                                    <option value="geometry">Геометрия</option>
-                                    <option value="physics">Физика</option>
-                                    <option value="chemistry">Химия</option>
-                                    <option value="biology">Биология</option>
-                                    <option value="geography">География</option>
-                                    <option value="history">Тарих</option>
-                                    <option value="world-history">Дүниежүзі тарихы</option>
-                                    <option value="kazakh-lang">Қазақ тілі</option>
-                                    <option value="kazakh-lit">Қазақ әдебиеті</option>
-                                    <option value="russian-lang">Орыс тілі</option>
-                                    <option value="russian-lit">Орыс әдебиеті</option>
-                                    <option value="english">Ағылшын тілі</option>
-                                    <option value="pe">Дене шынықтыру</option>
-                                    <option value="music">Музыка</option>
-                                    <option value="art">Сызу</option>
-                                    <option value="technology">Еңбек/Технология</option>
-                                    <option value="law">Құқық</option>
-                                    <option value="primary">Бастауыш (барлық пәндер)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Сынып</label>
-                                <select id="userGrade">
-                                    <option>Бастауыш (1-4)</option>
-                                    <option>Орта (5-9)</option>
-                                    <option>Жоғары (10-12)</option>
-                                    <option>Барлық сыныптар</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Педагогикалық стаж</label>
-                            <select id="experience" name="experience" required>
-                                <option value="">Таңдаңыз...</option>
-                                <option value="0-2">0-2 жыл</option>
-                                <option value="3-5">3-5 жыл</option>
-                                <option value="5-10">5-10 жыл</option>
-                                <option value="10-20">10-20 жыл</option>
-                                <option value="20+">20 жылдан астам</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Өзім туралы</label>
-                            <textarea id="userBio" rows="3" placeholder="Өзіңіз туралы қысқаша..."></textarea>
-                        </div>
-                        <div style="display:flex; gap:15px; margin-top:20px;">
-                            <button class="btn-primary" onclick="saveProfile()">
-                                <i class="fas fa-save"></i> Сақтау
-                            </button>
-                            <button class="btn-danger" onclick="logout()" style="background:#e74c3c; color:white; border:2px solid #e74c3c; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600; font-family:inherit;">
-                                <i class="fas fa-sign-out-alt"></i> Шығу
-                            </button>
-                        </div>
-                    </div>
+    </section>
+
+    <!-- Section 2: Target Audience -->
+    <section class="target-section" id="target">
+        <div class="cloud cloud-3"></div>
+
+        <h2 class="section-title">Сайт кімдерге арналған?</h2>
+
+        <div class="cards-container">
+            <div class="target-card fade-in">
+                <div class="target-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
                 </div>
+                <h3>Мұғалімдерге</h3>
+                <p>Сабақтарды түрлендіруге арналған инновациялық әдістер мен оқу құралдары</p>
             </div>
 
-            <!-- Stats Tab -->
-            <div class="tab-content" id="statsTab">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-number" id="statViewed">0</span>
-                        <div class="stat-label">Қаралған әдіс</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="statSaved">0</span>
-                        <div class="stat-label">Сақталған әдіс</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="statAdded">0</span>
-                        <div class="stat-label">Қосқан әдіс</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="statDays">0</span>
-                        <div class="stat-label">Платформада күн</div>
-                    </div>
+            <div class="target-card fade-in">
+                <div class="target-icon">
+                    <i class="fas fa-user-graduate"></i>
                 </div>
+                <h3>Практиканттарға</h3>
+                <p>Тәжірибе жинақтауға және кәсіби дағдыларды дамытуға көмектесетін материалдар</p>
             </div>
 
-            <!-- My Methods Tab -->
-            <div class="tab-content" id="myMethodsTab">
-                <div class="my-methods-header">
-                    <h4>Мен қосқан әдістер</h4>
-                    <button class="btn-primary" onclick="showAddMethodForm()">
-                        <i class="fas fa-plus"></i> Жаңа әдіс
-                    </button>
+            <div class="target-card fade-in">
+                <div class="target-icon">
+                    <i class="fas fa-book-reader"></i>
                 </div>
-                <div id="addMethodForm" style="display:none;">
-                    <div class="add-method-form">
-                        <div class="form-group">
-                            <label>Әдіс атауы</label>
-                            <input type="text" id="newMethodTitle" placeholder="Мысалы: Интерактивті тест">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Санат</label>
-                                <select id="newMethodCategory">
-                                    <option>Бастауыш сынып</option>
-                                    <option>Орта сынып</option>
-                                    <option>Жоғары сынып</option>
-                                    <option>Сергіту сәті</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Уақыты</label>
-                                <input type="text" id="newMethodTime" placeholder="10 минут">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Қысқаша сипаттама</label>
-                            <textarea id="newMethodDesc" rows="3" placeholder="Әдістің мәні..."></textarea>
-                        </div>
-                        <div class="form-actions">
-                            <button class="btn-secondary" onclick="hideAddMethodForm()">Бас тарту</button>
-                            <button class="btn-primary" onclick="addNewMethod()">
-                                <i class="fas fa-save"></i> Сақтау
-                            </button>
-                        </div>
+                <h3>Студенттерге</h3>
+                <p>Педагогикалық білім алушыларға арналған теориялық және практикалық база</p>
+            </div>
+        </div>
+
+        <div class="why-section fade-in">
+            <h3>Неліктен осы үш топқа?</h3>
+            <p>Біз білім беру процесінің барлық қатысушыларына — тәжірибелі ұстаздардан бастап болашақ педагогтарға дейін — қолдау көрсетеміз. Әрбір деңгейде кәсіби өсуге және сапалы білім беруге жағдай жасаймыз. Бірлесе отырып, біз қазақ білім беру жүйесін жаңғыртамыз!</p>
+        </div>
+    </section>
+
+    <!-- Section 3: Why ADIS -->
+    <section class="why-adis-section" id="why-adis">
+        <div class="cloud cloud-1"></div>
+
+        <div class="adis-container">
+            <div class="adis-image fade-in">
+                <img src="басты.jpeg" alt="Оқыту процесі">
+            </div>
+
+            <div class="adis-content fade-in">
+                <h2>Оқытуда <span>ÄDIS</span> не үшін қолданылады?</h2>
+                <div class="adis-answer">
+                    <p><strong>ÄDIS</strong> — бұл оқыту процесін жеңілдететін, сабақтарды интерактивті ететін және оқушылардың белсенділігін арттыратын заманауи әдістемелік құрал. Біздің платформа мұғалімдерге уақытты үнемдеп, сабақ сапасын арттыруға мүмкіндік береді!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: 3 Reasons -->
+    <section class="reasons-section" id="reasons">
+        <h2 class="section-title">Бізді таңдаудың 3 себебі</h2>
+
+        <div class="reasons-container">
+            <div class="reason-item fade-in">
+                <div class="reason-circle">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h4>Сапа кепілі</h4>
+                <p>Барлық материалдар сарапшылар тарапынан тексерілген және білім беру стандарттарына сәйкес келеді</p>
+            </div>
+
+            <div class="reason-item fade-in">
+                <div class="reason-circle">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h4>Жылдам қол жетімділік</h4>
+                <p>Кез келген уақытта, кез келген құрылғыдан қолжетімді. Жүктеп алуға немесе онлайн қарауға болады</p>
+            </div>
+
+            <div class="reason-item fade-in">
+                <div class="reason-circle">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h4>Үздіксіз жаңарту</h4>
+                <p>Материалдар базасы тұрақты түрде толықтырылып, заманауи талаптарға сай жаңартылып отырады</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Advantages -->
+    <section class="advantages-section" id="advantages">
+        <div class="cloud cloud-2"></div>
+
+        <h2 class="section-title">Артықшылықтарымыз</h2>
+
+        <div class="advantages-wrapper">
+            <div class="advantages-carousel" id="advantagesCarousel">
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-th-list"></i>
                     </div>
+                    <h4>Жүйеленген материалдар</h4>
+                    <p>Сыныптар бойынша және пәндер бойынша ыңғайлы түрде топтастырылған</p>
                 </div>
-                <div class="saved-methods-list" id="myMethodsList">
-                    <div class="empty-state">
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h4>Нақты нәтиже</h4>
+                    <p>Әр әдіс оқу нәтижелерін арттыруға бағытталған</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">
                         <i class="fas fa-lightbulb"></i>
-                        <h4>Сіз әзірше әдіс қосқан жоқсыз</h4>
                     </div>
+                    <h4>Инновациялық тәсілдер</h4>
+                    <p>Заманауи педагогиканың ең тиімді әдістері</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h4>Сабақ барысын ұйымдастыру</h4>
+                    <p>Платформа арқылы сабақтың барлық кезеңдерін жоспарлап, интерактивті тапсырмаларды қосуға болады</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Мобильді нұсқа</h4>
+                    <p>Телефон және планшет арқылы ыңғайлы қолдану</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h4>Интерактив тапсырмалар</h4>
+                    <p>Оқушылардың қызығушылығын арттыратын ойындар мен интерактивті жаттығулар</p>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<!-- ===== AI CHAT - НЕГІЗГІ БЕТТЕ ТҰРАТЫН БОЛДЫ ===== -->
-<div class="ai-robot-container" id="aiRobotContainer">
-    <div class="ai-robot-wrapper" onclick="toggleChat()">
-        <img src="ai-assistant.png" alt="ÄDIS AI көмекші" class="ai-robot-img">
-        <div class="ai-robot-tooltip">
-            <span>👋 Сәлем! Мен сізге көмектесемін</span>
-        </div>
-    </div>
-</div>
+    <!-- Section 6: Opportunities with Sticker Design -->
+    <section class="opportunities-section" id="opportunities">
+        <h2 class="section-title">Сіз қол жеткізетін мүмкіндіктер</h2>
 
-<!-- Чат терезесі -->
-<div class="ai-chat-window" id="aiChatWindow">
-    <div class="ai-chat-header">
-        <div>
-            <h4><i class="fas fa-robot"></i> ӘДІС AI көмекші</h4>
-            <div class="ai-chat-context" id="aiContext">
-                <i class="fas fa-map-marker-alt"></i> <span>Басты бет</span>
+        <div class="opportunities-bg">
+            <div class="stickers-container">
+                <div class="sticker">Әдістемелік материалдар</div>
+                <div class="sticker">Тегін жүктеп алу</div>
+                <div class="sticker">Видео нұсқаулықтар</div>
+                <div class="sticker">Интерактив ойындар</div>
+                <div class="sticker">Заманауи әдістер</div>
+                <div class="sticker">Ыңғайлы жұмыс ортасы</div>
             </div>
         </div>
-        <button class="ai-chat-close" onclick="toggleChat()" title="Жабу">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    <div class="ai-chat-messages" id="chatMessages">
-        <div class="message ai">
-            Сәлеметсіз бе! 👋 Мен сізге қажетті әдістерді табуға көмектесемін.
-            <div class="message-time">Бүгін</div>
+    </section>
+
+    <!-- Help Section -->
+    <section class="help" id="help">
+        <div class="help-container">
+            <div class="section-header">
+                <div class="section-tag">Көмек</div>
+                <h2 class="section-title-centered">Сұрақ-жауап</h2>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item active">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Платформаға қалай тіркелуге болады?</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>«Тіркелу» батырмасын басып, электрондық поштаңызды енгізіңіз. Растау хаты келгеннен кейін тіркелу аяқталады.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Әдістерді жүктеп алуға бола ма?</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Иә, әр әдістің бетінде толық нұсқаулық бар. Платформаға тіркелген пайдаланушыларға тегін.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Өз әдісімді қосуға бола ма?</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Әрине! «Ұсыныстар» бөлімінен өз әдісіңізді жібере аласыз. Модерациядан кейін платформада жарияланады.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>Техникалық қолдау қызметі қалай жұмыс істейді?</span>
+                        <span class="accordion-icon">+</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>Төмендегі форманы толтырып хабарлама жіберу арқылы қолдау қызметіне жүгіне аласыз. 24 сағат ішінде жауап аласыз.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-section fade-in">
+                <h3>Бізге хабарласыңыз</h3>
+                <p>Сұрағыңыз бар ма? Төмендегі форманы толтырыңыз, біз жауап береміз.</p>
+                <!-- target="_self" қосылды — Formspree сол бетте ашылады -->
+                <form action="https://formspree.io/f/mlgaokoz" method="POST" target="_self">
+                    <input type="hidden" name="_replyto" value="madinakhavazmatova@gmail.com">
+
+                    <div class="form-group">
+                        <label for="fullName">Аты-жөніңіз</label>
+                        <input type="text" id="fullName" name="name" required placeholder="Мысалы: Айгүл Серікқызы">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email немесе телефон</label>
+                        <input type="text" id="email" name="email" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Сұрақтың түрі</label>
+                        <select id="category" name="category" required>
+                            <option value="">Таңдаңыз...</option>
+                            <option value="technical">Техникалық мәселе</option>
+                            <option value="content">Материалдар туралы</option>
+                            <option value="other">Басқа</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Хабарлама</label>
+                        <textarea id="message" name="message" required placeholder="Сұрағыңызды толық жазыңыз..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Жіберу</button>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="quick-suggestions" id="quickSuggestions">
-        <button class="quick-suggestion" onclick="sendQuickMessage('Бастауышқа арналған әдіс')">Бастауыш</button>
-        <button class="quick-suggestion" onclick="sendQuickMessage('Сергіту сәті керек')">Сергіту</button>
-        <button class="quick-suggestion" onclick="sendQuickMessage('Топқа бөлу тәсілі')">Топқа бөлу</button>
-        <button class="quick-suggestion" onclick="sendQuickMessage('Қорытындылау әдісі')">Қорытынды</button>
-    </div>
-    <div class="ai-chat-input-area">
-        <input type="text" class="ai-chat-input" id="chatInput" placeholder="Сұрағыңызды жазыңыз..." onkeypress="if(event.key==='Enter')sendMessage()">
-        <button class="ai-chat-send" onclick="sendMessage()" title="Жіберу">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
-</div>
+    </section>
 
-<!-- Notification -->
-<div class="notification" id="notification"></div>
-
-<footer>
-    <div class="footer-left">
-        <a href="tel:87478732341" class="footer-contact"><i class="fas fa-phone"></i> 8 747 873 23 41</a>
-        <a href="https://wa.me/87786421462" target="_self" class="footer-contact"><i class="fab fa-whatsapp"></i> 8 778 642 14 62</a>
-    </div>
-    <div class="footer-center">
-        <p>Жасағандар: <strong>Хавазматова М.& Шералиева И.</strong></p>
-        <p><span class="footer-brand">ÄDIS</span> — әдістемелік платформа © 2026</p>
-    </div>
-    <div class="footer-right">
-        <a href="mailto:madinakhavazmatova@gmail.com" class="footer-contact"><i class="fas fa-envelope"></i> madinakhavazmatova@gmail.com</a>
-        <a href="https://youtube.com" target="_self" class="footer-contact"><i class="fab fa-youtube"></i> ÄDIS — жинағы</a>
-    </div>
-</footer>
-<script>
-// ===== NOTIFICATION FUNCTION =====
-function showNotification(message, type = 'success') {
-    const notification = document.getElementById('notification');
-    if (!notification) return;
-    
-    notification.textContent = message;
-    notification.className = 'notification ' + (type === 'error' ? 'error' : '');
-    notification.classList.add('show');
-    
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000);
-}
-
-// ===== MOBILE MENU FUNCTIONS =====
-function toggleMobileMenu() {
-    const burger = document.querySelector('.burger-menu');
-    const overlay = document.getElementById('mobileMenuOverlay');
-    const nav = document.getElementById('mobileNav');
-    
-    if (!burger || !overlay || !nav) return;
-    
-    burger.classList.toggle('active');
-    overlay.classList.toggle('show');
-    nav.classList.toggle('show');
-    
-    if (nav.classList.contains('show')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
-}
-
-function toggleMobileSubmenu(id, btn) {
-    const content = document.getElementById(id);
-    if (!content || !btn) return;
-    
-    const isActive = btn.classList.contains('active');
-    
-    document.querySelectorAll('.mobile-nav-content').forEach(el => {
-        if (el.id !== id) {
-            el.classList.remove('show');
-        }
-    });
-    document.querySelectorAll('.mobile-nav-toggle').forEach(el => {
-        if (el !== btn) {
-            el.classList.remove('active');
-        }
-    });
-    
-    if (isActive) {
-        btn.classList.remove('active');
-        content.classList.remove('show');
-    } else {
-        btn.classList.add('active');
-        content.classList.add('show');
-    }
-}
-
-function updateThemeText() {
-    const themeText = document.getElementById('themeText');
-    if (!themeText) return;
-    
-    const isDark = document.body.classList.contains('dark');
-    themeText.textContent = isDark ? 'Күнгі режим' : 'Түнгі режим';
-}
-
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        const nav = document.getElementById('mobileNav');
-        const overlay = document.getElementById('mobileMenuOverlay');
-        const burger = document.querySelector('.burger-menu');
-        
-        if (nav && nav.classList.contains('show')) {
-            nav.classList.remove('show');
-            overlay.classList.remove('show');
-            burger.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-});
-
-// ===== ACCORDION SIDEBAR FUNCTION =====
-function toggleAccordion(header, menuId) {
-    const menuItem = header.closest('.menu-item');
-    const sidebar = document.getElementById('sidebar');
-    
-    // Егер sidebar жабық болса (70px), алдымен ашылуын күту керек
-    const isExpanded = sidebar.offsetWidth > 100;
-    
-    if (!isExpanded && window.innerWidth > 768) {
-        // Sidebar жабық - hover арқылы ашылғанша күтеміз
-        // Немесе бірден ашуға болады
-        sidebar.style.width = '280px';
-        setTimeout(() => {
-            menuItem.classList.toggle('open');
-        }, 100);
-        setTimeout(() => {
-            sidebar.style.width = '';
-        }, 3000); // 3 секундтан кейін автоматты жабылады
-        return;
-    }
-    
-    // Басқа барлық submenu-ларды жабу
-    document.querySelectorAll('.menu-item').forEach(item => {
-        if (item !== menuItem) {
-            item.classList.remove('open');
-        }
-    });
-    
-    // Ағымды submenu-ны ашу/жабу
-    menuItem.classList.toggle('open');
-}
-
-// ===== THEME TOGGLE =====
-function toggleMode() {
-    document.body.classList.toggle('dark');
-    const isDark = document.body.classList.contains('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    
-    const toggleBtn = document.querySelector('.toggle');
-    if (toggleBtn) {
-        toggleBtn.textContent = isDark ? '☀️' : '🌙';
-    }
-    
-    updateThemeText();
-    notifyIframesTheme(isDark ? 'dark' : 'light');
-}
-
-// ===== PAGE LOADING =====
-function loadFrame(url) {
-    console.log('Loading frame:', url);
-    const frame = document.getElementById('contentFrame');
-    if (frame) {
-        frame.src = url;
-        updateAIContext(url);
-        trackView(url);
-    } else {
-        console.error('Content frame not found!');
-    }
-
-    if (window.innerWidth <= 768) {
-        const sidebar = document.getElementById('sidebar');
-        if (sidebar && sidebar.classList.contains('show')) {
-            sidebar.classList.remove('show');
-            document.body.style.overflow = '';
-        }
-    }
-}
-
-function loadPage(url, menuId) {
-    loadFrame(url);
-    
-    document.querySelectorAll('.top-menu a').forEach(link => {
-        link.style.color = '';
-        link.style.borderBottom = '';
-    });
-    
-    const activeLink = document.getElementById(menuId);
-    if (activeLink) {
-        activeLink.style.color = 'var(--accent)';
-        activeLink.style.borderBottom = '2px solid var(--accent)';
-    }
-}
-
-function updateAIContext(url) {
-    const contextMap = {
-        'home.html': 'Басты бет',
-        'bastauysh.html': 'Бастауыш сынып',
-        'orta.html': 'Орта сынып',
-        'jogary.html': 'Жоғары сынып',
-        'sergitu.html': 'Сергіту сәті',
-        'basta.html': 'Сабақты бастау',
-        'talda.html': 'Талдау',
-        'qoryt.html': 'Қорытынды',
-        'topbol.html': 'Топтық тапсырмалар',
-        'jeke.html': 'Жеке тапсырма',
-        'interactive.html': 'Интерактив тапсырмалар'
-    };
-    
-    const contextText = contextMap[url] || 'Басты бет';
-    const aiContext = document.getElementById('aiContext');
-    if (aiContext) {
-        aiContext.innerHTML = '<i class="fas fa-map-marker-alt"></i> <span>' + contextText + '</span>';
-    }
-}
-
-// ===== SEARCH FUNCTIONS =====
-function handleSearch(e) {
-    if (e.key === 'Enter') {
-        performSearch();
-    }
-}
-
-function performSearch() {
-    const searchInput = document.getElementById('searchInput');
-    if (!searchInput) return;
-    
-    const query = searchInput.value.trim().toLowerCase();
-    if (!query) return;
-    
-    const searchData = [
-        { title: 'Менің есімім', category: 'Бастауыш сынып', url: 'magic.html', tags: ['бастауыш', 'ойын', 'есім', 'термин'] },
-        { title: 'Сурет арқылы ойлау', category: 'Бастауыш сынып', url: 'picture.html', tags: ['бастауыш', 'сурет', 'визуалды', 'ойлау'] },
-        { title: 'Шатасқан әріптер әдісі', category: 'Орта сынып', url: 'insert.html', tags: ['орта', 'шатасқан', 'оқу', 'белгілеу'] },
-        { title: 'Пікірталас әдісі', category: 'Орта сынып', url: 'debate.html', tags: ['орта', 'пікірталас', 'талқылау', 'дебат'] },
-        { title: 'Case study әдісі', category: 'Жоғары сынып', url: 'Case.html', tags: ['жоғары', 'case', 'талдау', 'мысал'] },
-        { title: 'Алты қалпақ әдісі', category: 'Жоғары сынып', url: 'Алты%20қалпақ.html', tags: ['жоғары', 'қалпақ', 'ойлау', 'креативті'] },
-        { title: 'Сұрақ-қозғалыс әдісі', category: 'Сергіту сәті', url: 'suraq.html', tags: ['сергіту', 'қозғалыс', 'дене', 'сұрақ'] },
-        { title: 'Қарама-қарсы әрекет әдісі', category: 'Сергіту сәті', url: 'қарама-қарсы.html', tags: ['сергіту', 'қарама-қарсы', 'реакция'] },
-        { title: 'Көзге арналған гимнастика', category: 'Сергіту сәті', url: 'гимнастика.html', tags: ['сергіту', 'көз', 'гимнастика', 'денсаулық'] },
-        { title: '3 қимыл сергіту әдісі', category: 'Сергіту сәті', url: '3-қимыл.html', tags: ['сергіту', 'қимыл', 'дене', 'координация'] },
-        { title: 'Ритмді қайталау әдісі', category: 'Сергіту сәті', url: 'ритм.html', tags: ['сергіту', 'ритм', 'музыка', 'қайталау'] },
-        { title: 'Mind Mapping', category: 'Талдау', url: 'talda-mindmap.html', tags: ['талдау', 'mindmap', 'карта', 'ойлау'] },
-        { title: 'Кластер', category: 'Талдау', url: 'talda-cluster.html', tags: ['талдау', 'кластер', 'топтау', 'схема'] },
-        { title: 'Тестілеу', category: 'Қорытынды', url: 'qoryt-test.html', tags: ['қорытынды', 'тест', 'тексеру', 'баға'] },
-        { title: 'Рефлексия', category: 'Қорытынды', url: 'qoryt-reflection.html', tags: ['қорытынды', 'рефлексия', 'өзін-өзі', 'бағалау'] },
-        { title: 'Аралас топтар', category: 'Топтық тапсырмалар', url: 'topbol-mixed.html', tags: ['топ', 'аралас', 'бөлу', 'тәсіл'] },
-        { title: 'Қабілет бойынша', category: 'Топтық тапсырмалар', url: 'topbol-ability.html', tags: ['топ', 'қабілет', 'деңгей', 'дифференциация'] },
-        { title: 'Карточкалар', category: 'Жеке тапсырма', url: 'jeke-card.html', tags: ['жеке', 'карточка', 'жаттығу', 'жұмыс'] },
-        { title: 'Дифференциация', category: 'Жеке тапсырма', url: 'jeke-different.html', tags: ['жеке', 'дифференциация', 'деңгей', 'жұмыс'] },
-        { title: 'Бауырсақ арқылы топқа бөлу', category: 'Интерактив тапсырмалар', url: 'Bauyrsaq.html', tags: ['интерактив', 'бауырсақ', 'топ', 'ойын'] },
-        { title: 'Арқан тартыс ойыны', category: 'Интерактив тапсырмалар', url: 'arqan.html', tags: ['интерактив', 'арқан', 'ойын', 'топтық'] }
-    ];
-    
-    const results = searchData.filter(item => {
-        const searchText = (item.title + ' ' + item.category + ' ' + item.tags.join(' ')).toLowerCase();
-        return searchText.includes(query);
-    });
-    
-    showSearchResults(results, query);
-}
-
-function showSearchResults(results, query) {
-    const overlay = document.getElementById('searchResultsOverlay');
-    const body = document.getElementById('searchResultsBody');
-    
-    if (!overlay || !body) return;
-    
-    if (results.length === 0) {
-        body.innerHTML = `
-            <div class="no-results">
-                <i class="fas fa-search"></i>
-                <h4>"${query}" бойынша нәтиже табылмады</h4>
-                <p>Басқа сөздермен іздеп көріңіз немесе төмендегі ұсыныстарды қараңыз:</p>
-                <div style="margin-top:15px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
-                    <span class="quick-suggestion" onclick="quickSearch('сергіту')" style="cursor:pointer;">сергіту</span>
-                    <span class="quick-suggestion" onclick="quickSearch('топ')" style="cursor:pointer;">топ</span>
-                    <span class="quick-suggestion" onclick="quickSearch('тест')" style="cursor:pointer;">тест</span>
-                    <span class="quick-suggestion" onclick="quickSearch('ойын')" style="cursor:pointer;">ойын</span>
-                </div>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Әдістемелік Платформа</div>
+            <div class="footer-links">
+                <a href="#home">Басты бет</a>
+                <a href="#target">Аудитория</a>
+                <a href="#why-adis">Платформа туралы</a>
+                <a href="#help">Көмек</a>
             </div>
-        `;
-    } else {
-        body.innerHTML = `
-            <p style="margin-bottom: 15px; color: var(--text-light);">
-                <i class="fas fa-info-circle"></i> "${query}" бойынша <strong>${results.length}</strong> нәтиже табылды
-            </p>
-            <div class="search-grid">
-                ${results.map(item => `
-                    <div class="search-item" onclick="loadFrame('${item.url}'); closeSearch();">
-                        <div class="search-item-title">${item.title}</div>
-                        <div class="search-item-category">${item.category}</div>
-                        <div class="search-item-tags">
-                            ${item.tags.map(tag => '<span class="search-tag">' + tag + '</span>').join('')}
-                        </div>
-                    </div>
-                `).join('')}
+            <div class="footer-bottom">
+                <p>Жасағандар: <strong>Хавазматова М. & Шералиева И.</strong></p>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem;">©️ 2026 ӘДІС — әдістемелік платформа</p>
             </div>
-        `;
-    }
-    
-    overlay.classList.add('show');
-}
+        </div>
+    </footer>
 
-function quickSearch(term) {
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.value = term;
-        performSearch();
-    }
-}
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
 
-function closeSearch() {
-    const overlay = document.getElementById('searchResultsOverlay');
-    if (overlay) {
-        overlay.classList.remove('show');
-    }
-}
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
 
-// ===== AI CHAT FUNCTIONS =====
-function toggleChat() {
-    const chatWindow = document.getElementById('aiChatWindow');
-    if (chatWindow) {
-        chatWindow.classList.toggle('show');
-    }
-}
-
-// ===== AI ROBOT DRAG FUNCTIONALITY =====
-function initRobotDrag() {
-    const robot = document.querySelector('.ai-robot-wrapper');
-    const container = document.querySelector('.ai-robot-container');
-    if (!robot || !container) return;
-
-    let isDragging = false;
-    let startX, startY, initialLeft, initialTop;
-    let hasMoved = false;
-
-    function getPosition() {
-        const rect = container.getBoundingClientRect();
-        return { x: rect.left, y: rect.top };
-    }
-
-    robot.addEventListener('mousedown', function(e) {
-        isDragging = true;
-        hasMoved = false;
-        startX = e.clientX;
-        startY = e.clientY;
-        const pos = getPosition();
-        initialLeft = pos.x;
-        initialTop = pos.y;
-        robot.classList.add('dragging');
-        e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', function(e) {
-        if (!isDragging) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
-        const newX = initialLeft + dx;
-        const newY = initialTop + dy;
-        const maxX = window.innerWidth - robot.offsetWidth;
-        const maxY = window.innerHeight - robot.offsetHeight;
-        container.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
-        container.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
-        container.style.right = 'auto';
-        container.style.bottom = 'auto';
-    });
-
-    document.addEventListener('mouseup', function() {
-        if (!isDragging) return;
-        isDragging = false;
-        robot.classList.remove('dragging');
-        if (!hasMoved) toggleChat();
-    });
-
-    // Touch support
-    robot.addEventListener('touchstart', function(e) {
-        isDragging = true;
-        hasMoved = false;
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        const pos = getPosition();
-        initialLeft = pos.x;
-        initialTop = pos.y;
-        robot.classList.add('dragging');
-    }, {passive: false});
-
-    document.addEventListener('touchmove', function(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        const touch = e.touches[0];
-        const dx = touch.clientX - startX;
-        const dy = touch.clientY - startY;
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) hasMoved = true;
-        const newX = initialLeft + dx;
-        const newY = initialTop + dy;
-        const maxX = window.innerWidth - robot.offsetWidth;
-        const maxY = window.innerHeight - robot.offsetHeight;
-        container.style.left = Math.max(0, Math.min(newX, maxX)) + 'px';
-        container.style.top = Math.max(0, Math.min(newY, maxY)) + 'px';
-        container.style.right = 'auto';
-        container.style.bottom = 'auto';
-    }, {passive: false});
-
-    document.addEventListener('touchend', function() {
-        if (!isDragging) return;
-        isDragging = false;
-        robot.classList.remove('dragging');
-        if (!hasMoved) toggleChat();
-    });
-}
-
-function sendMessage() {
-    const chatInput = document.getElementById('chatInput');
-    if (!chatInput) return;
-    
-    const message = chatInput.value.trim();
-    if (!message) return;
-    
-    addMessage(message, 'user');
-    chatInput.value = '';
-    
-    showTyping();
-    setTimeout(() => {
-        removeTyping();
-        const response = generateAIResponse(message);
-        addMessage(response, 'ai');
-    }, 1500);
-}
-
-function sendQuickMessage(text) {
-    const chatInput = document.getElementById('chatInput');
-    if (chatInput) {
-        chatInput.value = text;
-        sendMessage();
-    }
-}
-
-function addMessage(text, sender) {
-    const container = document.getElementById('chatMessages');
-    if (!container) return;
-    
-    const time = new Date().toLocaleTimeString('kk-KZ', { hour: '2-digit', minute: '2-digit' });
-    
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'message ' + sender;
-    messageDiv.innerHTML = text + '<div class="message-time">' + time + '</div>';
-    
-    container.appendChild(messageDiv);
-    container.scrollTop = container.scrollHeight;
-}
-
-function showTyping() {
-    const container = document.getElementById('chatMessages');
-    if (!container) return;
-    
-    const typingDiv = document.createElement('div');
-    typingDiv.className = 'message ai typing';
-    typingDiv.id = 'typingIndicator';
-    typingDiv.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
-    container.appendChild(typingDiv);
-    container.scrollTop = container.scrollHeight;
-}
-
-function removeTyping() {
-    const typing = document.getElementById('typingIndicator');
-    if (typing) typing.remove();
-}
-
-function generateAIResponse(message) {
-    const lowerMsg = message.toLowerCase();
-    
-    const responses = [
-        {
-            keywords: ['бастауыш', 'бала', 'кіші'],
-            response: 'Бастауыш сыныпқа арналған танымал әдістер:<br>• <b>Сиқырлы қорап</b> - оқушыларды таң қалдыру арқылы мотивация<br>• <b>Сурет арқылы ойлау</b> - визуалды қабылдауды дамыту<br>• <b>Ойын элементтері</b> - қызығушылықты арттыру'
-        },
-        {
-            keywords: ['сергіту', 'дене', 'шаршадым', 'шаршау'],
-            response: 'Сергіту сәтіне арналған әдістер:<br>• <b>Сұрақ-қозғалыс</b> - дене белсенділігі<br>• <b>3 қимыл</b> - координацияны дамыту<br>• <b>Көз гимнастикасы</b> - көру жүйесіне арналған<br>• <b>Ритмді қайталау</b> - музыка мен қозғалыс'
-        },
-        {
-            keywords: ['топ', 'топқа бөлу', 'топтық'],
-            response: 'Топқа бөлу тәсілдері:<br>• <b>Аралас топтар</b> - әртүрлі деңгейдегі оқушылар<br>• <b>Қабілет бойынша</b> - бір деңгейдегі оқушылар<br>• <b>Бауырсақ арқылы</b> - ойын элементімен бөлу'
-        },
-        {
-            keywords: ['қорытынды', 'тест', 'рефлексия', 'қорытындылау'],
-            response: 'Қорытындылау әдістері:<br>• <b>Тестілеу</b> - білімді тексеру<br>• <b>Рефлексия</b> - өзін-өзі бағалау<br>• <b>Mind Mapping</b> - білімді жинақтау'
-        },
-        {
-            keywords: ['талдау', 'кластер', 'mind'],
-            response: 'Талдау әдістері:<br>• <b>Mind Mapping</b> - ойларды карталау<br>• <b>Кластер</b> - ұғымдарды топтау<br>• <b>Case study</b> - нақты мысалдарды талдау'
-        },
-        {
-            keywords: ['жоғары', 'студент', 'университет'],
-            response: 'Жоғары сыныпқа арналған әдістер:<br>• <b>Case study</b> - кәсіби мысалдарды талдау<br>• <b>Алты қалпақ</b> - әртүрлі перспективадан ойлау<br>• <b>Пікірталас</b> - даулы мәселелерді талқылау'
-        }
-    ];
-    
-    for (let i = 0; i < responses.length; i++) {
-        const item = responses[i];
-        for (let j = 0; j < item.keywords.length; j++) {
-            if (lowerMsg.indexOf(item.keywords[j]) !== -1) {
-                return item.response;
-            }
-        }
-    }
-    
-    return 'Кешіріңіз, мен сіздің сұрағыңызды толық түсінбедім. Нақтырақ сұрақ қойыңыз немесе бөлімді таңдаңыз. Мысалы: "сергіту", "топқа бөлу", "тест"';
-}
-
-// ===== PROFILE MODAL FUNCTIONS =====
-function showProfile() {
-    if (!isLoggedIn()) {
-        window.location.href = 'кіру.html';
-        return;
-    }
-    const modal = document.getElementById('profileModal');
-    if (modal) {
-        modal.classList.add('show');
-        loadStats();
-        // Бірінші табты белсендіру
-        switchTab('profile', document.querySelector('.tab'));
-    }
-}
-
-function closeProfile() {
-    const modal = document.getElementById('profileModal');
-    if (modal) {
-        modal.classList.remove('show');
-    }
-}
-
-function switchTab(tabName, tabBtn) {
-    // Барлық табтардан active класын алып тастау
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    // Таңдалған табты белсендіру
-    if (tabBtn) {
-        tabBtn.classList.add('active');
-    }
-    
-    // Соответствующий контентты көрсету
-    const tabMap = {
-        'profile': 'profileTab',
-        'stats': 'statsTab',
-        'myMethods': 'myMethodsTab'
-    };
-    
-    const contentId = tabMap[tabName];
-    if (contentId) {
-        const content = document.getElementById(contentId);
-        if (content) {
-            content.classList.add('active');
-        }
-    }
-    
-    // Егер статистика табы болса, деректерді жүктеу
-    if (tabName === 'stats') {
-        loadStats();
-    }
-    
-    // Егер менің әдістерім табы болса, тізімді жаңарту
-    if (tabName === 'myMethods') {
-        loadStats();
-    }
-}
-
-function showMyMethods() {
-    if (!isLoggedIn()) {
-        window.location.href = 'кіру.html';
-        return;
-    }
-    showProfile();
-    setTimeout(() => {
-        const tabs = document.querySelectorAll('.tab');
-        if (tabs.length >= 3) {
-            switchTab('myMethods', tabs[2]);
-        }
-    }, 100);
-}
-
-function showAddMethodForm() {
-    const form = document.getElementById('addMethodForm');
-    if (form) {
-        form.style.display = 'block';
-    }
-}
-
-function hideAddMethodForm() {
-    const form = document.getElementById('addMethodForm');
-    if (form) {
-        form.style.display = 'none';
-    }
-}
-
-function changeAvatar() {
-    showNotification('Аватар өзгерту функциясы жақын арада іске қосылады');
-}
-
-// ===== THEME NOTIFICATION TO IFRAMES =====
-function notifyIframesTheme(theme) {
-    const frame = document.getElementById('contentFrame');
-    if (frame && frame.contentWindow) {
-        try {
-            frame.contentWindow.postMessage(theme, '*');
-        } catch (e) {
-            console.log('Theme notification failed');
-        }
-    }
-}
-
-// ===== STATISTICS & USER DATA =====
-function initUserStats() {
-    if (!localStorage.getItem('joinDate')) {
-        localStorage.setItem('joinDate', Date.now().toString());
-    }
-    if (!localStorage.getItem('viewedHistory')) {
-        localStorage.setItem('viewedHistory', JSON.stringify([]));
-    }
-    if (!localStorage.getItem('savedMethods')) {
-        localStorage.setItem('savedMethods', JSON.stringify([]));
-    }
-    if (!localStorage.getItem('myMethods')) {
-        localStorage.setItem('myMethods', JSON.stringify([]));
-    }
-    if (!localStorage.getItem('viewedCount')) {
-        localStorage.setItem('viewedCount', '0');
-    }
-}
-
-function isLoggedIn() {
-    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-    return !!(profile.name && profile.email);
-}
-
-function trackView(url) {
-    if (!url || url === 'home.html') return;
-
-    let viewedHistory = JSON.parse(localStorage.getItem('viewedHistory') || '[]');
-    const today = new Date().toDateString();
-
-    const existingIndex = viewedHistory.findIndex(item => item.url === url && item.date === today);
-
-    if (existingIndex === -1) {
-        viewedHistory.push({
-            url: url,
-            date: today,
-            timestamp: Date.now()
-        });
-
-        if (viewedHistory.length > 100) {
-            viewedHistory = viewedHistory.slice(-100);
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         }
 
-        localStorage.setItem('viewedHistory', JSON.stringify(viewedHistory));
+        // Accordion Toggle
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
 
-        const uniqueUrls = [...new Set(viewedHistory.map(item => item.url))];
-        localStorage.setItem('viewedCount', uniqueUrls.length.toString());
-    }
-}
-
-function loadStats() {
-    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-    const savedMethods = JSON.parse(localStorage.getItem('savedMethods') || '[]');
-    const myMethods = JSON.parse(localStorage.getItem('myMethods') || '[]');
-    const viewedHistory = JSON.parse(localStorage.getItem('viewedHistory') || '[]');
-
-    const statViewed = document.getElementById('statViewed');
-    const statSaved = document.getElementById('statSaved');
-    const statAdded = document.getElementById('statAdded');
-    const statDays = document.getElementById('statDays');
-
-    const uniqueViewed = [...new Set(viewedHistory.map(item => item.url))];
-    if (statViewed) statViewed.textContent = uniqueViewed.length;
-    if (statSaved) statSaved.textContent = savedMethods.length;
-    if (statAdded) statAdded.textContent = myMethods.length;
-
-    if (statDays) {
-        let joinDate = localStorage.getItem('joinDate');
-        if (!joinDate && profile.uid) {
-            joinDate = Date.now().toString();
-            localStorage.setItem('joinDate', joinDate);
-        }
-        if (joinDate) {
-            const days = Math.floor((Date.now() - parseInt(joinDate)) / (1000 * 60 * 60 * 24));
-            statDays.textContent = days;
-        } else {
-            statDays.textContent = '0';
-        }
-    }
-
-    // Auto-fill profile form
-    if (profile.name) {
-        const userName = document.getElementById('userName');
-        if (userName) userName.value = profile.name;
-    }
-    if (profile.email) {
-        const userEmail = document.getElementById('userEmail');
-        if (userEmail) userEmail.value = profile.email;
-    }
-    if (profile.subject) {
-        const subject = document.getElementById('subject');
-        if (subject) subject.value = profile.subject;
-    }
-    if (profile.grade) {
-        const userGrade = document.getElementById('userGrade');
-        if (userGrade) userGrade.value = profile.grade;
-    }
-    if (profile.experience) {
-        const experience = document.getElementById('experience');
-        if (experience) experience.value = profile.experience;
-    }
-    if (profile.bio) {
-        const userBio = document.getElementById('userBio');
-        if (userBio) userBio.value = profile.bio;
-    }
-
-    const savedAvatar = localStorage.getItem('avatar') || profile.photoURL;
-    if (savedAvatar) {
-        const profileImage = document.getElementById('profileImage');
-        if (profileImage) profileImage.src = savedAvatar;
-    }
-
-    // Render my methods list
-    const myList = document.getElementById('myMethodsList');
-    if (myList) {
-        if (myMethods.length > 0) {
-            myList.innerHTML = myMethods.map(method => `
-                <div class="saved-method-item">
-                    <div class="saved-method-icon"><i class="fas fa-lightbulb"></i></div>
-                    <div class="saved-method-info">
-                        <div class="saved-method-title">${method.title}</div>
-                        <div class="saved-method-category">${method.category} • ${method.time || 'Уақыт көрсетілмеген'}</div>
-                    </div>
-                    <div class="saved-method-actions">
-                        <button onclick="deleteMyMethod('${method.id}')" title="Жою"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
-        } else {
-            myList.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-lightbulb"></i>
-                    <h4>Сіз әзірше әдіс қосқан жоқсыз</h4>
-                    <p>Жаңа әдіс қосу үшін "Жаңа әдіс" батырмасын басыңыз</p>
-                </div>
-            `;
-        }
-    }
-}
-
-function saveProfile() {
-    const userName = document.getElementById('userName');
-    const userEmail = document.getElementById('userEmail');
-    const subject = document.getElementById('subject');
-    const userGrade = document.getElementById('userGrade');
-    const experience = document.getElementById('experience');
-    const userBio = document.getElementById('userBio');
-
-    if (!userName || !userEmail) return;
-
-    const name = userName.value.trim();
-    const email = userEmail.value.trim();
-
-    if (name && email) {
-        const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-        profile.name = name;
-        profile.email = email;
-        if (subject) profile.subject = subject.value;
-        if (userGrade) profile.grade = userGrade.value;
-        if (experience) profile.experience = experience.value;
-        if (userBio) profile.bio = userBio.value;
-
-        localStorage.setItem('profile', JSON.stringify(profile));
-        localStorage.setItem('userSubject', subject ? subject.value : '');
-        localStorage.setItem('userGrade', userGrade ? userGrade.value : '');
-        localStorage.setItem('userExperience', experience ? experience.value : '');
-        localStorage.setItem('userBio', userBio ? userBio.value : '');
-
-        showNotification('Профиль сәтті сақталды! ✅');
-
-        const userBadgeName = document.getElementById('userBadgeName');
-        if (userBadgeName) userBadgeName.textContent = name;
-    } else {
-        showNotification('Аты-жөні және Email толтырыңыз!', 'error');
-    }
-}
-
-function addNewMethod() {
-    if (!isLoggedIn()) {
-        showNotification('Әдіс қосу үшін кіру керек!', 'error');
-        return;
-    }
-
-    const titleInput = document.getElementById('newMethodTitle');
-    const categoryInput = document.getElementById('newMethodCategory');
-    const timeInput = document.getElementById('newMethodTime');
-    const descInput = document.getElementById('newMethodDesc');
-
-    if (!titleInput || !descInput) return;
-
-    const title = titleInput.value.trim();
-    const category = categoryInput ? categoryInput.value : '';
-    const time = timeInput ? timeInput.value.trim() : '';
-    const desc = descInput.value.trim();
-
-    if (!title || !desc) {
-        showNotification('Атауы және сипаттамасы міндетті!', 'error');
-        return;
-    }
-
-    const newMethod = {
-        id: Date.now().toString(),
-        title: title,
-        category: category,
-        time: time,
-        description: desc,
-        date: new Date().toLocaleDateString('kk-KZ')
-    };
-
-    let myMethods = JSON.parse(localStorage.getItem('myMethods') || '[]');
-    myMethods.push(newMethod);
-    localStorage.setItem('myMethods', JSON.stringify(myMethods));
-
-    titleInput.value = '';
-    if (timeInput) timeInput.value = '';
-    descInput.value = '';
-    hideAddMethodForm();
-
-    loadStats();
-    showNotification('Әдіс сәтті қосылды! ✅');
-}
-
-function deleteMyMethod(id) {
-    let myMethods = JSON.parse(localStorage.getItem('myMethods') || '[]');
-    myMethods = myMethods.filter(m => m.id !== id);
-    localStorage.setItem('myMethods', JSON.stringify(myMethods));
-    loadStats();
-    showNotification('Әдіс жойылды');
-}
-
-function logout() {
-    localStorage.removeItem('profile');
-    localStorage.removeItem('avatar');
-    showNotification('Сіз платформадан шықтыңыз');
-    closeProfile();
-    setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 1000);
-}
-
-// ===== HEADER SCROLL SHRINK =====
-function initHeaderScroll() {
-    const header = document.querySelector('.header');
-    const body = document.body;
-    if (!header || !body) return;
-
-    let lastScroll = 0;
-    const scrollThreshold = 30;
-
-    function handleScroll() {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (currentScroll > scrollThreshold) {
-            header.classList.add('scrolled');
-            body.classList.add('header-scrolled');
-        } else {
-            header.classList.remove('scrolled');
-            body.classList.remove('header-scrolled');
-        }
-
-        lastScroll = currentScroll;
-    }
-
-    let ticking = false;
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            window.requestAnimationFrame(function() {
-                handleScroll();
-                ticking = false;
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('active');
             });
-            ticking = true;
-        }
-    });
 
-    handleScroll();
-}
-
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize header scroll effect
-    initHeaderScroll();
-
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark');
-        const toggleBtn = document.querySelector('.toggle');
-        if (toggleBtn) {
-            toggleBtn.textContent = '☀️';
-        }
-    }
-    
-    // Send theme to iframe on load
-    const contentFrame = document.getElementById('contentFrame');
-    if (contentFrame) {
-        contentFrame.addEventListener('load', function() {
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            try {
-                this.contentWindow.postMessage(currentTheme, '*');
-            } catch (e) {
-                console.log('Iframe load message error:', e);
-            }
-        });
-    }
-    
-    // Overlay click to close
-    const searchOverlay = document.getElementById('searchResultsOverlay');
-    if (searchOverlay) {
-        searchOverlay.addEventListener('click', function(e) {
-            if (e.target === this) closeSearch();
-        });
-    }
-    
-    const profileModal = document.getElementById('profileModal');
-    if (profileModal) {
-        profileModal.addEventListener('click', function(e) {
-            if (e.target === this) closeProfile();
-        });
-    }
-    
-    // Escape key to close
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeSearch();
-            closeProfile();
-            const chatWindow = document.getElementById('aiChatWindow');
-            if (chatWindow && chatWindow.classList.contains('show')) {
-                toggleChat();
+            if (!isActive) {
+                item.classList.add('active');
             }
         }
-    });
-    
-    // Initialize robot drag
-    initRobotDrag();
 
-    // Initialize user stats
-    initUserStats();
-    
-    // Load home page
-    loadFrame('home.html');
-});
-
-// Receive messages from iframe pages
-window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'getTheme') {
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        try {
-            e.source.postMessage(currentTheme, '*');
-        } catch (err) {
-            console.log('Message response error:', err);
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const themeBtn = document.querySelector('.toggle-theme');
+            if (document.body.classList.contains('dark')) {
+                themeBtn.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeBtn.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
         }
-    }
-});
-</script>
+
+        // Check saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            document.querySelector('.toggle-theme').textContent = '☀️';
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+        // Advantages Carousel Auto-scroll
+        let currentSlide = 0;
+        const carousel = document.getElementById('advantagesCarousel');
+        const cards = carousel.querySelectorAll('.advantage-card');
+        const totalSlides = cards.length - 3;
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % (totalSlides + 1);
+            carousel.style.transform = `translateX(-${currentSlide * (33.333 + 1.33)}%)`;
+        }
+
+        setInterval(nextSlide, 3000);
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+
+            if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target) && mobileMenu.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ============================================
+        // FIREBASE AUTHENTICATION - ТОЛЫҚ ДҰРЫСТАЛҒАН НҮСҚА
+        // ============================================
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC2NjVhAxz6o0orZsLvZO6DBpmefGWtdbs",
+            authDomain: "adis11.firebaseapp.com",
+            projectId: "adis11",
+            storageBucket: "adis11.firebasestorage.app",
+            messagingSenderId: "1076245506221",
+            appId: "1:1076245506221:web:163729dc73b8bc4b957e24",
+            measurementId: "G-ZDK8R92RMY"
+        };
+
+        // Firebase-ті инициализациялау
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+
+        // Бастапқы күйді орнату функциясы
+        function setInitialAuthState() {
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+            const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+            const authButtons = document.getElementById('authButtons');
+            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+
+            // Бастапқыда барлық батырмаларды көрсету (Firebase тексергенше)
+            if (loginBtn) loginBtn.style.display = 'inline-flex';
+            if (registerBtn) registerBtn.style.display = 'inline-flex';
+            if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+            if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'block';
+            if (authButtons) authButtons.style.display = 'flex';
+            if (mobileAuthButtons) mobileAuthButtons.style.display = 'flex';
+        }
+
+        // Бет жүктелгенде бастапқы күйді орнату
+        setInitialAuthState();
+
+        // Авторизация күйін бақылау - ТОЛЫҚ ДҰРЫСТАЛҒАН
+        auth.onAuthStateChanged((user) => {
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+            const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+            const authButtons = document.getElementById('authButtons');
+            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+
+            if (user) {
+                // Кірген пайдаланушы - кіру/тіркелу батырмалары жасырылады
+                console.log('Пайдаланушы кірген:', user.email);
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (registerBtn) registerBtn.style.display = 'none';
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+                if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+            } else {
+                // Кірмеген пайдаланушы - кіру/тіркелу батырмалары көрсетіледі
+                console.log('Пайдаланушы кірмеген');
+                if (loginBtn) loginBtn.style.display = 'inline-flex';
+                if (registerBtn) registerBtn.style.display = 'inline-flex';
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+                if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'block';
+                if (authButtons) authButtons.style.display = 'flex';
+                if (mobileAuthButtons) mobileAuthButtons.style.display = 'flex';
+            }
+        });
+
+        function logout() {
+            auth.signOut().then(() => {
+                console.log('Сәтті шықылды');
+                // localStorage-ты тазалау (қаласаңыз)
+                // localStorage.removeItem('profile');
+                // localStorage.removeItem('avatar');
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error('Шығу қатесі:', error);
+                alert('Шығу кезінде қате орын алды: ' + error.message);
+            });
+        }
+    </script>
+
 </body>
 </html>
