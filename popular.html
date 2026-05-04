@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Танымал әдістер — ӘДІС</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+    --primary:#0B3C5D;
+    --primary-hover:#1C5D99;
+    --secondary:#1C5D99;
+    --accent:#F2BB16;
+    --text:#2c3e50;
+    --text-medium:#5d6d7e;
+    --text-light:#7f8c8d;
+    --bg:#ffffff;
+    --bg-light:#f4f7fb;
+    --bg-gray:#E6F0F7;
+    --border:#e5e8e8;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
+    --success:#27ae60;
+    --warning:#f2BB16;
+    --new-badge:#e74c3c;
+}
+
+.dark{
+    --primary:#4A9FD4;
+    --primary-hover:#6BB3E0;
+    --secondary:#4A9FD4;
+    --accent:#F2BB16;
+    --text:#E8F4F8;
+    --text-medium:#B8D4E3;
+    --text-light:#8FB8D4;
+    --bg:#0A1628;
+    --bg-light:#0F1F35;
+    --bg-gray:#152238;
+    --border:#1E3A5F;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.5);
+    --success:#2ecc71;
+    --warning:#f1c40f;
+    --new-badge:#ff6b6b;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    padding:30px;
+    transition:all 0.3s ease;
+    min-height:100vh;
+}
+
+.container{
+    max-width:1400px;
+    margin:0 auto;
+}
+
+/* ===== PAGE TITLE ===== */
+.page-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:42px;
+    color:var(--primary);
+    margin-bottom:10px;
+    text-align:center;
+}
+
+.page-subtitle{
+    text-align:center;
+    color:var(--text-light);
+    font-size:16px;
+    margin-bottom:30px;
+}
+
+/* ===== CLEAR BUTTON ===== */
+.clear-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 24px;
+    border-radius:25px;
+    border:2px solid var(--accent);
+    background:var(--accent);
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.clear-btn:hover{
+    background:#D4A010;
+    border-color:#D4A010;
+    color:#fff;
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(242,187,22,0.4);
+}
+
+/* ===== METHODS LIST ===== */
+.methods-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+/* ===== METHOD ROW ===== */
+.method-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:20px 24px;
+    background:var(--bg-light);
+    border-radius:16px;
+    border:2px solid var(--border);
+    transition:all 0.3s ease;
+    cursor:pointer;
+    text-decoration:none;
+    color:inherit;
+}
+
+.method-row:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow-md);
+    border-color:var(--primary);
+    background:var(--bg);
+}
+
+/* ИКОНКА (сол жақта) */
+.method-icon{
+    width:56px;
+    height:56px;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:24px;
+    flex-shrink:0;
+}
+
+/* АҚПАРАТ (сол жақта, атау + категория) */
+.method-info{
+    flex:1;
+    min-width:0;
+}
+
+.method-title{
+    font-size:20px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.method-meta{
+    font-size:14px;
+    color:var(--text-light);
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.method-meta .dot{
+    width:4px;
+    height:4px;
+    background:var(--text-light);
+    border-radius:50%;
+}
+
+/* ===== РЕЙТИНГ БЛОГЫ (оң жақта) ===== */
+.rating-block{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:4px;
+    flex-shrink:0;
+}
+
+.rating-stars{
+    display:flex;
+    gap:2px;
+    font-size:16px;
+}
+
+.rating-stars .star{
+    color:var(--accent);
+}
+
+.rating-stars .star.empty{
+    color:var(--border);
+}
+
+.rating-count{
+    font-size:12px;
+    color:var(--text-medium);
+    background:var(--bg-gray);
+    padding:2px 8px;
+    border-radius:10px;
+}
+
+/* ===== RANK BADGE ===== */
+.rank-badge{
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:14px;
+    flex-shrink:0;
+}
+
+.rank-1{
+    background:linear-gradient(135deg, #FFD700, #FFA500);
+    color:#fff;
+    box-shadow:0 2px 8px rgba(255,215,0,0.4);
+}
+
+.rank-2{
+    background:linear-gradient(135deg, #C0C0C0, #A0A0A0);
+    color:#fff;
+    box-shadow:0 2px 8px rgba(192,192,192,0.4);
+}
+
+.rank-3{
+    background:linear-gradient(135deg, #CD7F32, #B87333);
+    color:#fff;
+    box-shadow:0 2px 8px rgba(205,127,50,0.4);
+}
+
+.rank-other{
+    background:var(--bg-gray);
+    color:var(--text-light);
+    border:2px solid var(--border);
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state{
+    text-align:center;
+    padding:80px 20px;
+    color:var(--text-light);
+}
+
+.empty-state i{
+    font-size:80px;
+    margin-bottom:25px;
+    opacity:0.4;
+    color:var(--primary);
+}
+
+.empty-state h3{
+    font-size:24px;
+    color:var(--text);
+    margin-bottom:15px;
+    font-family:'Cormorant Garamond', serif;
+}
+
+.empty-state p{
+    font-size:16px;
+    max-width:500px;
+    margin:0 auto 25px;
+    line-height:1.6;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:768px){
+    body{
+        padding:15px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .page-title{
+        font-size:28px;
+    }
+
+    .method-row{
+        padding:16px;
+        gap:12px;
+    }
+
+    .method-icon{
+        width:48px;
+        height:48px;
+        font-size:20px;
+    }
+
+    .method-title{
+        font-size:16px;
+    }
+
+    .rank-badge{
+        width:28px;
+        height:28px;
+        font-size:12px;
+    }
+}
+</style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1 class="page-title">Танымал әдістер</h1>
+        <button class="clear-btn" onclick="clearAllRatings()">
+            <i class="fas fa-trash-alt"></i> Бағаларды тазарту
+        </button>
+    </div>
+
+    <div class="methods-list" id="methodsList">
+        <!-- Бос күй -->
+        <div class="empty-state" id="emptyState">
+            <i class="fas fa-star"></i>
+            <h3>Әзірше баға берілген жоқ</h3>
+            <p>Әдістерге баға бере бастаңыз — ең танымалдары осы жерде көрсетіледі</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// БАРЛЫҚ ӘДІСТЕРДІҢ ДЕРЕКҚОРЫ
+// ═══════════════════════════════════════════════════════════════════════════
+
+const allMethods = [
+    { id: 'picture', title: 'Сурет арқылы ойлау', category: 'Бастауыш сынып', icon: 'fa-image', file: 'picture.html' }
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// БАҒАЛАУ ФУНКЦИЯЛАРЫ
+// ═══════════════════════════════════════════════════════════════════════════
+
+function getRatings() {
+    return JSON.parse(localStorage.getItem('methodRatings') || '{}');
+}
+
+// Орташа бағаны есептеу
+function calculateAverage(methodId) {
+    const ratings = getRatings();
+    const methodRatings = ratings[methodId] || [];
+    
+    if (methodRatings.length === 0) return 0;
+    
+    const sum = methodRatings.reduce((acc, r) => acc + (r.rating || 0), 0);
+    return (sum / methodRatings.length);
+}
+
+// Баға бергендер санын алу
+function getRatingCount(methodId) {
+    const ratings = getRatings();
+    return (ratings[methodId] || []).length;
+}
+
+// Жұлдыздарды көрсету
+function renderStars(average) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= Math.round(average)) {
+            stars += '<i class="fas fa-star star"></i>';
+        } else {
+            stars += '<i class="fas fa-star star empty"></i>';
+        }
+    }
+    return stars;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// БАҒАЛАРДЫ ТАЗАРТУ
+// ═══════════════════════════════════════════════════════════════════════════
+
+function clearAllRatings() {
+    if (confirm('Барлық бағаларды өшіру керек пе? Бұл әрекетті кері қайтару мүмкін емес!')) {
+        localStorage.removeItem('methodRatings');
+        localStorage.removeItem('userRatings');
+        renderPopularMethods();
+        alert('Барлық бағалар өшірілді!');
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ТАНЫМАЛ ӘДІСТЕРДІ КӨРСЕТУ
+// ═══════════════════════════════════════════════════════════════════════════
+
+function renderPopularMethods() {
+    const list = document.getElementById('methodsList');
+    const empty = document.getElementById('emptyState');
+    const ratings = getRatings();
+    
+    // localStorage-тегі барлық бағаланған әдістерді алу
+    const ratedMethodIds = Object.keys(ratings).filter(id => ratings[id] && ratings[id].length > 0);
+    
+    // Ешкім баға бермеген болса
+    if (ratedMethodIds.length === 0) {
+        list.innerHTML = '';
+        list.appendChild(empty);
+        empty.style.display = 'block';
+        return;
+    }
+    
+    empty.style.display = 'none';
+    
+    // Әр бағаланған әдіске ақпарат жинау
+    const ratedMethods = ratedMethodIds.map(id => {
+        const methodInfo = allMethods.find(m => m.id === id);
+        const avg = calculateAverage(id);
+        const count = getRatingCount(id);
+        
+        return {
+            id: id,
+            title: methodInfo ? methodInfo.title : id,
+            category: methodInfo ? methodInfo.category : 'Белгісіз бөлім',
+            icon: methodInfo ? methodInfo.icon : 'fa-star',
+            file: methodInfo ? methodInfo.file : '#',
+            average: avg,
+            count: count
+        };
+    });
+    
+    // Орташа баға бойынша сұрыптау (кему ретімен)
+    ratedMethods.sort((a, b) => b.average - a.average);
+    
+    // Топ 3 үшін арнайы белгі
+    function getRankClass(index) {
+        if (index === 0) return 'rank-1';
+        if (index === 1) return 'rank-2';
+        if (index === 2) return 'rank-3';
+        return 'rank-other';
+    }
+    
+    list.innerHTML = ratedMethods.map((method, index) => `
+        <a href="${method.file}" class="method-row" onclick="return openMethod(event, '${method.file}')">
+            <div class="rank-badge ${getRankClass(index)}">${index + 1}</div>
+            
+            <div class="method-icon">
+                <i class="fas ${method.icon}"></i>
+            </div>
+            
+            <div class="method-info">
+                <h3 class="method-title">${escapeHtml(method.title)}</h3>
+                <div class="method-meta">
+                    <span>${escapeHtml(method.category)}</span>
+                    <span class="dot"></span>
+                    <span>${method.count} баға</span>
+                </div>
+            </div>
+            
+            <div class="rating-block">
+                <div class="rating-stars">
+                    ${renderStars(method.average)}
+                </div>
+                <span class="rating-count">${method.average.toFixed(1)} / 5</span>
+            </div>
+        </a>
+    `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ӘДЕТТЕР
+// ═══════════════════════════════════════════════════════════════════════════
+
+function openMethod(event, file) {
+    if (window.parent !== window && window.parent.loadFrame) {
+        event.preventDefault();
+        window.parent.loadFrame(file);
+        return false;
+    }
+    return true;
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ІСКЕ ҚОСУ
+// ═══════════════════════════════════════════════════════════════════════════
+
+renderPopularMethods();
+
+// Басқа беттерден localStorage өзгергенде жаңарту
+window.addEventListener('storage', function(e) {
+    if (e.key === 'methodRatings') {
+        renderPopularMethods();
+    }
+});
+
+// Тема (ата-анадан)
+window.addEventListener('message', function(e) {
+    if (e.data === 'dark') {
+        document.body.classList.add('dark');
+    } else if (e.data === 'light') {
+        document.body.classList.remove('dark');
+    }
+});
+
+if (window.parent !== window) {
+    window.parent.postMessage({type: 'getTheme'}, '*');
+}
+</script>
+
+</body>
+</html>

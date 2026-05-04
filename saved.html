@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сақталған әдістер — ӘДІС</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+    --primary:#0B3C5D;
+    --primary-hover:#1C5D99;
+    --secondary:#1C5D99;
+    --accent:#F2BB16;
+    --text:#2c3e50;
+    --text-medium:#5d6d7e;
+    --text-light:#7f8c8d;
+    --bg:#ffffff;
+    --bg-light:#f4f7fb;
+    --bg-gray:#E6F0F7;
+    --border:#e5e8e8;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.1);
+    --success:#27ae60;
+    --warning:#f2BB16;
+    --new-badge:#e74c3c;
+}
+
+.dark{
+    --primary:#4A9FD4;
+    --primary-hover:#6BB3E0;
+    --secondary:#4A9FD4;
+    --accent:#F2BB16;
+    --text:#E8F4F8;
+    --text-medium:#B8D4E3;
+    --text-light:#8FB8D4;
+    --bg:#0A1628;
+    --bg-light:#0F1F35;
+    --bg-gray:#152238;
+    --border:#1E3A5F;
+    --shadow-sm:0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md:0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg:0 10px 25px rgba(0,0,0,0.5);
+    --success:#2ecc71;
+    --warning:#f1c40f;
+    --new-badge:#ff6b6b;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    padding:30px;
+    transition:all 0.3s ease;
+    min-height:100vh;
+}
+
+.container{
+    max-width:1400px;
+    margin:0 auto;
+}
+
+/* ===== PAGE TITLE ===== */
+.page-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:42px;
+    color:var(--primary);
+    margin-bottom:30px;
+    text-align:center;
+}
+
+/* ===== METHODS LIST ===== */
+.methods-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+/* ===== METHOD ROW (жолдық стиль — скриншоттағыдай) ===== */
+.method-row{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:20px 24px;
+    background:var(--bg-light);
+    border-radius:16px;
+    border:2px solid var(--border);
+    transition:all 0.3s ease;
+    cursor:pointer;
+    text-decoration:none;
+    color:inherit;
+}
+
+.method-row:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow-md);
+    border-color:var(--primary);
+    background:var(--bg);
+}
+
+/* ИКОНКА */
+.method-icon{
+    width:56px;
+    height:56px;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:24px;
+    flex-shrink:0;
+}
+
+/* АҚПАРАТ */
+.method-info{
+    flex:1;
+    min-width:0;
+}
+
+.method-title{
+    font-size:20px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.method-meta{
+    font-size:14px;
+    color:var(--text-light);
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.method-meta .dot{
+    width:4px;
+    height:4px;
+    background:var(--text-light);
+    border-radius:50%;
+}
+
+/* САҚТАУ БЕЛГІСІ */
+.save-btn{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    border:2px solid var(--border);
+    background:var(--bg);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    transition:all 0.3s ease;
+    color:var(--text-light);
+    flex-shrink:0;
+}
+
+.save-btn:hover{
+    transform:scale(1.1);
+    border-color:var(--accent);
+    color:var(--accent);
+}
+
+.save-btn.saved{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:var(--primary);
+}
+
+.save-btn.saved:hover{
+    background:transparent;
+    color:var(--accent);
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state{
+    text-align:center;
+    padding:80px 20px;
+    color:var(--text-light);
+}
+
+.empty-state i{
+    font-size:80px;
+    margin-bottom:25px;
+    opacity:0.4;
+    color:var(--primary);
+}
+
+.empty-state h3{
+    font-size:24px;
+    color:var(--text);
+    margin-bottom:15px;
+    font-family:'Cormorant Garamond', serif;
+}
+
+.empty-state p{
+    font-size:16px;
+    max-width:500px;
+    margin:0 auto 25px;
+    line-height:1.6;
+}
+
+/* ===== TOAST ===== */
+.toast{
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    padding:15px 25px;
+    background:var(--success);
+    color:white;
+    border-radius:12px;
+    box-shadow:var(--shadow-lg);
+    z-index:10000;
+    transform:translateX(400px);
+    transition:transform 0.3s ease;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.toast.show{
+    transform:translateX(0);
+}
+
+.toast.error{
+    background:var(--new-badge);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:768px){
+    body{
+        padding:15px;
+    }
+
+    .page-title{
+        font-size:28px;
+    }
+
+    .method-row{
+        padding:16px;
+        gap:14px;
+    }
+
+    .method-icon{
+        width:48px;
+        height:48px;
+        font-size:20px;
+    }
+
+    .method-title{
+        font-size:17px;
+    }
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<div class="container">
+
+    <h1 class="page-title">Сақталған әдістер</h1>
+
+    <div class="methods-list" id="methodsList">
+        <!-- Бос күй -->
+        <div class="empty-state" id="emptyState">
+            <i class="fas fa-bookmark"></i>
+            <h3>Сіз әзірше әдіс сақтаған жоқсыз</h3>
+            <p>Платформадағы ұнаған әдістеріңізді сақтап, кейін осы жерден тез таба аласыз</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// БАРЛЫҚ ӘДІСТЕРДІҢ ДЕРЕКҚОРЫ (9 бөлімнен)
+// ═══════════════════════════════════════════════════════════════════════════
+
+const allMethods = [
+    // 1. basta.html — Сабақты бастау
+    {
+        id: 'kirise',
+        title: 'Кіріспе',
+        category: 'Сабақты бастау',
+        icon: 'fa-play-circle',
+        file: 'kirise.html'
+    },
+    {
+        id: 'motivasia',
+        title: 'Мотивация',
+        category: 'Сабақты бастау',
+        icon: 'fa-fire',
+        file: 'motivasia.html'
+    },
+
+    // 2. interactive.html — Интерактив тапсырмалар
+    {
+        id: 'bauyrsaq',
+        title: 'Бауырсақ арқылы топқа бөлу',
+        category: 'Интерактив тапсырмалар',
+        icon: 'fa-users',
+        file: 'bauyrsaq.html'
+    },
+    {
+        id: 'mijattyqtau',
+        title: 'Ми жаттықтыру ойыны',
+        category: 'Интерактив тапсырмалар',
+        icon: 'fa-brain',
+        file: 'MI–oiyn.html'
+    },
+    {
+        id: 'bilimbatareya',
+        title: 'Білім батареясы',
+        category: 'Интерактив тапсырмалар',
+        icon: 'fa-battery-full',
+        file: 'bilim_batareasy.html'
+    },
+
+    // 3. jeke(1).html — Жеке тапсырма
+    {
+        id: 'jeke-card',
+        title: 'Карточкалар',
+        category: 'Жеке тапсырма',
+        icon: 'fa-id-card',
+        file: 'jeke-card.html'
+    },
+    {
+        id: 'jeke-different',
+        title: 'Дифференциация',
+        category: 'Жеке тапсырма',
+        icon: 'fa-layer-group',
+        file: 'jeke-different.html'
+    },
+
+    // 4. jogary(1).html — Жоғары сынып
+    {
+        id: 'case',
+        title: 'Case study әдісі',
+        category: 'Жоғары сынып',
+        icon: 'fa-briefcase',
+        file: 'Case.html'
+    },
+    {
+        id: 'alty-qalpaq',
+        title: 'Алты қалпақ әдісі',
+        category: 'Жоғары сынып',
+        icon: 'fa-hat-cowboy',
+        file: 'Алты қалпақ.html'
+    },
+
+    // 5. qoryt.html — Қорытынды
+    {
+        id: 'qoryt-test',
+        title: 'Тестілеу',
+        category: 'Қорытынды',
+        icon: 'fa-check-circle',
+        file: 'qoryt-test.html'
+    },
+    {
+        id: 'qoryt-reflection',
+        title: 'Рефлексия',
+        category: 'Қорытынды',
+        icon: 'fa-mirror',
+        file: 'qoryt-reflection.html'
+    },
+
+    // 6. takyryp.html — Жаңа тақырып түсіндіру
+    {
+        id: 'takyryp-story',
+        title: 'Әңгімелеу',
+        category: 'Жаңа тақырып түсіндіру',
+        icon: 'fa-book-open',
+        file: 'takyryp-story.html'
+    },
+    {
+        id: 'takyryp-visual',
+        title: 'Көрнекілік',
+        category: 'Жаңа тақырып түсіндіру',
+        icon: 'fa-eye',
+        file: 'takyryp-visual.html'
+    },
+
+    // 7. talda.html — Талдау
+    {
+        id: 'talda-mindmap',
+        title: 'Mind Mapping',
+        category: 'Талдау',
+        icon: 'fa-project-diagram',
+        file: 'talda-mindmap.html'
+    },
+    {
+        id: 'talda-cluster',
+        title: 'Кластер',
+        category: 'Талдау',
+        icon: 'fa-object-group',
+        file: 'talda-cluster.html'
+    },
+
+    // 8. topbol.html — Топқа бөлу
+    {
+        id: 'topbol-mixed',
+        title: 'Аралас топтар',
+        category: 'Топқа бөлу',
+        icon: 'fa-random',
+        file: 'topbol-mixed.html'
+    },
+    {
+        id: 'topbol-ability',
+        title: 'Қабілет бойынша',
+        category: 'Топқа бөлу',
+        icon: 'fa-chart-line',
+        file: 'topbol-ability.html'
+    },
+
+    // 9. sergitu.html — Сергіту сәті
+    {
+        id: 'suraq-qozgalys',
+        title: 'Сұрақ–қозғалыс әдісі',
+        category: 'Сергіту сәті',
+        icon: 'fa-question-circle',
+        file: 'suraq.html'
+    },
+    {
+        id: 'qarama-qarsy',
+        title: 'Қарама-қарсы әрекет әдісі',
+        category: 'Сергіту сәті',
+        icon: 'fa-exchange-alt',
+        file: 'қарама-қарсы.html'
+    },
+    {
+        id: 'koz-gimnastika',
+        title: 'Көзге арналған гимнастика',
+        category: 'Сергіту сәті',
+        icon: 'fa-eye',
+        file: 'гимнастика.html'
+    },
+    {
+        id: '3-qimyl',
+        title: '3 қимыл сергіту әдісі',
+        category: 'Сергіту сәті',
+        icon: 'fa-running',
+        file: '3-қимыл.html'
+    },
+    {
+        id: 'ritm',
+        title: 'Ритмді қайталау әдісі',
+        category: 'Сергіту сәті',
+        icon: 'fa-music',
+        file: 'ритм.html'
+    }
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LOCALSTORAGE ФУНКЦИЯЛАРЫ
+// ═══════════════════════════════════════════════════════════════════════════
+
+function getSavedMethods() {
+    return JSON.parse(localStorage.getItem('savedMethods') || '[]');
+}
+
+function saveSavedMethods(methods) {
+    localStorage.setItem('savedMethods', JSON.stringify(methods));
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// КӨРСЕТУ
+// ═══════════════════════════════════════════════════════════════════════════
+
+function renderSavedMethods() {
+    const list = document.getElementById('methodsList');
+    const empty = document.getElementById('emptyState');
+    const savedIds = getSavedMethods();
+    
+    // Сақталған ID-лер бойынша әдістерді табу
+    const savedMethods = allMethods.filter(m => savedIds.includes(m.id));
+    
+    if (savedMethods.length === 0) {
+        list.innerHTML = '';
+        list.appendChild(empty);
+        empty.style.display = 'block';
+        return;
+    }
+    
+    empty.style.display = 'none';
+    
+    list.innerHTML = savedMethods.map(method => `
+        <a href="${method.file}" class="method-row" onclick="return openMethod(event, '${method.file}')">
+            <div class="method-icon">
+                <i class="fas ${method.icon}"></i>
+            </div>
+            <div class="method-info">
+                <h3 class="method-title">${escapeHtml(method.title)}</h3>
+                <div class="method-meta">
+                    <span>${escapeHtml(method.category)}</span>
+                </div>
+            </div>
+            <button class="save-btn saved" title="Сақтаудан алу" 
+                    onclick="event.preventDefault(); event.stopPropagation(); unsaveMethod('${method.id}')">
+                <i class="fas fa-bookmark"></i>
+            </button>
+        </a>
+    `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ӘДЕТТЕР
+// ═══════════════════════════════════════════════════════════════════════════
+
+function openMethod(event, file) {
+    if (window.parent !== window && window.parent.loadFrame) {
+        event.preventDefault();
+        window.parent.loadFrame(file);
+        return false;
+    }
+    return true; // қарапайым гиперссылка ретінде жұмыс істейді
+}
+
+function unsaveMethod(id) {
+    let savedMethods = getSavedMethods();
+    const index = savedMethods.indexOf(id);
+    
+    if (index > -1) {
+        savedMethods.splice(index, 1);
+        saveSavedMethods(savedMethods);
+        renderSavedMethods();
+        showToast('Сақтаудан алынды');
+    }
+}
+
+// Toast
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast ' + (type === 'error' ? 'error' : '');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Қолданбалы
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ІСКЕ ҚОСУ
+// ═══════════════════════════════════════════════════════════════════════════
+
+renderSavedMethods();
+
+// Басқа беттерден localStorage өзгергенде жаңарту
+window.addEventListener('storage', function(e) {
+    if (e.key === 'savedMethods') {
+        renderSavedMethods();
+    }
+});
+
+// Тема (ата-анадан)
+window.addEventListener('message', function(e) {
+    if (e.data === 'dark') {
+        document.body.classList.add('dark');
+    } else if (e.data === 'light') {
+        document.body.classList.remove('dark');
+    }
+});
+
+if (window.parent !== window) {
+    window.parent.postMessage({type: 'getTheme'}, '*');
+}
+</script>
+
+</body>
+</html>

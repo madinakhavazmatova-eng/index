@@ -735,28 +735,69 @@ body{
 }
 
 .preview-content{
-    padding:20px;
+    padding:15px;
     text-align:center;
-    min-height:200px;
+    min-height:150px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:15px;
+    gap:12px;
 }
 
 .preview-content img{
     max-width:100%;
-    max-height:300px;
+    max-height:250px;
     border-radius:8px;
     box-shadow:var(--shadow-md);
 }
 
 .preview-content iframe{
     width:100%;
-    height:400px;
+    height:350px;
     border:none;
     border-radius:8px;
+}
+
+/* ПРЕЗЕНТАЦИЯ ПРЕВЬЮСІ - КІШІРЕК */
+.preview-content .ppt-preview-box{
+    width:100%;
+    max-width:500px;
+    background:linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+    border-radius:12px;
+    padding:30px 20px;
+    color:white;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.preview-content .ppt-preview-box::before{
+    content:'';
+    position:absolute;
+    top:-50%;
+    left:-50%;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+}
+
+.preview-content .ppt-preview-box i{
+    font-size:48px;
+    margin-bottom:10px;
+    opacity:0.9;
+}
+
+.preview-content .ppt-preview-box h4{
+    font-size:16px;
+    margin-bottom:5px;
+    position:relative;
+}
+
+.preview-content .ppt-preview-box p{
+    font-size:12px;
+    opacity:0.8;
+    position:relative;
 }
 
 /* Word превью стилі */
@@ -838,7 +879,7 @@ body{
     transform:translateY(-2px);
 }
 
-/* Толық экран модал */
+/* Толық экран модал - ЖАҢАРТЫЛҒАН */
 .fullscreen-modal{
     display:none;
     position:fixed;
@@ -846,7 +887,7 @@ body{
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.9);
+    background:rgba(0,0,0,0.95);
     z-index:10000;
     justify-content:center;
     align-items:center;
@@ -857,8 +898,8 @@ body{
 }
 
 .fullscreen-content{
-    width:95%;
-    height:95%;
+    width:98%;
+    height:98%;
     background:var(--bg);
     border-radius:12px;
     overflow:hidden;
@@ -870,24 +911,25 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:15px 20px;
+    padding:12px 20px;
     background:var(--primary);
     color:white;
+    flex-shrink:0;
 }
 
 .fullscreen-title{
-    font-size:16px;
+    font-size:15px;
     font-weight:600;
 }
 
 .fullscreen-actions{
     display:flex;
-    gap:10px;
+    gap:8px;
 }
 
 .fullscreen-btn{
-    width:36px;
-    height:36px;
+    width:34px;
+    height:34px;
     border-radius:8px;
     border:none;
     background:rgba(255,255,255,0.2);
@@ -896,34 +938,95 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-    transition:all 0.3s ease;
-    font-size:16px;
+    transition:all 0.2s ease;
+    font-size:14px;
 }
 
 .fullscreen-btn:hover{
-    background:rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.35);
     transform:scale(1.1);
 }
 
 .fullscreen-body{
     flex:1;
-    padding:20px;
     overflow:auto;
     display:flex;
     align-items:center;
     justify-content:center;
+    background:var(--bg);
+    padding:0;
+}
+
+/* ПРЕЗЕНТАЦИЯ (PPT) ҮШІН АРНАЙЫ СТИЛЬ */
+.fullscreen-body.ppt-viewer{
+    background:#f5f5f5;
+    padding:10px;
 }
 
 .fullscreen-body iframe{
     width:100%;
     height:100%;
     border:none;
+    display:block;
 }
 
 .fullscreen-body img{
     max-width:100%;
     max-height:100%;
     object-fit:contain;
+    transition:transform 0.3s ease;
+}
+
+/* ПРЕЗЕНТАЦИЯ СЛАЙДТАРЫ */
+.ppt-container{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+    padding:20px;
+}
+
+.ppt-slide{
+    max-width:100%;
+    max-height:calc(100% - 80px);
+    object-fit:contain;
+    border-radius:8px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.3);
+    transition:transform 0.3s ease;
+}
+
+.ppt-controls{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:10px 25px;
+    background:rgba(0,0,0,0.7);
+    border-radius:30px;
+    color:white;
+}
+
+.ppt-controls button{
+    background:none;
+    border:none;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    padding:8px 12px;
+    border-radius:8px;
+    transition:all 0.2s;
+}
+
+.ppt-controls button:hover{
+    background:rgba(255,255,255,0.2);
+}
+
+.ppt-slide-number{
+    font-size:14px;
+    min-width:60px;
+    text-align:center;
 }
 
 /* Бос күй */
@@ -1034,6 +1137,7 @@ body{
     to { transform: rotate(360deg); }
 }
 </style>
+<base target="_blank">
 </head>
 <body>
 
